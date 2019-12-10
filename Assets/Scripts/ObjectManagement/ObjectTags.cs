@@ -2,12 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum ObjectTag
+public class ObjectTags : MonoBehaviour
 {
-    Small,
-    Edible,
-    Plant,
-    Living,
-    Vegetarian,
-    Carnivorous
+    public List<ObjectTag> ObjectTagList = new List<ObjectTag>();
 }
