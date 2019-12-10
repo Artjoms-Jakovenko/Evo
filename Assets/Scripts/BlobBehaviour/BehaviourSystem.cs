@@ -15,7 +15,7 @@ public class BehaviourSystem : MonoBehaviour
     private Action CurrentStrategy = Action.None;
 
     // EatAction
-    public List<List<ObjectTag>> EdibleTagCombinations { get => throw new System.NotImplementedException(); set => throw new System.NotImplementedException(); }
+    
 
     private Dictionary<Action, IAction> ActionDictionary = new Dictionary<Action, IAction>();
 
@@ -35,7 +35,12 @@ public class BehaviourSystem : MonoBehaviour
     void InitActions()
     {
         ActionDictionary.Add(Action.None, new NoneAction());
-        ActionDictionary.Add(Action.Eat, new EatAction(gameObject.transform));
+
+        List<List<ObjectTag>> edibleTagCombinations = new List<List<ObjectTag>>()
+        {
+            new List<ObjectTag>(){ ObjectTag.Edible, ObjectTag.Small, ObjectTag.Plant }
+        };
+        ActionDictionary.Add(Action.Eat, new EatAction(gameObject.transform, edibleTagCombinations));
     }
     #endregion
 
@@ -48,6 +53,7 @@ public class BehaviourSystem : MonoBehaviour
         {
             timeWithoutReaction -= reactionPeriod;
             CurrentStrategy = GetBestAction();
+            ActionDictionary[CurrentStrategy].MakeDecision();
         }
     }
 

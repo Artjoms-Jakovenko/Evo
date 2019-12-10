@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class ObjectManager : MonoBehaviour
@@ -9,7 +10,7 @@ public class ObjectManager : MonoBehaviour
 
     }
 
-    private List<ObjectTags> TaggedObjects = new List<ObjectTags>(); 
+    private List<TaggedObject> TaggedObjects = new List<TaggedObject>(); 
 
     private static ObjectManager _instance;
 
@@ -27,17 +28,37 @@ public class ObjectManager : MonoBehaviour
         _instance = this;
         foreach (Transform child in transform)
         {
-            _instance.TaggedObjects.Add(child.GetComponent<ObjectTags>());
+            _instance.TaggedObjects.Add(child.GetComponent<TaggedObject>());
         }
     }
 
-    public void AddObject(ObjectTags anObject) // TODO rename
+    // AND behaviour
+    public List<TaggedObject> GetTagCombinations(List<ObjectTag> objectTags)
     {
-        TaggedObjects.Add(anObject);
+        List<TaggedObject> taggedObjects = new List<TaggedObject>();
+        foreach (var taggedObject in TaggedObjects)
+        {
+            //if (taggedObject.ObjectTagList.Contains(objectTags))
+            if (!objectTags.Except(taggedObject.ObjectTagList).Any())
+            {
+                taggedObjects.Add(taggedObject);
+            }
+        }
+        return taggedObjects;
     }
 
-    void Start()
+    // OR behaviour
+    public List<TaggedObject> GetAllWithTags(List<ObjectTag> objectTags)
     {
-        
+        List<TaggedObject> taggedObjects = new List<TaggedObject>();
+        foreach (var taggedObject in TaggedObjects)
+        {
+            //if (taggedObject.ObjectTagList.Contains(objectTags))
+            if (taggedObject.ObjectTagList.Any(x => objectTags.Contains(x)))
+            {
+                taggedObjects.Add(taggedObject);
+            }
+        }
+        return taggedObjects;
     }
 }

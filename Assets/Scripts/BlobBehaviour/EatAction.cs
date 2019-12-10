@@ -1,29 +1,44 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class EatAction : IAction
 {
-    List<List<ObjectTag>> EdibleTagCombinations { get; set; }
+    
     private Transform blobTransform;
+    private Hunger hunger;
+    List<List<ObjectTag>> EdibleTagCombinations { get; set; }
 
-    public EatAction(Transform blobTransform)
+    Vector3 foodLocation;
+
+    public EatAction(Transform blobTransform, List<List<ObjectTag>> edibleTagCombinations)
     {
         this.blobTransform = blobTransform;
+        hunger = blobTransform.gameObject.GetComponent<Hunger>();
+        EdibleTagCombinations = edibleTagCombinations;
     }
 
     public float GetActionPriorityScore()
     {
-        return 1; // TODO
+        return 95.0F - hunger.energy; // TODO
     }
 
     public void PerformAction()
     {
-        blobTransform.Translate(new Vector3(1 * Time.deltaTime, 0, 0));
+        Vector3 movement = (foodLocation - blobTransform.position).normalized; // TODO
+
+        blobTransform.Translate(new Vector3(movement.x * Time.deltaTime, movement.y * Time.deltaTime, movement.z * Time.deltaTime));
     }
 
     public void MakeDecision()
     {
-        // TODO
+        List<TaggedObject> foodCandidates = new List<TaggedObject>();
+        foreach (var edibleCombination in EdibleTagCombinations)
+        {
+            foodCandidates = foodCandidates.Union(ObjectManager.GetInstance().GetTagCombinations(edibleCombination)).ToList();
+        }
+
+        foodLocation = foodCandidates[0].transform.position;
     }
 }
