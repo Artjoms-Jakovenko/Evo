@@ -33,7 +33,7 @@ public class ObjectManager : MonoBehaviour
     }
 
     // AND behaviour
-    public List<TaggedObject> GetTagCombinations(List<ObjectTag> objectTags)
+    public List<TaggedObject> GetAllWithTagCombination(List<ObjectTag> objectTags)
     {
         List<TaggedObject> taggedObjects = new List<TaggedObject>();
         foreach (var taggedObject in TaggedObjects)
@@ -60,5 +60,16 @@ public class ObjectManager : MonoBehaviour
             }
         }
         return taggedObjects;
+    }
+
+    public void AddObject()
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public void DestroyObject(GameObject gameObject)
+    {
+        TaggedObjects.RemoveAll(x => x.gameObject.GetInstanceID() == gameObject.GetInstanceID());
+        Destroy(gameObject);
     }
 }

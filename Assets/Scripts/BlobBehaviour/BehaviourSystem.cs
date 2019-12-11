@@ -30,6 +30,7 @@ public class BehaviourSystem : MonoBehaviour
     {
         reactionPeriod = 1.0F;
         timeWithoutReaction = 0.0F;
+        // Add stats to blob stats based on saved data
     }
 
     void InitActions()
@@ -40,6 +41,8 @@ public class BehaviourSystem : MonoBehaviour
         {
             new List<ObjectTag>(){ ObjectTag.Edible, ObjectTag.Small, ObjectTag.Plant }
         };
+        // TODO stat initialization based on required stats
+        // TODO addcomponent hunger, init hunger
         ActionDictionary.Add(Action.Eat, new EatAction(gameObject.transform, edibleTagCombinations));
     }
     #endregion
