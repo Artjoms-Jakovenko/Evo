@@ -5,14 +5,11 @@ using UnityEngine;
 
 public class BlobStats : MonoBehaviour
 {
-    public Dictionary<Stats, Stat<float>> stats = new Dictionary<Stats, Stat<float>>();
+    List<Stats> blobStats = new List<Stats>();
 
-    public void Awake()
-    {
-        stats.Add(Stats.Speed, new Stat<float>(1.0F, 1.0F, 5.0F));
-    }
+    public Stat<float> Speed = new Stat<float>(1.0F, 5.0F);
+    public Stat<float> EnergyLimit = new Stat<float>(100.0F, 120.0F);
 
-    public float? speed = 1.0F;
     public float? reactionTime = 1.0F;
 
     public bool? canBeHungry;

@@ -36,7 +36,9 @@ public class EatAction : IAction
 
             if (hitColliders.Any(x => x.gameObject.GetInstanceID() == food.GetInstanceID()))
             {
-                ObjectManager.GetInstance().DestroyObject(food);
+
+                hunger.energy += food.GetComponent<Edible>().energyValue;
+                ObjectManager.GetInstance().DestroyObject(food); // TODO shift the responsibility to the object
                 food = null;
             }
             else

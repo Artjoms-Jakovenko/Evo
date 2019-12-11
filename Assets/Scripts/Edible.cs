@@ -6,4 +6,9 @@ public class Edible : MonoBehaviour
 {
     public float energyValue = 0.0F;
     public int portionNumber = 1;
+
+    private void Awake()
+    {
+        gameObject.GetComponent<TaggedObject>().AddTag(ObjectTag.Edible);
+    }
 }
