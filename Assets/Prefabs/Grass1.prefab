@@ -551,5 +551,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 412589015459c5743bc73d8b4963c7a3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  energyValue: 10
+  portionEnergyValue: 10
   portionNumber: 1

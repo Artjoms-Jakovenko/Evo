@@ -6,6 +6,11 @@ public enum Stats
 {
     Speed,
     ReactionTime, 
-    MaxEnergy
+    MaxEnergy,
+    Health,
+    Size,
+    Sight,
+    Strength,
+
 }
 

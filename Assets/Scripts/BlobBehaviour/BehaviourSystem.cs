@@ -50,8 +50,6 @@ public class BehaviourSystem : MonoBehaviour
 
     void Update()
     {
-        ActionDictionary[CurrentStrategy].PerformAction();
-
         timeWithoutReaction += Time.deltaTime;
         if(timeWithoutReaction > reactionPeriod)
         {
@@ -59,6 +57,11 @@ public class BehaviourSystem : MonoBehaviour
             CurrentStrategy = GetBestAction();
             ActionDictionary[CurrentStrategy].MakeDecision();
         }
+    }
+
+    private void FixedUpdate()
+    {
+        ActionDictionary[CurrentStrategy].PerformAction();
     }
 
     private Action GetBestAction()

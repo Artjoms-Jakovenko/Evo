@@ -15,7 +15,7 @@ public class EatAction : IAction
 
     private BlobStats blobStats;
 
-    GameObject food; // TODO implement eating based on collision
+    GameObject food;
 
     public EatAction(Transform blobTransform, List<List<ObjectTag>> edibleTagCombinations)
     {
@@ -39,9 +39,7 @@ public class EatAction : IAction
 
             if (hitColliders.Any(x => x.gameObject.GetInstanceID() == food.GetInstanceID()))
             {
-
-                hunger.energy += food.GetComponent<Edible>().energyValue;
-                ObjectManager.GetInstance().DestroyObject(food); // TODO shift the responsibility to the object
+                hunger.energy += food.GetComponent<Edible>().Bite(1);
                 food = null;
             }
             else
