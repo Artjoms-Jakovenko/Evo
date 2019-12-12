@@ -20,14 +20,26 @@ public class UpgradeShop : MonoBehaviour
         Upgrade(blobStats.Speed);
     }
 
-    void Upgrade(Stat<float> stat) // TODO give feedback on operation success
+    bool Upgrade(Stat stat)
     {
         int upgradeCost = UpgradeSystem.GetSpeedUpgradeCost(stat);
-        if (upgradeCost <= playerMoney.coins)
+        if (CanUpgrade(stat, upgradeCost))
         {
             playerMoney.coins -= upgradeCost;
-            stat.currentUpgradeLevel++; // TODO handle limits
-            stat.value += 5; // TODO remove
+            return true;
         }
+        return false;
+    }
+
+    bool CanUpgrade(Stat stat, int upgradeCost)
+    {
+        if (upgradeCost <= playerMoney.coins)
+        {
+            if (stat.CanUpgrade())
+            {
+                return true;
+            }
+        }
+        return false;
     }
 }

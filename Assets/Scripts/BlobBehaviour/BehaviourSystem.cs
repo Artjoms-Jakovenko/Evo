@@ -15,9 +15,6 @@ public class BehaviourSystem : MonoBehaviour
     private float timeWithoutReaction;
     private Action CurrentStrategy = Action.None;
 
-    // EatAction
-    
-
     private Dictionary<Action, IAction> ActionDictionary = new Dictionary<Action, IAction>();
 
     void Awake()
@@ -61,12 +58,19 @@ public class BehaviourSystem : MonoBehaviour
 
     private void FixedUpdate()
     {
-        ActionDictionary[CurrentStrategy].PerformAction();
+        try 
+        { 
+            ActionDictionary[CurrentStrategy].PerformAction();
+        }
+        catch
+        {
+
+        }
     }
 
     private Action GetBestAction()
     {
-        Action bestAction = Action.None; // TODO
+        Action bestAction = Action.None;
         float bestActionScore = float.MinValue;
         foreach (var potentialAction in ActionDictionary)
         {

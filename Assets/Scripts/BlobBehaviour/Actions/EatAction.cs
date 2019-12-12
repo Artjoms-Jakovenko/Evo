@@ -40,6 +40,10 @@ public class EatAction : IAction
             if (hitColliders.Any(x => x.gameObject.GetInstanceID() == food.GetInstanceID()))
             {
                 hunger.energy += food.GetComponent<Edible>().Bite(1);
+                if(hunger.energy > blobStats.EnergyLimit.value)
+                {
+                    hunger.energy = blobStats.EnergyLimit.value;
+                }
                 food = null;
             }
             else
