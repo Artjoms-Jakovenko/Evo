@@ -9,7 +9,7 @@ public class NoneAction : IAction
 
     public float GetActionPriorityScore()
     {
-        return 0;
+        return 500;
     }
 
     public void MakeDecision()

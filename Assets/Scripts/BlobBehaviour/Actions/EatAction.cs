@@ -10,8 +10,10 @@ public class EatAction : IAction
     private readonly Hunger hunger;
     private readonly BlobMovement blobMovement;
     List<List<ObjectTag>> EdibleTagCombinations { get; set; }
-    public List<Stats> RequiredStats { get; } = new List<Stats>() { Stats.Speed };
+    public List<Stats> RequiredStats { get; } = new List<Stats>() { Stats.Speed, Stats.MaxEnergy };
     public List<Component> RequiredComponents { get; } = new List<Component>() { Component.Hunger, Component.BlobMovement };
+
+    private BlobStats blobStats;
 
     GameObject food; // TODO implement eating based on collision
 
@@ -21,11 +23,12 @@ public class EatAction : IAction
         hunger = blobTransform.gameObject.GetComponent<Hunger>();
         blobMovement = blobTransform.gameObject.GetComponent<BlobMovement>();
         EdibleTagCombinations = edibleTagCombinations;
+        blobStats = blobTransform.gameObject.GetComponent<BlobStats>();
     }
 
     public float GetActionPriorityScore()
     {
-        return 95.0F - hunger.energy; // TODO
+        return 1000.0F * (1.0F - hunger.energy / blobStats.EnergyLimit.value);
     }
 
     public void PerformAction()

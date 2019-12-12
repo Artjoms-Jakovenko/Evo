@@ -5,6 +5,7 @@ using UnityEngine;
 public enum Stats
 {
     Speed,
-    ReactionTime
+    ReactionTime, 
+    MaxEnergy
 }
 
