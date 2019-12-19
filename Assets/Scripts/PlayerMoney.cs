@@ -6,4 +6,9 @@ public class PlayerMoney : MonoBehaviour
 {
     public int coins;
     public int premiumCoins;
+
+    private void Awake()
+    {
+        DontDestroyOnLoad(this.gameObject);
+    }
 }

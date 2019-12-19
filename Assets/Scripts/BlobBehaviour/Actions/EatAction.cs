@@ -28,7 +28,7 @@ public class EatAction : IAction
 
     public float GetActionPriorityScore()
     {
-        return 1000.0F * (1.0F - hunger.energy / blobStats.EnergyLimit.value);
+        return 1000.0F * (1.0F - hunger.energy / blobStats.stats.EnergyLimit.value);
     }
 
     public void PerformAction()
@@ -40,9 +40,9 @@ public class EatAction : IAction
             if (hitColliders.Any(x => x.gameObject.GetInstanceID() == food.GetInstanceID()))
             {
                 hunger.energy += food.GetComponent<Edible>().Bite(1);
-                if(hunger.energy > blobStats.EnergyLimit.value)
+                if(hunger.energy > blobStats.stats.EnergyLimit.value)
                 {
-                    hunger.energy = blobStats.EnergyLimit.value;
+                    hunger.energy = blobStats.stats.EnergyLimit.value;
                 }
                 food = null;
             }

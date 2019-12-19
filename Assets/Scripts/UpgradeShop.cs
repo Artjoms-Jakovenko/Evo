@@ -11,13 +11,16 @@ public class UpgradeShop : MonoBehaviour
     {
         playerMoney = gameObject.GetComponent<PlayerMoney>();
         blobStats = blob.GetComponent<BlobStats>();
-        PrintUpgradePrices();
+        PrintUpgradePrices(); // TODO remove
+        SaveSystem.Save(); // TODO remove
+        GameObject go = BlobInstantiator.GetBlobGameObject(blobStats); // TODO remove
+        Instantiate(go, new Vector3(0.0F, 0.0F, 0.0F), Quaternion.identity); // TODO remove
     }
     void PrintUpgradePrices()
     {
-        int speedCost = UpgradeSystem.GetSpeedUpgradeCost(blobStats.Speed);
+        int speedCost = UpgradeSystem.GetSpeedUpgradeCost(blobStats.stats.Speed);
         Debug.Log(speedCost);
-        Upgrade(blobStats.Speed);
+        Upgrade(blobStats.stats.Speed);
     }
 
     bool Upgrade(Stat stat)

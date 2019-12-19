@@ -24,14 +24,14 @@ public class BehaviourSystem : MonoBehaviour
     }
 
     #region Initialization
-    void InitStats()
+    void InitStats() // TODO Move it to blob instantiator
     {
-        reactionPeriod = 1.0F;
+        reactionPeriod = 5.0F;
         timeWithoutReaction = 0.0F;
         // Add stats to blob stats based on saved data
     }
 
-    void InitActions()
+    void InitActions() // TODO Move it to blob instantiator
     {
         ActionDictionary.Add(Action.None, new NoneAction());
 
@@ -54,18 +54,13 @@ public class BehaviourSystem : MonoBehaviour
             CurrentStrategy = GetBestAction();
             ActionDictionary[CurrentStrategy].MakeDecision();
         }
+
+        ActionDictionary[CurrentStrategy].PerformAction();
     }
 
     private void FixedUpdate()
     {
-        try 
-        { 
-            ActionDictionary[CurrentStrategy].PerformAction();
-        }
-        catch
-        {
 
-        }
     }
 
     private Action GetBestAction()

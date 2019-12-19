@@ -15,4 +15,9 @@ public static class UpgradeCostCalculator
     {
         return CalculateUpgradeCost(stat, 1.0F, 100.0F, 1000.0F);
     }
+
+    public static int GetHealthUpgradeCost(Stat stat)
+    {
+        return CalculateUpgradeCost(stat, 1.0F, 100.0F, 1000.0F);
+    }
 }
