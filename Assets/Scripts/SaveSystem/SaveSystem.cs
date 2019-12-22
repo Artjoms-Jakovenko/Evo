@@ -6,37 +6,51 @@ using UnityEngine;
 
 public static class SaveSystem
 {
-    private static string SaveToString()
+    private static string savePath = Application.persistentDataPath + "/evo";
+    private static string SaveToString(SaveData saveData)
     {
-        GameObject player = GameObject.Find("Player");
-        PlayerMoney playerMoney = player.GetComponent<PlayerMoney>();
-
-        SaveData saveData = new SaveData
-        {
-            money = playerMoney.coins,
-            premiumMoney = playerMoney.premiumCoins
-        };
-
         return JsonUtility.ToJson(saveData);
     }
 
-    public static void Save()
+    public static void Save(SaveData saveData) // TODO create save file on first game launch
     {
-        string savePath = Application.persistentDataPath + "/evo";
-        using (var fileStream = new FileStream(savePath, FileMode.OpenOrCreate))
+        using (var fileStream = new FileStream(savePath, FileMode.OpenOrCreate)) // TODO check if openorcreate is best
         {
-            byte[] data = new UTF8Encoding(true).GetBytes(SaveToString());
+            byte[] data = new UTF8Encoding(true).GetBytes(SaveToString(saveData));
             fileStream.Write(data, 0, data.Length);
         }
     }
 
-    private static string LoadString()
+    public static void MakeFirstSave()
     {
-        return null; // TODO
+        SaveData saveData = new SaveData
+        {
+            money = 500, // TODO adjust numbers for release
+            premiumMoney = 0
+        };
+
+        BlobStatsData blobStatsData = new BlobStatsData();
+        saveData.blobData.Add(blobStatsData); // TODO dict key
+
+        Save(saveData);
+    }
+
+    private static string LoadString() //  TODO throw error if file is not present
+    {
+        string fileContents = null;
+        using (var fileStream = new FileStream(savePath, FileMode.Open, FileAccess.Read))
+        {
+            using (StreamReader reader = new StreamReader(fileStream))
+            {
+                fileContents = reader.ReadToEnd();
+            }
+        }
+        return fileContents;
     }
 
     public static SaveData Load()
     {
-        return null; // TODO
+        SaveData saveData = JsonUtility.FromJson<SaveData>(LoadString());
+        return saveData;
     }
 }

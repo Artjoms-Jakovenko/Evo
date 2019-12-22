@@ -8,5 +8,5 @@ public class SaveData
     public string protection = "FFFF";
     public int money;
     public int premiumMoney;
-    public List<BlobStatsData> blobData;
+    public List<BlobStatsData> blobData = new List<BlobStatsData>();
 }
