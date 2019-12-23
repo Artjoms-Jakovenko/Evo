@@ -5,11 +5,9 @@ using UnityEngine;
 
 public static class SaveDataUtility
 {
-    public static void PayMoney(int amount)
+    public static void PayMoney(SaveData saveData, int amount)
     {
-        SaveData saveData = SaveSystem.Load();
         saveData.money -= amount;
-        SaveSystem.Save(saveData);
     }
 
     public static int GetMoney()
@@ -23,8 +21,8 @@ public static class SaveDataUtility
 
     }
 
-    public static BlobStatsData GetBlobStats(SaveData saveData, long blobID)
+    public static BlobStatsData GetBlobStats(SaveData saveData, int blobID)
     {
-        return saveData.blobData.Where(x => x.id == blobID).FirstOrDefault();
+        return saveData.blobData[blobID];
     }
 }

@@ -9,7 +9,7 @@ public class Stat
     public float minValue;
     public float maxValue;
     public int upgradeLevels;
-    public int currentUpgradeLevel; // TODO override set to do the math
+    public int currentUpgradeLevel;
     public Stats statName; // TODO
 
     public Stat(float value, float minValue, float maxValue, int currentUpgradeLevel, int upgradeLevels, Stats statName)
@@ -26,8 +26,8 @@ public class Stat
     {
         if(CanUpgrade())
         {
+            value = GetNextLevelValue();
             currentUpgradeLevel++;
-            value = (maxValue - minValue) / upgradeLevels * currentUpgradeLevel;
             return true;
         }
 
@@ -41,5 +41,10 @@ public class Stat
             return true;
         }
         return false;
+    }
+
+    public float GetNextLevelValue() // TODO handle max level
+    {
+        return minValue + (maxValue - minValue) / upgradeLevels * (currentUpgradeLevel + 1);
     }
 }

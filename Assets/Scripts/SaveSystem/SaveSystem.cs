@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using Newtonsoft.Json;
+using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
@@ -9,7 +10,7 @@ public static class SaveSystem
     private static string savePath = Application.persistentDataPath + "/evo";
     private static string SaveToString(SaveData saveData)
     {
-        return JsonUtility.ToJson(saveData);
+        return JsonConvert.SerializeObject(saveData);
     }
 
     public static void Save(SaveData saveData) // TODO create save file on first game launch
@@ -21,7 +22,7 @@ public static class SaveSystem
         }
     }
 
-    public static void MakeFirstSave()
+    private static void MakeFirstSave()
     {
         SaveData saveData = new SaveData
         {
@@ -30,7 +31,7 @@ public static class SaveSystem
         };
 
         BlobStatsData blobStatsData = new BlobStatsData();
-        saveData.blobData.Add(blobStatsData); // TODO dict key
+        saveData.blobData.Add(0, blobStatsData); // TODO dict key
 
         Save(saveData);
     }
@@ -50,7 +51,12 @@ public static class SaveSystem
 
     public static SaveData Load()
     {
-        SaveData saveData = JsonUtility.FromJson<SaveData>(LoadString());
+        if (!File.Exists(savePath)) 
+        {
+            MakeFirstSave();
+        }
+        SaveData saveData = JsonConvert.DeserializeObject<SaveData>(LoadString());
+
         return saveData;
     }
 }

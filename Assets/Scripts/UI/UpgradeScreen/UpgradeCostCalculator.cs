@@ -11,8 +11,16 @@ public static class UpgradeSystem
         return (int) cost;
     }
 
-    public static int GetSpeedUpgradeCost(Stat stat)
+    // TODO make it an enum stat calculator
+    public static int GetUpgradeCost(Stat stat)
     {
-        return CalculateUpgradeCost(stat, 1.0F, 100.0F, 1000.0F);
+        switch (stat.statName)
+        {
+            case Stats.Speed:
+                return CalculateUpgradeCost(stat, 1.0F, 100.0F, 1000.0F);
+            default:
+                throw new System.Exception();
+        }
+        
     }
 }

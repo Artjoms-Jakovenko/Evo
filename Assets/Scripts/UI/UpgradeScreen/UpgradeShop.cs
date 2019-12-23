@@ -4,43 +4,59 @@ using System.Linq;
 using TMPro;
 using UnityEngine;
 
-public class UpgradeShop : MonoBehaviour
+public class UpgradeShop : MonoBehaviour // TODO make class to link stat name to its diplay name and description
 {
+    public GameObject shopCanvas;
     public TextMeshProUGUI moneyText;
+    public TextMeshProUGUI premiumMoneyText;
     public TextMeshProUGUI evolvePriceText;
-    public long blobID;
-    private void Awake()
-    {
-        //playerMoney = gameObject.GetComponent<PlayerMoney>();
-        //blobStats = blob.GetComponent<BlobStats>();
-        //PrintUpgradePrices(); // TODO remove
-        SaveSystem.MakeFirstSave();
-        //SaveSystem.Save(); // TODO remove
-        SaveData saveData = SaveSystem.Load();
+    public TextMeshProUGUI currentStatValueHighlightText;
+    public TextMeshProUGUI evolveValueText;
+    public TextMeshProUGUI maxValueText;
+    public TextMeshProUGUI statTitleText; // TODO
 
-        moneyText.text = saveData.money.ToString();
-        PrintUpgradePrices();
-        //GameObject go = BlobInstantiator.GetBlobGameObject(blobStats); // TODO remove
-        //Instantiate(go, new Vector3(0.0F, 0.0F, 0.0F), Quaternion.identity); // TODO remove
+    public int blobID;
+    private Stats selectedStat;
+
+    private void Update()
+    {
+        if (shopCanvas.activeSelf)
+        {
+            UpdateUI();
+        }
     }
+
     void PrintUpgradePrices()
     {
         SaveData saveData = SaveSystem.Load();
         
-        int speedCost = UpgradeSystem.GetSpeedUpgradeCost(SaveDataUtility.GetBlobStats(saveData, blobID).Speed);
-        SaveDataUtility.GetBlobStats(saveData, blobID).Speed.value = 3.0F;
+        int speedCost = UpgradeSystem.GetUpgradeCost(SaveDataUtility.GetBlobStats(saveData, blobID).Speed);
+        selectedStat = SaveDataUtility.GetBlobStats(saveData, blobID).Speed.statName;
+
         Debug.Log(speedCost);
     }
 
-    bool Upgrade(Stat stat)
+    public void Upgrade()
     {
-        int upgradeCost = UpgradeSystem.GetSpeedUpgradeCost(stat);
-        if (CanUpgrade(stat, upgradeCost))
+        SaveData saveData = SaveSystem.Load();
+        int upgradeCost = UpgradeSystem.GetUpgradeCost(SaveDataUtility.GetBlobStats(saveData, blobID).Speed);
+        if (CanUpgrade(SaveDataUtility.GetBlobStats(saveData, blobID).Speed, upgradeCost))
         {
-            SaveDataUtility.PayMoney(upgradeCost);
-            return true;
+            if (SaveDataUtility.GetBlobStats(saveData, blobID).Speed.Upgrade())
+            {
+                SaveDataUtility.PayMoney(saveData, upgradeCost);
+            }
+            else
+            {
+                Debug.Log("Can't upgrade. Max level already.");
+            }
+
+            SaveSystem.Save(saveData); // TODO double save, resets money
         }
-        return false;
+        else
+        {
+            Debug.Log("Can't upgrade. Not enough money.");
+        }
     }
 
     bool CanUpgrade(Stat stat, int upgradeCost)
@@ -53,5 +69,31 @@ public class UpgradeShop : MonoBehaviour
             }
         }
         return false;
+    }
+
+    private void UpdateUI()
+    {
+        SaveData saveData = SaveSystem.Load();
+
+        moneyText.text = saveData.money.ToString();
+        premiumMoneyText.text = saveData.premiumMoney.ToString();
+
+        Stat stat = SaveDataUtility.GetBlobStats(saveData, blobID).Speed;
+        int upgradeCost = UpgradeSystem.GetUpgradeCost(stat);
+        evolvePriceText.text = "Evolve " + upgradeCost;
+        currentStatValueHighlightText.text = stat.value.ToString();
+        evolveValueText.text = stat.value + " <size=150%>→<size=100%> " + stat.GetNextLevelValue();
+        maxValueText.text = "Max " + stat.maxValue.ToString();
+    }
+
+    public void EnableUI()
+    {
+        UpdateUI();
+        shopCanvas.SetActive(true);
+    }
+
+    public void DisableUI()
+    {
+        shopCanvas.SetActive(false);
     }
 }

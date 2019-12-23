@@ -5,7 +5,6 @@ using UnityEngine;
 [System.Serializable]
 public class BlobStatsData
 {
-    public long id = 0; // TODO Move this to constructor
     // Make into properties to assign buffs
     public Stat Speed = new Stat(1.0F, 1.0F, 2.0F, 0, 4, Stats.Speed);
     public Stat EnergyLimit = new Stat(20.0F, 20.0F, 40.0F, 0, 4, Stats.MaxEnergy);
