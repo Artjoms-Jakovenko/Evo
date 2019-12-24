@@ -4,9 +4,36 @@ using System.Linq;
 using TMPro;
 using UnityEngine;
 
-public class UpgradeShop : MonoBehaviour // TODO make class to link stat name to its diplay name and description
+public class UpgradeShop : MonoBehaviour
 {
+    private Dictionary<Stats, StatUI> statDescriptions = new Dictionary<Stats, StatUI>()
+    {
+        { Stats.Speed, new StatUI()
+        {
+            statDisplayName = "Speed",
+            statDescription = "How fast the blob moves",
+            statResourceImagePath = null // TODO
+        }
+        },
+        { Stats.Health, new StatUI()
+        {
+            statDisplayName = "Health",
+            statDescription = "How much damage a blob can take before it dies.",
+            statResourceImagePath = null // TODO
+        }
+        },
+        { Stats.Sight, new StatUI()
+        {
+            statDisplayName = "Sight",
+            statDescription = "How far a blob can notice things.",
+            statResourceImagePath = null // TODO
+        }
+        },
+    };
+
     public GameObject shopCanvas;
+    public GameObject mainMenu;
+    public GameObject upgradeLevelBackground;
     public TextMeshProUGUI moneyText;
     public TextMeshProUGUI premiumMoneyText;
     public TextMeshProUGUI evolvePriceText;
@@ -15,8 +42,17 @@ public class UpgradeShop : MonoBehaviour // TODO make class to link stat name to
     public TextMeshProUGUI maxValueText;
     public TextMeshProUGUI statTitleText; // TODO
 
+    private SelectedStatRenderer selectedStatRenderer;
+
     public int blobID;
     private Stats selectedStat;
+
+    private void Awake()
+    {
+        selectedStatRenderer = new SelectedStatRenderer(upgradeLevelBackground, statTitleText, evolveValueText, maxValueText);
+        SaveData saveData = SaveSystem.Load();
+        selectedStatRenderer.UpdateSelectedStatUI(saveData.blobData[blobID].Speed); // TODO Remove
+    }
 
     private void Update()
     {
@@ -30,8 +66,8 @@ public class UpgradeShop : MonoBehaviour // TODO make class to link stat name to
     {
         SaveData saveData = SaveSystem.Load();
         
-        int speedCost = UpgradeSystem.GetUpgradeCost(SaveDataUtility.GetBlobStats(saveData, blobID).Speed);
-        selectedStat = SaveDataUtility.GetBlobStats(saveData, blobID).Speed.statName;
+        int speedCost = UpgradeSystem.GetUpgradeCost(saveData.blobData[blobID].Speed);
+        selectedStat = saveData.blobData[blobID].Speed.statName;
 
         Debug.Log(speedCost);
     }
@@ -39,10 +75,10 @@ public class UpgradeShop : MonoBehaviour // TODO make class to link stat name to
     public void Upgrade()
     {
         SaveData saveData = SaveSystem.Load();
-        int upgradeCost = UpgradeSystem.GetUpgradeCost(SaveDataUtility.GetBlobStats(saveData, blobID).Speed);
-        if (CanUpgrade(SaveDataUtility.GetBlobStats(saveData, blobID).Speed, upgradeCost))
+        int upgradeCost = UpgradeSystem.GetUpgradeCost(saveData.blobData[blobID].Speed);
+        if (CanUpgrade(saveData.blobData[blobID].Speed, upgradeCost))
         {
-            if (SaveDataUtility.GetBlobStats(saveData, blobID).Speed.Upgrade())
+            if (saveData.blobData[blobID].Speed.Upgrade())
             {
                 SaveDataUtility.PayMoney(saveData, upgradeCost);
             }
@@ -52,6 +88,8 @@ public class UpgradeShop : MonoBehaviour // TODO make class to link stat name to
             }
 
             SaveSystem.Save(saveData); // TODO double save, resets money
+
+            selectedStatRenderer.UpdateSelectedStatUI(saveData.blobData[blobID].Speed);
         }
         else
         {
@@ -71,19 +109,19 @@ public class UpgradeShop : MonoBehaviour // TODO make class to link stat name to
         return false;
     }
 
-    private void UpdateUI()
+    private void UpdateUI() // TODO move stat on evolve 
     {
         SaveData saveData = SaveSystem.Load();
 
         moneyText.text = saveData.money.ToString();
         premiumMoneyText.text = saveData.premiumMoney.ToString();
 
-        Stat stat = SaveDataUtility.GetBlobStats(saveData, blobID).Speed;
+        Stat stat = saveData.blobData[blobID].Speed;
+
+        currentStatValueHighlightText.text = stat.value.ToString();
+
         int upgradeCost = UpgradeSystem.GetUpgradeCost(stat);
         evolvePriceText.text = "Evolve " + upgradeCost;
-        currentStatValueHighlightText.text = stat.value.ToString();
-        evolveValueText.text = stat.value + " <size=150%>→<size=100%> " + stat.GetNextLevelValue();
-        maxValueText.text = "Max " + stat.maxValue.ToString();
     }
 
     public void EnableUI()
@@ -95,5 +133,11 @@ public class UpgradeShop : MonoBehaviour // TODO make class to link stat name to
     public void DisableUI()
     {
         shopCanvas.SetActive(false);
+    }
+
+    public void GoBackToMenu()
+    {
+        DisableUI();
+        mainMenu.GetComponent<MainMenuUI>().EnableUI();
     }
 }

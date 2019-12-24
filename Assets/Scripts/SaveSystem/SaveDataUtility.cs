@@ -20,9 +20,4 @@ public static class SaveDataUtility
     {
 
     }
-
-    public static BlobStatsData GetBlobStats(SaveData saveData, int blobID)
-    {
-        return saveData.blobData[blobID];
-    }
 }

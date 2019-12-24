@@ -16,8 +16,17 @@ public class MainMenuUI : MonoBehaviour
 
     public void StartEvolveShopScreen()
     {
-        mainMenuCanvas.SetActive(false);
+        DisableUI();
         upgradeShop.EnableUI();
+    }
+
+    public void EnableUI()
+    {
+        mainMenuCanvas.SetActive(true);
+    }
+    public void DisableUI()
+    {
+        mainMenuCanvas.SetActive(false);
     }
 
     public void StartGame()
