@@ -63,7 +63,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: XX
+  m_text: 5
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 04ae8b01d5c28b74db9f141857756696, type: 2}
   m_sharedMaterial: {fileID: -7782557187510969538, guid: 04ae8b01d5c28b74db9f141857756696,
@@ -287,7 +287,7 @@ GameObject:
   - component: {fileID: 6156584241611846106}
   - component: {fileID: 8311502458119764895}
   m_Layer: 0
-  m_Name: Image
+  m_Name: StatImage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

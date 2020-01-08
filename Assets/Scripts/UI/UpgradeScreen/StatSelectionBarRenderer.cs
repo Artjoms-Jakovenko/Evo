@@ -1,7 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class StatSelectionBarRenderer
 {
@@ -11,9 +13,7 @@ public class StatSelectionBarRenderer
     int currentPosition = 0;
 
     // Workaround to access dictionary by index, since dictionary element order is undefined
-    List<StatName> statNames;
-    List<Stat> stats;
-
+    List<KeyValuePair<StatName, Stat>> stats;
 
     public StatSelectionBarRenderer(GameObject parentBlock)
     {
@@ -24,8 +24,7 @@ public class StatSelectionBarRenderer
 
     public void RenderStatSelectionUI(BlobStatsData blobStatsData,  int startPosition, Dictionary<StatName, StatUI> statDescriptions)
     {
-        statNames = new List<StatName>(blobStatsData.stats.Keys);
-        stats = new List<Stat>(blobStatsData.stats.Values);
+        stats = blobStatsData.stats.ToList();
 
         RectTransform parentRectTransform = parentBlock.GetComponent<RectTransform>();
         RectTransform statBackgroundRectTransform = statBackground.GetComponent<RectTransform>();
@@ -40,11 +39,14 @@ public class StatSelectionBarRenderer
 
             // TODO add image
             // change image
+            GameObject image = statBackgroundGameObject.transform.GetChild(0).gameObject; // TODO rework
+            Image statImage = image.GetComponent<Image>();
+            statImage.sprite = Resources.Load<Sprite>("UI/Stats/HealthIcon");
             // change image size
 
             // TODO change text
             TextMeshProUGUI statValueText = statBackground.GetComponentInChildren<TextMeshProUGUI>();
-            statValueText.text = stats[i].value.ToString();
+            statValueText.text = stats[i].Value.value.ToString();
         }
 
 
