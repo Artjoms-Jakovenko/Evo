@@ -10,16 +10,14 @@ public class Stat
     public float maxValue;
     public int upgradeLevels;
     public int currentUpgradeLevel;
-    public Stats statName; // TODO
 
-    public Stat(float value, float minValue, float maxValue, int currentUpgradeLevel, int upgradeLevels, Stats statName)
+    public Stat(float value, float minValue, float maxValue, int currentUpgradeLevel, int upgradeLevels)
     {
         this.value = value;
         this.minValue = minValue;
         this.maxValue = maxValue;
         this.upgradeLevels = upgradeLevels;
         this.currentUpgradeLevel = currentUpgradeLevel;
-        this.statName = statName;
     }
 
     public bool Upgrade()

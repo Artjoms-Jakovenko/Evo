@@ -12,11 +12,11 @@ public static class UpgradeSystem
     }
 
     // TODO make it an enum stat calculator
-    public static int GetUpgradeCost(Stat stat)
+    public static int GetUpgradeCost(StatName statName, Stat stat)
     {
-        switch (stat.statName)
+        switch (statName)
         {
-            case Stats.Speed:
+            case StatName.Speed:
                 return CalculateUpgradeCost(stat, 1.0F, 100.0F, 1000.0F);
             default:
                 throw new System.Exception();

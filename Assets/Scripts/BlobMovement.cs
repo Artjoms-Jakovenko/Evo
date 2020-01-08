@@ -17,6 +17,6 @@ public class BlobMovement : MonoBehaviour
 
         //runner.transform.Translate(new Vector3(movement.x * Time.deltaTime, 0.0F, movement.z * Time.deltaTime), Space.World); // TODO consider global or relative movement
         runner.transform.rotation = Quaternion.LookRotation(movement); 
-        runner.transform.Translate(new Vector3(0.0F, 0.0F, Time.deltaTime * blobStats.stats.Speed.value), Space.Self);
+        runner.transform.Translate(new Vector3(0.0F, 0.0F, Time.deltaTime * blobStats.stats.stats[StatName.Speed].value), Space.Self);
     }
 }

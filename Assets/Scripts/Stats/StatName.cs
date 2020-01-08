@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum Stats
+public enum StatName
 {
     Speed,
     ReactionTime, 
@@ -11,6 +11,5 @@ public enum Stats
     Size,
     Sight,
     Strength,
-
 }
 

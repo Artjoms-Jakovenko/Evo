@@ -6,8 +6,8 @@ using UnityEngine;
 public class SelectedStatRenderer
 {
     GameObject upgradeLevelBackground;
-    GameObject UpgradedLevel;
-    GameObject NotUpgradedLevel;
+    GameObject upgradedLevel;
+    GameObject notUpgradedLevel;
     TextMeshProUGUI statTitleText;
     TextMeshProUGUI evolveValueText;
     TextMeshProUGUI maxValueText;
@@ -15,8 +15,8 @@ public class SelectedStatRenderer
     public SelectedStatRenderer(GameObject upgradeLevelBackground, TextMeshProUGUI statTitleText, TextMeshProUGUI evolveValueText, TextMeshProUGUI maxValueText)
     {
         this.upgradeLevelBackground = upgradeLevelBackground;
-        UpgradedLevel = Resources.Load("UI/EvolveShop/UpgradedLevel") as GameObject;
-        NotUpgradedLevel = Resources.Load("UI/EvolveShop/NotUpgradedLevel") as GameObject;
+        upgradedLevel = Resources.Load("UI/EvolveShop/UpgradedLevel") as GameObject;
+        notUpgradedLevel = Resources.Load("UI/EvolveShop/NotUpgradedLevel") as GameObject;
         this.statTitleText = statTitleText;
         this.evolveValueText = evolveValueText;
         this.maxValueText = maxValueText;
@@ -33,30 +33,28 @@ public class SelectedStatRenderer
 
         RectTransform rectTransform = upgradeLevelBackground.GetComponent<RectTransform>();
 
-        float offset = 40.0F;
-        float spacing = 20.0F;
-
-        float barWidth = ((rectTransform.rect.width - offset * 2.0F) - stat.upgradeLevels * spacing) / stat.upgradeLevels;
+        LinearUiSpacing linearUiSpacing = new LinearUiSpacing(rectTransform.rect.width, 40.0F, 20.0F, stat.upgradeLevels);
 
         for (int i = 0; i < stat.upgradeLevels; i++)
         {
             GameObject gameObject = null;
             if (i < stat.currentUpgradeLevel)
             {
-                gameObject = GameObject.Instantiate(UpgradedLevel);
+                gameObject = GameObject.Instantiate(upgradedLevel); // TODO instantiate child to combine setparent and localscale mb
             }
             else
             {
-                gameObject = GameObject.Instantiate(NotUpgradedLevel);
+                gameObject = GameObject.Instantiate(notUpgradedLevel);
             }
 
             gameObject.transform.SetParent(upgradeLevelBackground.transform);
             gameObject.transform.localScale = new Vector3(1.0F, 1.0F, 1.0F);
 
             RectTransform barRectTransform = gameObject.GetComponent<RectTransform>();
-            barRectTransform.sizeDelta = new Vector2(barWidth, barRectTransform.rect.height);
+            barRectTransform.sizeDelta = new Vector2(linearUiSpacing.partLength, barRectTransform.rect.height);
 
-            gameObject.transform.localPosition = new Vector3(offset - (rectTransform.rect.width - barRectTransform.rect.width) / 2 + (barWidth + spacing) * i, 22.0F - rectTransform.rect.height / 2, 0.0F);
+            float barRelativeStart = -(rectTransform.rect.width - barRectTransform.rect.width) / 2;
+            gameObject.transform.localPosition = new Vector3(barRelativeStart + linearUiSpacing.GetNthPathPosition(i), 22.0F - rectTransform.rect.height / 2, 0.0F);
         }
     }
 }

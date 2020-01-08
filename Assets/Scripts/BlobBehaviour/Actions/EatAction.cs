@@ -10,7 +10,7 @@ public class EatAction : IAction
     private readonly Hunger hunger;
     private readonly BlobMovement blobMovement;
     List<List<ObjectTag>> EdibleTagCombinations { get; set; }
-    public List<Stats> RequiredStats { get; } = new List<Stats>() { Stats.Speed, Stats.MaxEnergy };
+    public List<StatName> RequiredStats { get; } = new List<StatName>() { StatName.Speed, StatName.MaxEnergy };
     public List<Component> RequiredComponents { get; } = new List<Component>() { Component.Hunger, Component.BlobMovement };
 
     private BlobStats blobStats;
@@ -28,7 +28,7 @@ public class EatAction : IAction
 
     public float GetActionPriorityScore()
     {
-        return 1000.0F * (1.0F - hunger.energy / blobStats.stats.EnergyLimit.value);
+        return 1000.0F * (1.0F - hunger.energy / blobStats.stats.stats[StatName.MaxEnergy].value);
     }
 
     public void PerformAction()
@@ -40,9 +40,9 @@ public class EatAction : IAction
             if (hitColliders.Any(x => x.gameObject.GetInstanceID() == food.GetInstanceID()))
             {
                 hunger.energy += food.GetComponent<Edible>().Bite(1);
-                if(hunger.energy > blobStats.stats.EnergyLimit.value)
+                if(hunger.energy > blobStats.stats.stats[StatName.MaxEnergy].value)
                 {
-                    hunger.energy = blobStats.stats.EnergyLimit.value;
+                    hunger.energy = blobStats.stats.stats[StatName.MaxEnergy].value;
                 }
                 food = null;
             }

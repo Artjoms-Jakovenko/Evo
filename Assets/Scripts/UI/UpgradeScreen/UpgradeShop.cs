@@ -6,27 +6,27 @@ using UnityEngine;
 
 public class UpgradeShop : MonoBehaviour
 {
-    private Dictionary<Stats, StatUI> statDescriptions = new Dictionary<Stats, StatUI>()
+    private Dictionary<StatName, StatUI> statDescriptions = new Dictionary<StatName, StatUI>()
     {
-        { Stats.Speed, new StatUI()
+        { StatName.Speed, new StatUI()
         {
             statDisplayName = "Speed",
             statDescription = "How fast the blob moves",
-            statResourceImagePath = null // TODO
+            statResourceImagePath = "UI/Stats/Speed" // TODO
         }
         },
-        { Stats.Health, new StatUI()
+        { StatName.Health, new StatUI()
         {
             statDisplayName = "Health",
             statDescription = "How much damage a blob can take before it dies.",
-            statResourceImagePath = null // TODO
+            statResourceImagePath = "UI/Stats/Health" // TODO
         }
         },
-        { Stats.Sight, new StatUI()
+        { StatName.Sight, new StatUI()
         {
             statDisplayName = "Sight",
             statDescription = "How far a blob can notice things.",
-            statResourceImagePath = null // TODO
+            statResourceImagePath = "UI/Stats/Sight" // TODO
         }
         },
     };
@@ -34,6 +34,7 @@ public class UpgradeShop : MonoBehaviour
     public GameObject shopCanvas;
     public GameObject mainMenu;
     public GameObject upgradeLevelBackground;
+    public GameObject statSelectionBar;
     public TextMeshProUGUI moneyText;
     public TextMeshProUGUI premiumMoneyText;
     public TextMeshProUGUI evolvePriceText;
@@ -45,13 +46,16 @@ public class UpgradeShop : MonoBehaviour
     private SelectedStatRenderer selectedStatRenderer;
 
     public int blobID;
-    private Stats selectedStat;
+    private StatName selectedStat;
 
     private void Awake()
     {
         selectedStatRenderer = new SelectedStatRenderer(upgradeLevelBackground, statTitleText, evolveValueText, maxValueText);
         SaveData saveData = SaveSystem.Load();
-        selectedStatRenderer.UpdateSelectedStatUI(saveData.blobData[blobID].Speed); // TODO Remove
+        selectedStatRenderer.UpdateSelectedStatUI(saveData.blobData[blobID].stats[StatName.Speed]); // TODO Remove
+
+        StatSelectionBarRenderer statSelectionBarRenderer = new StatSelectionBarRenderer(statSelectionBar);
+        statSelectionBarRenderer.RenderStatSelectionUI(saveData.blobData[blobID], 0, statDescriptions); // TODO Remove
     }
 
     private void Update()
@@ -66,8 +70,8 @@ public class UpgradeShop : MonoBehaviour
     {
         SaveData saveData = SaveSystem.Load();
         
-        int speedCost = UpgradeSystem.GetUpgradeCost(saveData.blobData[blobID].Speed);
-        selectedStat = saveData.blobData[blobID].Speed.statName;
+        int speedCost = UpgradeSystem.GetUpgradeCost(StatName.Speed, saveData.blobData[blobID].stats[StatName.Speed]);
+        selectedStat = StatName.Speed; // TODO fix this mess
 
         Debug.Log(speedCost);
     }
@@ -75,10 +79,10 @@ public class UpgradeShop : MonoBehaviour
     public void Upgrade()
     {
         SaveData saveData = SaveSystem.Load();
-        int upgradeCost = UpgradeSystem.GetUpgradeCost(saveData.blobData[blobID].Speed);
-        if (CanUpgrade(saveData.blobData[blobID].Speed, upgradeCost))
+        int upgradeCost = UpgradeSystem.GetUpgradeCost(StatName.Speed, saveData.blobData[blobID].stats[StatName.Speed]);
+        if (CanUpgrade(saveData.blobData[blobID].stats[StatName.Speed], upgradeCost))
         {
-            if (saveData.blobData[blobID].Speed.Upgrade())
+            if (saveData.blobData[blobID].stats[StatName.Speed].Upgrade())
             {
                 SaveDataUtility.PayMoney(saveData, upgradeCost);
             }
@@ -89,7 +93,7 @@ public class UpgradeShop : MonoBehaviour
 
             SaveSystem.Save(saveData); // TODO double save, resets money
 
-            selectedStatRenderer.UpdateSelectedStatUI(saveData.blobData[blobID].Speed);
+            selectedStatRenderer.UpdateSelectedStatUI(saveData.blobData[blobID].stats[StatName.Speed]);
         }
         else
         {
@@ -116,11 +120,11 @@ public class UpgradeShop : MonoBehaviour
         moneyText.text = saveData.money.ToString();
         premiumMoneyText.text = saveData.premiumMoney.ToString();
 
-        Stat stat = saveData.blobData[blobID].Speed;
+        Stat stat = saveData.blobData[blobID].stats[StatName.Speed]; // TODO unhardcode this
 
         currentStatValueHighlightText.text = stat.value.ToString();
 
-        int upgradeCost = UpgradeSystem.GetUpgradeCost(stat);
+        int upgradeCost = UpgradeSystem.GetUpgradeCost(StatName.Speed, stat); // TODO unhardcode this
         evolvePriceText.text = "Evolve " + upgradeCost;
     }
 

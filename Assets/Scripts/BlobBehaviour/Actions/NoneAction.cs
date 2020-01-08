@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class NoneAction : IAction
 {
-    public List<Stats> RequiredStats { get; } = new List<Stats>();
+    public List<StatName> RequiredStats { get; } = new List<StatName>();
     public List<Component> RequiredComponents { get; } = new List<Component>();
 
     public float GetActionPriorityScore()
