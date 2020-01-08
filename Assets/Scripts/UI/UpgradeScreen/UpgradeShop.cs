@@ -38,7 +38,6 @@ public class UpgradeShop : MonoBehaviour
     public TextMeshProUGUI moneyText;
     public TextMeshProUGUI premiumMoneyText;
     public TextMeshProUGUI evolvePriceText;
-    public TextMeshProUGUI currentStatValueHighlightText;
     public TextMeshProUGUI evolveValueText;
     public TextMeshProUGUI maxValueText;
     public TextMeshProUGUI statTitleText; // TODO
@@ -121,8 +120,6 @@ public class UpgradeShop : MonoBehaviour
         premiumMoneyText.text = saveData.premiumMoney.ToString();
 
         Stat stat = saveData.blobData[blobID].stats[StatName.Speed]; // TODO unhardcode this
-
-        currentStatValueHighlightText.text = stat.value.ToString();
 
         int upgradeCost = UpgradeSystem.GetUpgradeCost(StatName.Speed, stat); // TODO unhardcode this
         evolvePriceText.text = "Evolve " + upgradeCost;

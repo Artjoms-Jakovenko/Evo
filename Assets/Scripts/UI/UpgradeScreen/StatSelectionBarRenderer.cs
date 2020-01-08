@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class StatSelectionBarRenderer
@@ -42,6 +43,8 @@ public class StatSelectionBarRenderer
             // change image size
 
             // TODO change text
+            TextMeshProUGUI statValueText = statBackground.GetComponentInChildren<TextMeshProUGUI>();
+            statValueText.text = stats[i].value.ToString();
         }
 
 
