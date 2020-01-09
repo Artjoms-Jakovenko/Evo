@@ -3,23 +3,19 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
-public class SelectedStatRenderer
+public class SelectedStatRenderer : MonoBehaviour
 {
-    GameObject upgradeLevelBackground;
+    public GameObject upgradeLevelBackground;
+    public TextMeshProUGUI statTitleText;
+    public TextMeshProUGUI evolveValueText;
+    public TextMeshProUGUI maxValueText;
     GameObject upgradedLevel;
     GameObject notUpgradedLevel;
-    TextMeshProUGUI statTitleText;
-    TextMeshProUGUI evolveValueText;
-    TextMeshProUGUI maxValueText;
 
-    public SelectedStatRenderer(GameObject upgradeLevelBackground, TextMeshProUGUI statTitleText, TextMeshProUGUI evolveValueText, TextMeshProUGUI maxValueText)
+    void Awake()
     {
-        this.upgradeLevelBackground = upgradeLevelBackground;
         upgradedLevel = Resources.Load("UI/EvolveShop/UpgradedLevel") as GameObject;
         notUpgradedLevel = Resources.Load("UI/EvolveShop/NotUpgradedLevel") as GameObject;
-        this.statTitleText = statTitleText;
-        this.evolveValueText = evolveValueText;
-        this.maxValueText = maxValueText;
     }
     public void UpdateSelectedStatUI(Stat stat) // TODO move creation to separate class
     {
