@@ -9,13 +9,15 @@ public class StatSelectionBarRenderer : MonoBehaviour // TODO This class should 
 {
     public GameObject leftArrow;
     public GameObject rightArrow;
+    public GameObject selectedStatWindow;
 
     GameObject statBackground;
     GameObject statValueText;
+    SelectedStatRenderer selectedStatRenderer;
+    private StatName? selectedStat = null;
 
     int currentPosition = 0;
     List<GameObject> statButtons = new List<GameObject>();
-    public Dictionary<StatName, StatUI> statDescriptions; // TODO rework
     BlobStatsData lastBlobStatsData; // TODO rework
 
     // Workaround to access dictionary by index, since dictionary element order is undefined
@@ -25,6 +27,7 @@ public class StatSelectionBarRenderer : MonoBehaviour // TODO This class should 
     {
         statBackground = Resources.Load("UI/EvolveShop/StatButton") as GameObject;
         statValueText = Resources.Load("UI/EvolveShop/StatValueText") as GameObject;
+        selectedStatRenderer = selectedStatWindow.GetComponent<SelectedStatRenderer>();
     }
 
     public void RenderStatSelectionUI(BlobStatsData blobStatsData)
@@ -37,6 +40,13 @@ public class StatSelectionBarRenderer : MonoBehaviour // TODO This class should 
         // Create buttons
         stats = lastBlobStatsData.stats.ToList();
         stats.Sort((x, y) => x.Key.CompareTo(y.Key));
+
+
+        if(selectedStat == null) // TODO consider making cleaner
+        {
+            selectedStat = stats.First().Key;
+        }
+        SetSelectedStat((StatName)selectedStat);
 
         RectTransform parentRectTransform = gameObject.GetComponent<RectTransform>();
         RectTransform statBackgroundRectTransform = statBackground.GetComponent<RectTransform>();
@@ -69,8 +79,12 @@ public class StatSelectionBarRenderer : MonoBehaviour // TODO This class should 
             float relativeStart = -(parentRectTransform.rect.width - statBackgroundRectTransform.rect.width) / 2;
             statBackgroundGameObject.transform.localPosition = new Vector3(relativeStart + linearUiSpacing.GetNthPathPosition(i), 0.0F, 0.0F);
 
+            // Add events to buttons
+            StatName statCaptured = stats[i + currentPosition].Key; // Important to keep this variable captured to avoid index issues
+            statBackgroundGameObject.GetComponent<Button>().onClick.AddListener(() => SetSelectedStat(statCaptured));
+
             // Add image
-            string imagePath = statDescriptions[stats[i + currentPosition].Key].statResourceImagePath;
+            string imagePath = UiData.statDescriptions[stats[i + currentPosition].Key].statResourceImagePath;
             GameObject image = GameObjectUtility.InstantiateChild(Resources.Load<GameObject>(imagePath), statBackgroundGameObject);
             image.transform.localPosition = new Vector3(-8.0F, 15.0F, 0.0F);
 
@@ -82,9 +96,11 @@ public class StatSelectionBarRenderer : MonoBehaviour // TODO This class should 
         }
     }
 
-    public void SetSelectedStat()
+    public void SetSelectedStat(StatName statName)
     {
-
+        selectedStat = statName;
+        selectedStatWindow.SetActive(true);
+        selectedStatRenderer.UpdateSelectedStatUI(statName, lastBlobStatsData.stats[statName]);
     }
 
     public void ScrollOneRight()
@@ -106,5 +122,10 @@ public class StatSelectionBarRenderer : MonoBehaviour // TODO This class should 
             GameObject.Destroy(gameObject);
         }
         statButtons.Clear();
+    }
+
+    public StatName GetSelectedStat()
+    {
+        return (StatName)selectedStat;
     }
 }

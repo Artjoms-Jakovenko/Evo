@@ -301,6 +301,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   leftArrow: {fileID: 67341549}
   rightArrow: {fileID: 1298099814}
+  selectedStatWindow: {fileID: 1623396720}
 --- !u!1 &152105856
 GameObject:
   m_ObjectHideFlags: 0
@@ -2220,14 +2221,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   shopCanvas: {fileID: 1143911480}
   mainMenu: {fileID: 1139272910}
-  upgradeLevelBackground: {fileID: 260209219}
   statSelectionBar: {fileID: 120595175}
   moneyText: {fileID: 506692053}
   premiumMoneyText: {fileID: 693816343}
   evolvePriceText: {fileID: 477959545}
-  evolveValueText: {fileID: 907325034}
-  maxValueText: {fileID: 972930082}
-  statTitleText: {fileID: 603137287}
   blobID: 0
 --- !u!1 &1622787792
 GameObject:
@@ -2360,6 +2357,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   upgradeLevelBackground: {fileID: 260209219}
+  selectedStatBackground: {fileID: 902368412}
   statTitleText: {fileID: 603137287}
   evolveValueText: {fileID: 907325034}
   maxValueText: {fileID: 972930082}

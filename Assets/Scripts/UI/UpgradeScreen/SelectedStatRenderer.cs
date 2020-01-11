@@ -6,6 +6,7 @@ using UnityEngine;
 public class SelectedStatRenderer : MonoBehaviour
 {
     public GameObject upgradeLevelBackground;
+    public GameObject selectedStatBackground;
     public TextMeshProUGUI statTitleText;
     public TextMeshProUGUI evolveValueText;
     public TextMeshProUGUI maxValueText;
@@ -17,15 +18,27 @@ public class SelectedStatRenderer : MonoBehaviour
         upgradedLevel = Resources.Load("UI/EvolveShop/UpgradedLevel") as GameObject;
         notUpgradedLevel = Resources.Load("UI/EvolveShop/NotUpgradedLevel") as GameObject;
     }
-    public void UpdateSelectedStatUI(Stat stat) // TODO move creation to separate class
+    public void UpdateSelectedStatUI(StatName statName, Stat stat) // TODO move creation to separate class
     {
         evolveValueText.text = stat.value + " <size=150%>→<size=100%> " + stat.GetNextLevelValue();
         maxValueText.text = "Max " + stat.maxValue.ToString();
+        statTitleText.text = UiData.statDescriptions[statName].statDisplayName;
 
         foreach (Transform child in upgradeLevelBackground.transform)
         {
             GameObject.Destroy(child.gameObject);
         }
+
+        foreach (Transform child in selectedStatBackground.transform)
+        {
+            GameObject.Destroy(child.gameObject);
+        }
+
+        string imagePath = UiData.statDescriptions[statName].statResourceImagePath;
+        GameObject image = GameObjectUtility.InstantiateChild(Resources.Load<GameObject>(imagePath), selectedStatBackground);
+        image.transform.localPosition = new Vector3(-8.0F, -25.0F, 0.0F);
+        image.transform.localScale = new Vector3(1.25F, 1.25F, 1.25F);
+        image.transform.SetAsFirstSibling(); // Render it behind info button
 
         RectTransform rectTransform = upgradeLevelBackground.GetComponent<RectTransform>();
 
@@ -36,15 +49,12 @@ public class SelectedStatRenderer : MonoBehaviour
             GameObject gameObject = null;
             if (i < stat.currentUpgradeLevel)
             {
-                gameObject = GameObject.Instantiate(upgradedLevel); // TODO instantiate child to combine setparent and localscale mb
+                gameObject = GameObjectUtility.InstantiateChild(upgradedLevel, upgradeLevelBackground);
             }
             else
             {
-                gameObject = GameObject.Instantiate(notUpgradedLevel);
+                gameObject = GameObjectUtility.InstantiateChild(notUpgradedLevel, upgradeLevelBackground);
             }
-
-            gameObject.transform.SetParent(upgradeLevelBackground.transform);
-            gameObject.transform.localScale = new Vector3(1.0F, 1.0F, 1.0F);
 
             RectTransform barRectTransform = gameObject.GetComponent<RectTransform>();
             barRectTransform.sizeDelta = new Vector2(linearUiSpacing.partLength, barRectTransform.rect.height);

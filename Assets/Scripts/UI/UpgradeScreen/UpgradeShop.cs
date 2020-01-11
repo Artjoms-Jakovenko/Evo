@@ -6,45 +6,6 @@ using UnityEngine;
 
 public class UpgradeShop : MonoBehaviour
 {
-    private Dictionary<StatName, StatUI> statDescriptions = new Dictionary<StatName, StatUI>()
-    {
-        { StatName.Speed, new StatUI()
-        {
-            statDisplayName = "Speed",
-            statDescription = "How fast the blob moves. More speed will help the blob outrun other species.",
-            statResourceImagePath = "UI/Stats/SpeedICon" // TODO load image object instead of path
-        }
-        },
-        { StatName.Health, new StatUI()
-        {
-            statDisplayName = "Health",
-            statDescription = "How much damage a blob can take before it dies. More health means the blob will likely survive longer.",
-            statResourceImagePath = "UI/Stats/HealthIcon"
-        }
-        },
-        { StatName.Sight, new StatUI()
-        {
-            statDisplayName = "Sight",
-            statDescription = "How far a blob can notice things. More sight will help the blob make better decisions and react faster.",
-            statResourceImagePath = "UI/Stats/HealthIcon" // TODO
-        }
-        },
-        { StatName.ReactionTime, new StatUI()
-        {
-            statDisplayName = "Reaction time",
-            statDescription = "How fast a blob can make decisions.", // TODO
-            statResourceImagePath = "UI/Stats/HealthIcon" // TODO
-        }
-        },
-        { StatName.MaxEnergy, new StatUI()
-        {
-            statDisplayName = "Max energy",
-            statDescription = "How much energy can a blob store.", // TODO
-            statResourceImagePath = "UI/Stats/HealthIcon" // TODO
-        }
-        },
-    };
-
     public GameObject shopCanvas;
     public GameObject mainMenu;
     public GameObject statSelectionBar;
@@ -52,47 +13,38 @@ public class UpgradeShop : MonoBehaviour
     public TextMeshProUGUI premiumMoneyText;
     public TextMeshProUGUI evolvePriceText;
 
-    SelectedStatRenderer selectedStatRenderer;
-
     public int blobID;
-    private StatName selectedStat;
+
+    StatSelectionBarRenderer statSelectionBarRenderer;
+    StatName lastSelectedStat;
 
     private void Awake()
     {
-        selectedStatRenderer = gameObject.GetComponentInChildren<SelectedStatRenderer>();
         SaveData saveData = SaveSystem.Load();
-        selectedStatRenderer.UpdateSelectedStatUI(saveData.blobData[blobID].stats[StatName.Speed]); // TODO Remove
 
-        StatSelectionBarRenderer statSelectionBarRenderer = gameObject.GetComponentInChildren<StatSelectionBarRenderer>();
-        statSelectionBarRenderer.statDescriptions = statDescriptions; // TODO Remove
+        statSelectionBarRenderer = gameObject.GetComponentInChildren<StatSelectionBarRenderer>();
         statSelectionBarRenderer.RenderStatSelectionUI(saveData.blobData[blobID]); // TODO Remove
+
+        UpdateUI();
     }
 
     private void Update()
     {
-        if (shopCanvas.activeSelf)
+        StatName selectedStat = statSelectionBarRenderer.GetSelectedStat();
+        if(lastSelectedStat != selectedStat)
         {
+            lastSelectedStat = selectedStat;
             UpdateUI();
         }
-    }
-
-    void PrintUpgradePrices()
-    {
-        SaveData saveData = SaveSystem.Load();
-        
-        int speedCost = UpgradeSystem.GetUpgradeCost(StatName.Speed, saveData.blobData[blobID].stats[StatName.Speed]);
-        selectedStat = StatName.Speed; // TODO fix this mess
-
-        Debug.Log(speedCost);
     }
 
     public void Upgrade()
     {
         SaveData saveData = SaveSystem.Load();
-        int upgradeCost = UpgradeSystem.GetUpgradeCost(StatName.Speed, saveData.blobData[blobID].stats[StatName.Speed]);
-        if (CanUpgrade(saveData.blobData[blobID].stats[StatName.Speed], upgradeCost))
+        int upgradeCost = UpgradeSystem.GetUpgradeCost(lastSelectedStat, saveData.blobData[blobID].stats[lastSelectedStat]);
+        if (CanUpgrade(saveData.blobData[blobID].stats[lastSelectedStat], upgradeCost))
         {
-            if (saveData.blobData[blobID].stats[StatName.Speed].Upgrade())
+            if (saveData.blobData[blobID].stats[lastSelectedStat].Upgrade())
             {
                 SaveDataUtility.PayMoney(saveData, upgradeCost);
             }
@@ -101,14 +53,14 @@ public class UpgradeShop : MonoBehaviour
                 Debug.Log("Can't upgrade. Max level already.");
             }
 
-            SaveSystem.Save(saveData); // TODO double save, resets money
-
-            selectedStatRenderer.UpdateSelectedStatUI(saveData.blobData[blobID].stats[StatName.Speed]);
+            SaveSystem.Save(saveData);
         }
         else
         {
             Debug.Log("Can't upgrade. Not enough money.");
         }
+
+        UpdateUI();
     }
 
     bool CanUpgrade(Stat stat, int upgradeCost)
@@ -123,23 +75,28 @@ public class UpgradeShop : MonoBehaviour
         return false;
     }
 
-    private void UpdateUI() // TODO move stat on evolve 
+    private void UpdateUI()
     {
         SaveData saveData = SaveSystem.Load();
+
+        StatSelectionBarRenderer statSelectionBarRenderer = gameObject.GetComponentInChildren<StatSelectionBarRenderer>();
+        statSelectionBarRenderer.RenderStatSelectionUI(saveData.blobData[blobID]); // TODO rewrite
 
         moneyText.text = saveData.money.ToString();
         premiumMoneyText.text = saveData.premiumMoney.ToString();
 
-        Stat stat = saveData.blobData[blobID].stats[StatName.Speed]; // TODO unhardcode this
+        StatName selectedStat = statSelectionBarRenderer.GetSelectedStat();
 
-        int upgradeCost = UpgradeSystem.GetUpgradeCost(StatName.Speed, stat); // TODO unhardcode this
+        Stat stat = saveData.blobData[blobID].stats[selectedStat]; // TODO unhardcode this
+
+        int upgradeCost = UpgradeSystem.GetUpgradeCost(selectedStat, stat); // TODO unhardcode this
         evolvePriceText.text = "Evolve " + upgradeCost;
     }
 
     public void EnableUI()
     {
-        UpdateUI();
         shopCanvas.SetActive(true);
+        UpdateUI();
     }
 
     public void DisableUI()

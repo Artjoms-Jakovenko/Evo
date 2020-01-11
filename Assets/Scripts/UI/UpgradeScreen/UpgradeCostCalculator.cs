@@ -18,6 +18,14 @@ public static class UpgradeSystem
         {
             case StatName.Speed:
                 return CalculateUpgradeCost(stat, 1.0F, 100.0F, 1000.0F);
+            case StatName.ReactionTime:
+                return CalculateUpgradeCost(stat, 1.0F, 100.0F, -1000.0F);
+            case StatName.Health:
+                return CalculateUpgradeCost(stat, 1.0F, 100.0F, 1000.0F);
+            case StatName.Sight:
+                return CalculateUpgradeCost(stat, 1.0F, 100.0F, 1000.0F);
+            case StatName.MaxEnergy:
+                return CalculateUpgradeCost(stat, 1.0F, 100.0F, 1000.0F);
             default:
                 throw new System.Exception();
         }
