@@ -9,6 +9,7 @@ public class EatAction : IAction
     private readonly Transform blobTransform;
     private readonly Hunger hunger;
     private readonly BlobMovement blobMovement;
+    private Animator blobAnimator;
     List<List<ObjectTag>> EdibleTagCombinations { get; set; }
     public List<StatName> RequiredStats { get; } = new List<StatName>() { StatName.Speed, StatName.MaxEnergy };
     public List<Component> RequiredComponents { get; } = new List<Component>() { Component.Hunger, Component.BlobMovement };
@@ -24,6 +25,7 @@ public class EatAction : IAction
         blobMovement = blobTransform.gameObject.GetComponent<BlobMovement>();
         EdibleTagCombinations = edibleTagCombinations;
         blobStats = blobTransform.gameObject.GetComponent<BlobStats>();
+        blobAnimator = blobTransform.gameObject.GetComponent<Animator>();
     }
 
     public float GetActionPriorityScore()
@@ -45,11 +47,17 @@ public class EatAction : IAction
                     hunger.energy = blobStats.stats.stats[StatName.MaxEnergy].value;
                 }
                 food = null;
+                blobAnimator.SetTrigger("GoIdle"); // TODO structure
             }
             else
             {
+                blobAnimator.SetTrigger("StartWalking");
                 blobMovement.RunAndLookTo(blobTransform, food.transform);
             }
+        }
+        else
+        {
+            blobAnimator.SetTrigger("GoIdle");
         }
     }
 
