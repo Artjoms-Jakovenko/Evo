@@ -10,27 +10,33 @@ namespace Assets.Scripts.UI
         private GameObject rightButton;
         private LinearUiSpacing linearUiSpacing;
         private int currentPosition = 0;
-        private int maxElementCount;
 
-        private List<GameObject> sliderElements = new List<GameObject>();
+        private RectTransform parentRectTransform;
 
-        protected SliderSelector(GameObject leftArrow, GameObject rightArrow, LinearUiSpacing linearUiSpacing, int maxElementCount)
+        private readonly List<GameObject> sliderElements = new List<GameObject>();
+
+        protected void Initialize(GameObject leftArrow, GameObject rightArrow, LinearUiSpacing linearUiSpacing)
         {
             leftButton = leftArrow;
             rightButton = rightArrow;
             leftButton.GetComponent<Button>().onClick.AddListener(ScrollOneLeft);
             rightButton.GetComponent<Button>().onClick.AddListener(ScrollOneRight);
             this.linearUiSpacing = linearUiSpacing;
-            this.maxElementCount = maxElementCount;
+            parentRectTransform = gameObject.GetComponent<RectTransform>();
         }
 
-        private void RenderSliderElements()
+        protected void RenderSliderElements()
         {
             DeleteButtons();
             SetSliderButtonActivity();
             for (int i = 0; i < linearUiSpacing.partAmount; i++)
             {
-                GetObjectAt(currentPosition + i);
+                GameObject element = GetObjectAt(currentPosition + i);
+                //GameObjectUtility.InstantiateChild(element, gameObject, true); // TODO consider this
+                RectTransform elementRectTransform = element.GetComponent<RectTransform>();
+                float relativeStart = -(parentRectTransform.rect.width - elementRectTransform.rect.width) / 2;
+                element.transform.localPosition = new Vector3(relativeStart + linearUiSpacing.GetNthPathPosition(i), 0.0F, 0.0F);
+                sliderElements.Add(element);
             }
         }
 
@@ -48,6 +54,8 @@ namespace Assets.Scripts.UI
 
         private void SetSliderButtonActivity()
         {
+            int maxElementCount = GetObjectCount();
+
             if (currentPosition <= 0)
             {
                 leftButton.SetActive(false);
@@ -75,7 +83,8 @@ namespace Assets.Scripts.UI
             }
             sliderElements.Clear();
         }
-
+        
         public abstract GameObject GetObjectAt(int position);
+        public abstract int GetObjectCount();
     }
 }

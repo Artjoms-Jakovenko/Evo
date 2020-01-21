@@ -5,21 +5,12 @@ using UnityEngine;
 
 public class ObjectManager : MonoBehaviour
 {
-    private ObjectManager()
-    {
-
-    }
-
-    private List<TaggedObject> TaggedObjects = new List<TaggedObject>(); 
+    private readonly List<TaggedObject> TaggedObjects = new List<TaggedObject>(); 
 
     private static ObjectManager _instance;
 
     public static ObjectManager GetInstance()
     {
-        if (_instance == null)
-        {
-            _instance = new ObjectManager();
-        }
         return _instance;
     }
 
