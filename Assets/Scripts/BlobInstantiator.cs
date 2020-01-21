@@ -4,10 +4,13 @@ using UnityEngine;
 
 public static class BlobInstantiator
 {
-    public static GameObject GetBlobGameObject(BlobStats blobStats)
+    public static GameObject GetBlobGameObject(BlobStatsData blobStats) // TODO finish
     {
-        GameObject gameObject = Resources.Load("Blob") as GameObject;
-        gameObject.GetComponent<Hunger>().energy = blobStats.stats.stats[StatName.MaxEnergy].value / 2.0F;
+        GameObject gameObject = GameObject.Instantiate(Resources.Load("Blob") as GameObject);
+
+        gameObject.GetComponent<BlobStats>().stats = blobStats;
+
+        gameObject.GetComponent<Hunger>().energy = blobStats.stats[StatName.MaxEnergy].value / 2.0F;
 
         return gameObject;
     }

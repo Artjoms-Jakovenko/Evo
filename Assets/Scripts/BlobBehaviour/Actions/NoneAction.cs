@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class NoneAction : IAction
+public class NoneAction : IAction // TODO add animation idle
 {
     public List<StatName> RequiredStats { get; } = new List<StatName>();
     public List<Component> RequiredComponents { get; } = new List<Component>();

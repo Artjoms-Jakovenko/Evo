@@ -35,7 +35,7 @@ public class SelectedStatRenderer : MonoBehaviour
         }
 
         string imagePath = UiData.statDescriptions[statName].statResourceImagePath;
-        GameObject image = GameObjectUtility.InstantiateChild(Resources.Load<GameObject>(imagePath), selectedStatBackground);
+        GameObject image = GameObjectUtility.InstantiateChild(Resources.Load<GameObject>(imagePath), selectedStatBackground, true);
         image.transform.localPosition = new Vector3(-8.0F, -25.0F, 0.0F);
         image.transform.localScale = new Vector3(1.25F, 1.25F, 1.25F);
         image.transform.SetAsFirstSibling(); // Render it behind info button
@@ -49,11 +49,11 @@ public class SelectedStatRenderer : MonoBehaviour
             GameObject gameObject = null;
             if (i < stat.currentUpgradeLevel)
             {
-                gameObject = GameObjectUtility.InstantiateChild(upgradedLevel, upgradeLevelBackground);
+                gameObject = GameObjectUtility.InstantiateChild(upgradedLevel, upgradeLevelBackground, true);
             }
             else
             {
-                gameObject = GameObjectUtility.InstantiateChild(notUpgradedLevel, upgradeLevelBackground);
+                gameObject = GameObjectUtility.InstantiateChild(notUpgradedLevel, upgradeLevelBackground, true);
             }
 
             RectTransform barRectTransform = gameObject.GetComponent<RectTransform>();

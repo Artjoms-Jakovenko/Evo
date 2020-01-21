@@ -75,7 +75,7 @@ public class StatSelectionBarRenderer : MonoBehaviour // TODO This class should 
         for (int i = 0; i < linearUiSpacing.partAmount; i++) // TODO split code in functions
         {
             // Create background
-            GameObject statBackgroundGameObject = GameObjectUtility.InstantiateChild(statBackground, gameObject);
+            GameObject statBackgroundGameObject = GameObjectUtility.InstantiateChild(statBackground, gameObject, true);
             float relativeStart = -(parentRectTransform.rect.width - statBackgroundRectTransform.rect.width) / 2;
             statBackgroundGameObject.transform.localPosition = new Vector3(relativeStart + linearUiSpacing.GetNthPathPosition(i), 0.0F, 0.0F);
 
@@ -85,7 +85,7 @@ public class StatSelectionBarRenderer : MonoBehaviour // TODO This class should 
 
             // Add image
             string imagePath = UiData.statDescriptions[stats[i + currentPosition].Key].statResourceImagePath;
-            GameObject image = GameObjectUtility.InstantiateChild(Resources.Load<GameObject>(imagePath), statBackgroundGameObject);
+            GameObject image = GameObjectUtility.InstantiateChild(Resources.Load<GameObject>(imagePath), statBackgroundGameObject, true);
             image.transform.localPosition = new Vector3(-8.0F, 15.0F, 0.0F);
 
             // Change text

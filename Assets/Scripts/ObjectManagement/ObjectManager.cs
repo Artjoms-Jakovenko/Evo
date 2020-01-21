@@ -62,9 +62,10 @@ public class ObjectManager : MonoBehaviour
         return taggedObjects;
     }
 
-    public void AddObject()
+    public void AddObject(GameObject objectToAdd)
     {
-        throw new System.NotImplementedException();
+        GameObjectUtility.MakeChild(objectToAdd, gameObject);
+        TaggedObjects.Add(objectToAdd.GetComponent<TaggedObject>());
     }
 
     public void DestroyObject(GameObject gameObject)
