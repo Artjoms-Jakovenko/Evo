@@ -37,11 +37,11 @@ public class StatSelectionBarRenderer : MonoBehaviour // TODO This class should 
         // Remove old buttons
         DeleteButtons();
 
-        // Create buttons
+        // Sort keyValuePairs
         stats = lastBlobStatsData.stats.ToList();
         stats.Sort((x, y) => x.Key.CompareTo(y.Key));
 
-
+        // Assign default stat
         if(selectedStat == null) // TODO consider making cleaner
         {
             selectedStat = stats.First().Key;
@@ -72,6 +72,7 @@ public class StatSelectionBarRenderer : MonoBehaviour // TODO This class should 
             rightArrow.SetActive(true);
         }
 
+        // Create buttons
         for (int i = 0; i < linearUiSpacing.partAmount; i++) // TODO split code in functions
         {
             // Create background

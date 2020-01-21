@@ -4,7 +4,7 @@ using UnityEngine.UI;
 
 namespace Assets.Scripts.UI
 {
-    public abstract class SliderSelector
+    public abstract class SliderSelector : MonoBehaviour
     {
         private GameObject leftButton;
         private GameObject rightButton;
@@ -26,19 +26,24 @@ namespace Assets.Scripts.UI
 
         private void RenderSliderElements()
         {
-
+            DeleteButtons();
+            SetSliderButtonActivity();
+            for (int i = 0; i < linearUiSpacing.partAmount; i++)
+            {
+                GetObjectAt(currentPosition + i);
+            }
         }
 
         private void ScrollOneRight()
         {
             currentPosition++;
-            //RenderStatSelectionUI(lastBlobStatsData);
+            RenderSliderElements();
         }
 
         private void ScrollOneLeft()
         {
             currentPosition--;
-            //RenderStatSelectionUI(lastBlobStatsData);
+            RenderSliderElements();
         }
 
         private void SetSliderButtonActivity()
