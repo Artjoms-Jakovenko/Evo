@@ -34,6 +34,11 @@ public class Stat
 
     public bool CanUpgrade()
     {
+        return !IsMaxLevel();
+    }
+
+    public bool IsMaxLevel()
+    {
         if (currentUpgradeLevel < upgradeLevels)
         {
             return true;

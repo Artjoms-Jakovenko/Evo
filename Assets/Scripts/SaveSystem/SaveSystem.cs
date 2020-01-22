@@ -7,16 +7,24 @@ using UnityEngine;
 
 public static class SaveSystem
 {
-    private static string savePath = Application.persistentDataPath + "/evo";
+    private readonly static string savePath = Application.persistentDataPath + "/evo.json";
+    private readonly static JsonSerializerSettings jsonSerializerSettings = new JsonSerializerSettings();
+
+    static SaveSystem()
+    {
+        jsonSerializerSettings.ObjectCreationHandling = ObjectCreationHandling.Replace;
+    }
+
     private static string SaveToString(SaveData saveData)
     {
-        return JsonConvert.SerializeObject(saveData);
+        return JsonConvert.SerializeObject(saveData, jsonSerializerSettings);
     }
 
     public static void Save(SaveData saveData) // TODO create save file on first game launch
     {
-        using (var fileStream = new FileStream(savePath, FileMode.OpenOrCreate)) // TODO check if openorcreate is best
+        using (var fileStream = new FileStream(savePath, FileMode.Create)) // TODO check if openorcreate is best, if using open, must clear file beforehand
         {
+            string todo = SaveToString(saveData);
             byte[] data = new UTF8Encoding(true).GetBytes(SaveToString(saveData));
             fileStream.Write(data, 0, data.Length);
         }
@@ -26,7 +34,7 @@ public static class SaveSystem
     {
         SaveData saveData = new SaveData
         {
-            money = 500, // TODO adjust numbers for release
+            money = 100000, // TODO adjust numbers for release
             premiumMoney = 0
         };
 
@@ -55,7 +63,8 @@ public static class SaveSystem
         {
             MakeFirstSave();
         }
-        SaveData saveData = JsonConvert.DeserializeObject<SaveData>(LoadString());
+
+        SaveData saveData = JsonConvert.DeserializeObject<SaveData>(LoadString(), jsonSerializerSettings);
 
         return saveData;
     }

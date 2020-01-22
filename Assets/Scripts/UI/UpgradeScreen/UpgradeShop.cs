@@ -42,9 +42,9 @@ public class UpgradeShop : MonoBehaviour
     {
         SaveData saveData = SaveSystem.Load();
         int upgradeCost = UpgradeSystem.GetUpgradeCost(lastSelectedStat, saveData.blobData[blobID].stats[lastSelectedStat]);
-        if (CanUpgrade(saveData.blobData[blobID].stats[lastSelectedStat], upgradeCost))
+        if (EnoughMoneyToUpgrade(saveData.blobData[blobID].stats[lastSelectedStat], upgradeCost))
         {
-            if (saveData.blobData[blobID].stats[lastSelectedStat].Upgrade())
+            if (saveData.blobData[blobID].stats[lastSelectedStat].Upgrade()) // Checks if stat is upgradeable
             {
                 SaveDataUtility.PayMoney(saveData, upgradeCost);
             }
@@ -63,14 +63,11 @@ public class UpgradeShop : MonoBehaviour
         UpdateUI();
     }
 
-    bool CanUpgrade(Stat stat, int upgradeCost)
+    bool EnoughMoneyToUpgrade(Stat stat, int upgradeCost)
     {
         if (upgradeCost <= SaveDataUtility.GetMoney()) 
         {
-            if (stat.CanUpgrade())
-            {
-                return true;
-            }
+            return true;
         }
         return false;
     }
