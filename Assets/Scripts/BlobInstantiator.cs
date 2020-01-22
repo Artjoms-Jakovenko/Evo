@@ -10,8 +10,6 @@ public static class BlobInstantiator
 
         gameObject.GetComponent<BlobStats>().stats = blobStats;
 
-        gameObject.GetComponent<Hunger>().energy = blobStats.stats[StatName.MaxEnergy].value / 2.0F;
-
         return gameObject;
     }
 }

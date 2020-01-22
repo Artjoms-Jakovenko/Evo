@@ -10,10 +10,13 @@ public class GameManager : MonoBehaviour
     {
         SaveData blobStatsData = SaveSystem.Load();
 
-        GameObject blob = BlobInstantiator.GetBlobGameObject(blobStatsData.blobData[0]);
+        for (int i = 0; i < 5; i++)
+        {
+            GameObject blob = BlobInstantiator.GetBlobGameObject(blobStatsData.blobData[0]);
 
-        blob.transform.position = new Vector3(0.0F, 0.0F, 0.0F);
+            blob.transform.position = new Vector3(i, 0.0F, i);
 
-        ObjectManager.GetInstance().AddObject(blob);
+            ObjectManager.GetInstance().AddObject(blob);
+        }  
     }
 }

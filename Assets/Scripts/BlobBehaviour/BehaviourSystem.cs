@@ -17,6 +17,13 @@ public class BehaviourSystem : MonoBehaviour
 
     private Dictionary<Action, IAction> ActionDictionary = new Dictionary<Action, IAction>();
 
+    /*void OnDrawGizmos() // To test colliders
+    {
+        Gizmos.color = Color.red;
+        Vector3 position = transform.position;
+        position.y += transform.localScale.y / 2;
+        Gizmos.DrawSphere(position, transform.localScale.x / 2);
+    }*/
     void Awake()
     {
         InitStats();

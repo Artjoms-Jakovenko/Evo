@@ -4,10 +4,16 @@ using UnityEngine;
 
 public class Hunger : MonoBehaviour
 {
-    public float energy = 0;
+    private Energy energy;
+    //private float hungerIntensity; // TODO add hunger intensity
+
+    private void Awake()
+    {
+        energy = GetComponent<Energy>();
+    }
 
     private void Update()
     {
-        energy -= Time.deltaTime;
+        energy.AddEnergy(-Time.deltaTime);
     }
 }
