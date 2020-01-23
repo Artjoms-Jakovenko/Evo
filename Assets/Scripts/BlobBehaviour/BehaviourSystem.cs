@@ -7,6 +7,7 @@ public enum Action
 {
     Eat,
     None,
+    MeleeFight,
 }
 
 public class BehaviourSystem : MonoBehaviour
@@ -14,6 +15,7 @@ public class BehaviourSystem : MonoBehaviour
     private float reactionPeriod;
     private float timeWithoutReaction;
     private Action CurrentStrategy = Action.None;
+    private AnimationController animationController;
 
     private Dictionary<Action, IAction> ActionDictionary = new Dictionary<Action, IAction>();
 
@@ -28,6 +30,7 @@ public class BehaviourSystem : MonoBehaviour
     {
         InitStats();
         InitActions();
+        animationController = gameObject.GetComponent<AnimationController>();
     }
 
     #region Initialization
@@ -49,20 +52,24 @@ public class BehaviourSystem : MonoBehaviour
         // TODO stat initialization based on required stats
         // TODO addcomponent hunger, init hunger
         ActionDictionary.Add(Action.Eat, new EatAction(gameObject.transform, edibleTagCombinations));
+        ActionDictionary.Add(Action.MeleeFight, new MeleeFightAction(gameObject.transform));
     }
     #endregion
 
     void Update()
     {
-        timeWithoutReaction += Time.deltaTime;
-        if(timeWithoutReaction > reactionPeriod)
+        if (!animationController.IsAnimationLocked()) // Checks if busy performing some action
         {
-            timeWithoutReaction -= reactionPeriod;
-            CurrentStrategy = GetBestAction();
-            ActionDictionary[CurrentStrategy].MakeDecision();
-        }
+            timeWithoutReaction += Time.deltaTime;
+            if (timeWithoutReaction > reactionPeriod)
+            {
+                timeWithoutReaction -= reactionPeriod;
+                CurrentStrategy = GetBestAction();
+                ActionDictionary[CurrentStrategy].MakeDecision();
+            }
 
-        ActionDictionary[CurrentStrategy].PerformAction();
+            ActionDictionary[CurrentStrategy].PerformAction();
+        }
     }
 
     private void FixedUpdate()

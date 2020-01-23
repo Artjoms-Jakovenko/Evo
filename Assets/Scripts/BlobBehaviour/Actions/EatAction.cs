@@ -10,7 +10,7 @@ public class EatAction : IAction
     private readonly Transform blobTransform;
     private readonly Energy energy;
     private readonly BlobMovement blobMovement;
-    private Animator blobAnimator;
+    private AnimationController blobAnimationController;
     List<List<ObjectTag>> EdibleTagCombinations;
     public List<StatName> RequiredStats { get; } = new List<StatName>() { StatName.Speed, StatName.MaxEnergy };
     public List<Component> RequiredComponents { get; } = new List<Component>() { Component.Hunger, Component.BlobMovement };
@@ -26,12 +26,12 @@ public class EatAction : IAction
         blobMovement = blobTransform.gameObject.GetComponent<BlobMovement>();
         EdibleTagCombinations = edibleTagCombinations;
         blobStats = blobTransform.gameObject.GetComponent<BlobStats>();
-        blobAnimator = blobTransform.gameObject.GetComponent<Animator>();
+        blobAnimationController = blobTransform.gameObject.GetComponent<AnimationController>();
     }
 
     public float GetActionPriorityScore() // 0.0 - 1000.0F 
     {
-        return Math.Max(1000.0F, 1000.0F * (1.0F - energy.GetEnergy() / blobStats.stats.stats[StatName.MaxEnergy].value));
+        return Math.Min(1000.0F, 1000.0F * (1.0F - energy.GetEnergy() / blobStats.stats.stats[StatName.MaxEnergy].value));
     }
 
     public void PerformAction()
@@ -46,17 +46,17 @@ public class EatAction : IAction
             {
                 energy.AddEnergy(food.GetComponent<Edible>().Bite(1));
                 food = null;
-                blobAnimator.SetTrigger("GoIdle");
+                blobAnimationController.PlayAnimation(AnimationState.Idle); // Presumably this doesnt work
             }
             else
             {
-                blobAnimator.SetTrigger("StartWalking");
+                blobAnimationController.PlayAnimation(AnimationState.Walk);
                 blobMovement.RunAndLookTo(blobTransform, food.transform);
             }
         }
         else
         {
-            blobAnimator.SetTrigger("GoIdle");
+            blobAnimationController.PlayAnimation(AnimationState.Idle);
         }
     }
 

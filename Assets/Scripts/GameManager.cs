@@ -10,7 +10,7 @@ public class GameManager : MonoBehaviour
     {
         SaveData blobStatsData = SaveSystem.Load();
 
-        for (int i = 0; i < 5; i++)
+        for (int i = 0; i < 2; i++)
         {
             GameObject blob = BlobInstantiator.GetBlobGameObject(blobStatsData.blobData[0]);
 
