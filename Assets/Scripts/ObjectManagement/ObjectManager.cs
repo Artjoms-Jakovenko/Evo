@@ -64,4 +64,19 @@ public class ObjectManager : MonoBehaviour
         TaggedObjects.RemoveAll(x => x.gameObject.GetInstanceID() == gameObject.GetInstanceID());
         Destroy(gameObject);
     }
+
+    public TaggedObject GetClothestObject(float maxDistance, GameObject origin, List<TaggedObject> objects)
+    {
+        TaggedObject closestObject = null;
+        foreach (var taggedObject in objects)
+        {
+            float objectDistance = Vector3.Distance(taggedObject.transform.position, origin.transform.position);
+            if (objectDistance <= maxDistance)
+            {
+                maxDistance = objectDistance;
+                closestObject = taggedObject;
+            }
+        }
+        return closestObject;
+    }
 }

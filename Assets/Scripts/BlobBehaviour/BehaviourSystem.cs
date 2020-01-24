@@ -36,14 +36,14 @@ public class BehaviourSystem : MonoBehaviour
     #region Initialization
     void InitStats() // TODO Move it to blob instantiator
     {
-        reactionPeriod = 5.0F;
+        reactionPeriod = 3.0F;
         timeWithoutReaction = 0.0F;
         // Add stats to blob stats based on saved data
     }
 
     void InitActions() // TODO Move it to blob instantiator
     {
-        ActionDictionary.Add(Action.None, new NoneAction());
+        ActionDictionary.Add(Action.None, new NoneAction(gameObject));
 
         List<List<ObjectTag>> edibleTagCombinations = new List<List<ObjectTag>>()
         {

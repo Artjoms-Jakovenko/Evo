@@ -1,6 +1,8 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using UnityEngine;
 
 public class MeleeFightAction : IAction
@@ -14,7 +16,9 @@ public class MeleeFightAction : IAction
 
     public List<Component> RequiredComponents => throw new System.NotImplementedException();
 
-    GameObject enemy;
+    GameObject enemyToChase;
+    GameObject enemyToFight;
+    List<TaggedObject> enemies;
 
     public MeleeFightAction(Transform blobTransform)
     {
@@ -26,49 +30,62 @@ public class MeleeFightAction : IAction
 
     public float GetActionPriorityScore()
     {
-        return 600.0F; // TODO change dynamically, maybe randomly
+        enemies = ObjectManager.GetInstance().GetAllWithTags(new List<ObjectTag>() { ObjectTag.Vegetarian }); // TODO rebalance
+        enemies.RemoveAll(x => x.gameObject.GetInstanceID() == blobTransform.gameObject.GetInstanceID()); // Remove hunting blob if present
+        float maxDistance = blobStats.stats.stats[StatName.Sight].value;
+        TaggedObject taggedObject  = ObjectManager.GetInstance().GetClothestObject(maxDistance, blobTransform.gameObject, enemies);
+        
+        if (taggedObject != null)
+        {
+            enemyToChase = taggedObject.gameObject;
+            return 500.0F;
+        }
+        else
+        {
+            return -100.0F;
+        }
     }
 
     public void MakeDecision()
     {
-        List<TaggedObject> enemies = ObjectManager.GetInstance().GetAllWithTags(new List<ObjectTag>() { ObjectTag.Vegetarian }); // TODO rebalance
-        enemies.RemoveAll(x => x.gameObject.GetInstanceID() == blobTransform.gameObject.GetInstanceID()); // Remove hunting blob if present
-
-        float maxDistance = blobStats.stats.stats[StatName.Sight].value;
-        foreach (var enemy in enemies)
-        {
-            float distance = Vector3.Distance(enemy.transform.position, blobTransform.position); // TODO look into navmesh distance
-            if(distance <= maxDistance)
-            {
-                maxDistance = distance;
-                this.enemy = enemy.gameObject;
-            }
-        }
+        
     }
-
-    bool once = true;
 
     public void PerformAction()
     {
-        if (enemy != null)
+        if (enemyToChase != null)
         {
             Vector3 colliderPosition = blobTransform.position;
             colliderPosition.y += blobTransform.localScale.y / 2;
             Collider[] hitColliders = Physics.OverlapSphere(colliderPosition, blobTransform.localScale.x / 2.0F * 1.2F, 0x01); // TODO change layermask, change scale*/
-            if (hitColliders.Any(x => x.gameObject.GetInstanceID() == enemy.GetInstanceID()))
+            if (hitColliders.Any(x => x.gameObject.GetInstanceID() == enemyToChase.GetInstanceID()))
             {
-                blobAnimationController.PlayAnimation(AnimationState.Kick);
-                enemy = null;
+                blobAnimationController.PlayAnimation(this);
+                blobMovement.LookTo(blobTransform, enemyToChase.transform);
+                enemyToFight = enemyToChase;
+                enemyToChase = null;
             }
             else
             {
                 blobAnimationController.PlayAnimation(AnimationState.Walk);
-                blobMovement.RunAndLookTo(blobTransform, enemy.transform);
+                blobMovement.RunAndLookTo(blobTransform, enemyToChase.transform);
             }
         }
         else
         {
             blobAnimationController.PlayAnimation(AnimationState.Idle);
+        }
+    }
+
+    public void DealDamage()
+    {
+        if (enemyToFight != null)
+        {
+            enemyToFight.GetComponent<Health>().TakeDamage(1);
+        }
+        else
+        {
+            Debug.Log("Enemy was null. Could not kick.");
         }
     }
 }

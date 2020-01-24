@@ -68,15 +68,16 @@ public class EatAction : IAction
             foodCandidates = foodCandidates.Union(ObjectManager.GetInstance().GetAllWithTagCombination(edibleCombination)).ToList();
         }
 
-        float shortestDistance = float.MaxValue;
-        foreach (var foodCandidate in foodCandidates)
+        float maxDistance = blobStats.stats.stats[StatName.Sight].value;
+        TaggedObject taggedObject = ObjectManager.GetInstance().GetClothestObject(maxDistance, blobTransform.gameObject, foodCandidates);
+
+        if(taggedObject != null)
         {
-            float foodDistance = Vector3.Distance(foodCandidate.transform.position, blobTransform.position); // TODO look into navmesh distance
-            if (foodDistance < shortestDistance) 
-            {
-                shortestDistance = foodDistance;
-                food = foodCandidate.gameObject;
-            }
+            food = taggedObject.gameObject;
+        }
+        else
+        {
+            // TODO implement wandering for food
         }
     }
 }

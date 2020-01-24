@@ -4,17 +4,24 @@ using UnityEngine;
 
 public class NoneAction : IAction // TODO add animation idle
 {
+    private AnimationController blobAnimationController;
+
     public List<StatName> RequiredStats { get; } = new List<StatName>();
     public List<Component> RequiredComponents { get; } = new List<Component>();
 
+    public NoneAction(GameObject blob)
+    {
+        blobAnimationController = blob.GetComponent<AnimationController>();
+    }
+
     public float GetActionPriorityScore()
     {
-        return 500;
+        return 0;
     }
 
     public void MakeDecision()
     {
-        // Do nothing
+        blobAnimationController.PlayAnimation(AnimationState.Idle);
     }
 
     public void PerformAction()
