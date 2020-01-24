@@ -19,4 +19,13 @@ public class GameManager : MonoBehaviour
             ObjectManager.GetInstance().AddObject(blob);
         }  
     }
+
+    private void Update()
+    {
+        var li = ObjectManager.GetInstance().GetAllWithTags(new List<ObjectTag>() { ObjectTag.Vegetarian });
+        if(li.Count == 0)
+        {
+            Debug.Log("Game over");
+        }
+    }
 }

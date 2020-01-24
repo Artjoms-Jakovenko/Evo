@@ -84,10 +84,18 @@ public class UpgradeShop : MonoBehaviour
 
         StatName selectedStat = statSelectionBarRenderer.GetSelectedStat();
 
-        Stat stat = saveData.blobData[blobID].stats[selectedStat]; // TODO unhardcode this
+        Stat stat = saveData.blobData[blobID].stats[selectedStat];
 
-        int upgradeCost = UpgradeSystem.GetUpgradeCost(selectedStat, stat); // TODO unhardcode this
-        evolvePriceText.text = "Evolve " + upgradeCost;
+        
+        if (stat.IsMaxLevel())
+        {
+            evolvePriceText.text = "Max level";
+        }
+        else
+        {
+            int upgradeCost = UpgradeSystem.GetUpgradeCost(selectedStat, stat);
+            evolvePriceText.text = "Evolve " + upgradeCost;
+        }
     }
 
     public void EnableUI()

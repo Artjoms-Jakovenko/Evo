@@ -41,9 +41,9 @@ public class Stat
     {
         if (currentUpgradeLevel < upgradeLevels)
         {
-            return true;
+            return false;
         }
-        return false;
+        return true;
     }
 
     public float GetNextLevelValue() // TODO handle max level
