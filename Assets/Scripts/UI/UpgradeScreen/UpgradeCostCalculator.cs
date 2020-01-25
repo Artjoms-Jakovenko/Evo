@@ -26,6 +26,8 @@ public static class UpgradeSystem
                 return CalculateUpgradeCost(stat, 1.0F, 100.0F, 1000.0F);
             case StatName.MaxEnergy:
                 return CalculateUpgradeCost(stat, 1.0F, 100.0F, 1000.0F);
+            case StatName.Strength:
+                return CalculateUpgradeCost(stat, 1.0F, 100.0F, 1000.0F);
             default:
                 throw new System.Exception();
         }
