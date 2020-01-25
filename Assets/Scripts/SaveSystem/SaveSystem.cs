@@ -40,6 +40,8 @@ public static class SaveSystem
 
         BlobStatsData blobStatsData = BlobInstantiator.CreateBlob(BlobType.Survivor);
         saveData.blobData.Add(0, blobStatsData); // TODO dict key
+        BlobStatsData blobStatsData2 = BlobInstantiator.CreateBlob(BlobType.Fighter);
+        saveData.blobData.Add(1, blobStatsData2); // TODO dict key
 
         Save(saveData);
     }

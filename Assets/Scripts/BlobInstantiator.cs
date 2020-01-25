@@ -34,8 +34,6 @@ public static class BlobInstantiator
         blobStatsData.stats.Add(StatName.MaxEnergy, new Stat(20.0F, 20.0F, 40.0F, 0, 4));
         blobStatsData.stats.Add(StatName.Sight, new Stat(5.0F, 5.0F, 10.0F, 0, 4));
         blobStatsData.stats.Add(StatName.ReactionTime, new Stat(3.0F, 3.0F, 2.0F, 0, 4));
-        //{ StatName.Strength, new Stat(1.0F, 1.0F, 2.0F, 0, 4) },
-        //public Stat<float> StartingEnergy = new Stat<float>(10.0F, 10.0F, 50.0F, 4);
 
         blobStatsData.possibleActions.Add(Action.None);
         blobStatsData.possibleActions.Add(Action.Eat);
@@ -49,6 +47,7 @@ public static class BlobInstantiator
                 break;
             case BlobType.Fighter:
                 blobStatsData.possibleActions.Add(Action.MeleeFight);
+                blobStatsData.stats.Add(StatName.Strength, new Stat(1.0F, 1.0F, 2.0F, 0, 4));
                 break;
         }
 

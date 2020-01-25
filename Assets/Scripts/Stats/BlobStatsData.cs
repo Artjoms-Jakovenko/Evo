@@ -6,6 +6,7 @@ using UnityEngine;
 public class BlobStatsData
 {
     public BlobType blobType;
+    public string blobName;
 
     public Dictionary<StatName, Stat> stats = new Dictionary<StatName, Stat>();
     public List<Action> possibleActions = new List<Action>();

@@ -37,18 +37,34 @@ public class BehaviourSystem : MonoBehaviour
     }
 
     #region Initialization
-    void InitStats() // TODO Move it to blob instantiator
+    void InitStats()
     {
         reactionPeriod = blobStats.stats.stats[StatName.ReactionTime].value;
         timeWithoutReaction = 0.0F;
-        // Add stats to blob stats based on saved data
     }
 
-    void InitActions() // TODO Move it to blob instantiator
+    void InitActions()
     {
-        ActionDictionary.Add(Action.None, new NoneAction(gameObject));
-        ActionDictionary.Add(Action.Eat, new EatAction(gameObject.transform, blobStats.stats.edibleTagCombinations));
-        ActionDictionary.Add(Action.MeleeFight, new MeleeFightAction(gameObject.transform));
+        foreach(var action in blobStats.stats.possibleActions)
+        {
+            AddAction(action);
+        }
+    }
+
+    void AddAction(Action action)
+    {
+        switch (action)
+        {
+            case Action.None:
+                ActionDictionary.Add(Action.None, new NoneAction(gameObject));
+                break;
+            case Action.Eat:
+                ActionDictionary.Add(Action.Eat, new EatAction(gameObject.transform, blobStats.stats.edibleTagCombinations));
+                break;
+            case Action.MeleeFight:
+                ActionDictionary.Add(Action.MeleeFight, new MeleeFightAction(gameObject.transform));
+                break;
+        }
     }
     #endregion
 
@@ -66,11 +82,6 @@ public class BehaviourSystem : MonoBehaviour
 
             ActionDictionary[CurrentStrategy].PerformAction();
         }
-    }
-
-    private void FixedUpdate()
-    {
-
     }
 
     private Action GetBestAction()

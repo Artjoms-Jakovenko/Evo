@@ -13,9 +13,9 @@ public class GameManager : MonoBehaviour
 
         for (int i = 0; i < 10; i++)
         {
-            GameObject blob = BlobInstantiator.GetBlobGameObject(blobStatsData.blobData[0]);
+            GameObject blob = BlobInstantiator.GetBlobGameObject(blobStatsData.blobData[i % 2]);
 
-            blob.transform.position = new Vector3(10 - 2 * i, 0.0F, i);
+            blob.transform.position = new Vector3(10 - 2 * i, 0.0F, -i);
 
             ObjectManager.GetInstance().AddObject(blob);
         }  
