@@ -5,6 +5,7 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     public GameObject objectsList;
+    float roundTime = 20.0F;
 
     private void Start() // Turn into awake, Must fix, because objectmanager is null
     {
@@ -22,8 +23,9 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
+        roundTime -= Time.deltaTime;
         var li = ObjectManager.GetInstance().GetAllWithTags(new List<ObjectTag>() { ObjectTag.Vegetarian });
-        if(li.Count == 0)
+        if(li.Count == 0 || roundTime <= 0.0F)
         {
             Debug.Log("Game over");
         }

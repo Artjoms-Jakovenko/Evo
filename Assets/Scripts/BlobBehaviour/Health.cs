@@ -5,7 +5,7 @@ using UnityEngine;
 public class Health : MonoBehaviour
 {
     private float health;
-    void Awake()
+    void Start()
     {
         health = GetComponent<BlobStats>().stats.stats[StatName.Health].value;
     }

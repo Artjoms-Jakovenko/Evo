@@ -9,7 +9,7 @@ public class MainMenuUI : MonoBehaviour
     public GameObject evolveShopScreen;
     private UpgradeShop upgradeShop;
 
-    private void Awake()
+    private void Start()
     {
         upgradeShop = evolveShopScreen.GetComponent<UpgradeShop>();
     }

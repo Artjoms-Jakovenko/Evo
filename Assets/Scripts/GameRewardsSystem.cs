@@ -4,15 +4,5 @@ using UnityEngine;
 
 public class GameRewardsSystem : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    // TODO rewards based on stars + dictionary of levels
 }

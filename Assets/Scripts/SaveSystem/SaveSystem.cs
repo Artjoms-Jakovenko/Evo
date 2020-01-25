@@ -38,7 +38,7 @@ public static class SaveSystem
             premiumMoney = 0
         };
 
-        BlobStatsData blobStatsData = new BlobStatsData();
+        BlobStatsData blobStatsData = BlobInstantiator.CreateBlob(BlobType.Survivor);
         saveData.blobData.Add(0, blobStatsData); // TODO dict key
 
         Save(saveData);

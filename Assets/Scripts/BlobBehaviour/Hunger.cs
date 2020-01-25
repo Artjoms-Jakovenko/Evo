@@ -7,7 +7,7 @@ public class Hunger : MonoBehaviour
     private Energy energy;
     //private float hungerIntensity; // TODO add hunger intensity
 
-    private void Awake()
+    private void Start()
     {
         energy = GetComponent<Energy>();
     }

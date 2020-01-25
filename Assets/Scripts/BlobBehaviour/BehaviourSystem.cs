@@ -16,6 +16,7 @@ public class BehaviourSystem : MonoBehaviour
     private float timeWithoutReaction;
     private Action CurrentStrategy = Action.None;
     private AnimationController animationController;
+    private BlobStats blobStats;
 
     private Dictionary<Action, IAction> ActionDictionary = new Dictionary<Action, IAction>();
 
@@ -26,17 +27,19 @@ public class BehaviourSystem : MonoBehaviour
         position.y += transform.localScale.y / 2;
         Gizmos.DrawSphere(position, transform.localScale.x / 2);
     }*/
-    void Awake()
+
+    void Start()
     {
+        animationController = gameObject.GetComponent<AnimationController>();
+        blobStats = GetComponent<BlobStats>();
         InitStats();
         InitActions();
-        animationController = gameObject.GetComponent<AnimationController>();
     }
 
     #region Initialization
     void InitStats() // TODO Move it to blob instantiator
     {
-        reactionPeriod = 3.0F;
+        reactionPeriod = blobStats.stats.stats[StatName.ReactionTime].value;
         timeWithoutReaction = 0.0F;
         // Add stats to blob stats based on saved data
     }
@@ -44,14 +47,7 @@ public class BehaviourSystem : MonoBehaviour
     void InitActions() // TODO Move it to blob instantiator
     {
         ActionDictionary.Add(Action.None, new NoneAction(gameObject));
-
-        List<List<ObjectTag>> edibleTagCombinations = new List<List<ObjectTag>>()
-        {
-            new List<ObjectTag>(){ ObjectTag.Edible, ObjectTag.Small, ObjectTag.Plant }
-        };
-        // TODO stat initialization based on required stats
-        // TODO addcomponent hunger, init hunger
-        ActionDictionary.Add(Action.Eat, new EatAction(gameObject.transform, edibleTagCombinations));
+        ActionDictionary.Add(Action.Eat, new EatAction(gameObject.transform, blobStats.stats.edibleTagCombinations));
         ActionDictionary.Add(Action.MeleeFight, new MeleeFightAction(gameObject.transform));
     }
     #endregion

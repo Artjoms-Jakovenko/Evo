@@ -21,7 +21,7 @@ public class StatSelectionBarRenderer : SliderSelector
     // Workaround to access dictionary by index, since dictionary element order is undefined
     List<KeyValuePair<StatName, Stat>> stats;
 
-    public void Awake()
+    public void Start()
     {
         statBackground = Resources.Load("UI/EvolveShop/StatButton") as GameObject;
         selectedStatRenderer = selectedStatWindow.GetComponent<SelectedStatRenderer>();

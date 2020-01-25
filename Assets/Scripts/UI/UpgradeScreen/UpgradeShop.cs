@@ -18,7 +18,7 @@ public class UpgradeShop : MonoBehaviour
     StatSelectionBarRenderer statSelectionBarRenderer;
     StatName lastSelectedStat;
 
-    private void Awake()
+    private void Start()
     {
         SaveData saveData = SaveSystem.Load();
 

@@ -8,7 +8,7 @@ public class Energy : MonoBehaviour
     private float maxEnergy;
     private Health health;
 
-    private void Awake()
+    private void Start()
     {
         maxEnergy = GetComponent<BlobStats>().stats.stats[StatName.MaxEnergy].value;
         energy = maxEnergy / 2.0F;

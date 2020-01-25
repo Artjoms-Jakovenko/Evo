@@ -5,7 +5,7 @@ using UnityEngine;
 public class BlobMovement : MonoBehaviour
 {
     private BlobStats blobStats;
-    private void Awake()
+    private void Start()
     {
         blobStats = gameObject.GetComponent<BlobStats>();
     }
