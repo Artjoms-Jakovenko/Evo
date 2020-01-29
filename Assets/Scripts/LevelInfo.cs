@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Level // TODO
+public class LevelInfo : MonoBehaviour
 {
-    int maxBlobCount;
+    public int maxBlobCount;
     string nextLevelName;
     string participationReward;
     string oneStarReward;

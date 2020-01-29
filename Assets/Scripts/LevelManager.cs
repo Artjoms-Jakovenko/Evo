@@ -4,15 +4,16 @@ using UnityEngine;
 
 public class LevelManager : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    /*Dictionary<string, Level> levels = new Dictionary<string, Level>();
+
+    private void Awake()
     {
-        
+        // Intro Level 1
+        levels.Add("Intro_Level_1", new Level(2));
     }
 
-    // Update is called once per frame
-    void Update()
+    public int GetMaxBlobCount(string levelName)
     {
-        
-    }
+        return levels[levelName].maxBlobCount;
+    }*/
 }

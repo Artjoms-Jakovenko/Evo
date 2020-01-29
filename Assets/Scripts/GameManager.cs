@@ -1,5 +1,7 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
@@ -7,6 +9,7 @@ public class GameManager : MonoBehaviour
     public GameObject rewardScreen;
     public GameObject blobSelector;
     public BlobSelector blobSelectorBar;
+    public GameObject spawnPointsParent;
 
     //public GameObject objectsList;
     float roundTime = 20.0F;
@@ -31,13 +34,31 @@ public class GameManager : MonoBehaviour
         
         SaveData saveData = SaveSystem.Load();
 
-        foreach (var blobId in selectedBlobIds)
-        {
-            GameObject blob = BlobInstantiator.GetBlobGameObject(saveData.blobData[blobId]);
+        int spawnPointCount = spawnPointsParent.transform.childCount;
+        CheckIfEnoughSpawnPoints(selectedBlobIds.Count, spawnPointCount);
 
-            blob.transform.position = new Vector3(0.0F, 0.0F, 0.0F);
+        List<int> spawnPointOrder = Enumerable.Range(0, spawnPointsParent.transform.childCount).OrderBy(x => Guid.NewGuid()).Take(selectedBlobIds.Count).ToList();
+
+        for (int i = 0; i < selectedBlobIds.Count; i++)
+        {
+            GameObject blob = BlobInstantiator.GetBlobGameObject(saveData.blobData[selectedBlobIds[i]]);
+
+            Transform spawnPoint = spawnPointsParent.transform.GetChild(spawnPointOrder[i]); // TODO
+            blob.transform.localPosition = spawnPoint.localPosition;
 
             ObjectManager.GetInstance().AddObject(blob);
         }
+
+        Destroy(spawnPointsParent);
+    }
+
+    private bool CheckIfEnoughSpawnPoints(int blobCount, int spawnPointCount)
+    {
+        if (blobCount > spawnPointCount) // TODO make it a test
+        {
+            Debug.LogError("Not enough spawn points");
+            return false;
+        }
+        return true;
     }
 }
