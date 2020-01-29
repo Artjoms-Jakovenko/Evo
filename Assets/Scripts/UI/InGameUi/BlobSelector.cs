@@ -52,7 +52,7 @@ public class BlobSelector : SliderSelector, IBlobSelectObserver
     void SelectButtonClicked(int buttonID)
     {
         Debug.Log("Button " + buttonID);
-        blobSelectScreen.SelectBlob(this);
+        blobSelectScreen.SelectBlob(this, selectedBlobIds);
         selectedButton = buttonID;
     }
 
