@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Level // TODO
 {
+    int maxBlobCount;
     string nextLevelName;
     string participationReward;
     string oneStarReward;

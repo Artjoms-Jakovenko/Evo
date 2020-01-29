@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class BlobSelector : SliderSelector, IBlobSelectObserver
 {
@@ -10,16 +11,24 @@ public class BlobSelector : SliderSelector, IBlobSelectObserver
     public GameObject blobSelectionBar;
     public BlobSelectScreen blobSelectScreen;
 
-    List<int> selectedBlob = new List<int>();
+    List<int> selectedBlobIds = new List<int>();
+
+    List<GameObject> blobButtons = new List<GameObject>();
+    int selectedButton = 0;
 
     GameObject blobAddButton;
 
     int blobCount = 2; // TODO max allowed blobs on this level
     public override GameObject GetObjectAt(int position)
     {
-        GameObject statBackgroundGameObject = GameObjectUtility.InstantiateChild(blobAddButton, gameObject, true);
+        GameObject blobButton = GameObjectUtility.InstantiateChild(blobAddButton, gameObject, true);
 
-        return statBackgroundGameObject;
+        int buttonID = blobButtons.Count;
+        blobButtons.Add(blobButton);
+        // Add events to buttons
+        blobButton.GetComponent<Button>().onClick.AddListener(() => SelectButtonClicked(buttonID));
+
+        return blobButton;
     }
 
     public override int GetObjectCount()
@@ -38,12 +47,23 @@ public class BlobSelector : SliderSelector, IBlobSelectObserver
         LinearUiSpacing linearUiSpacing = new LinearUiSpacing(blobSelectionBar.GetComponent<RectTransform>().rect.width, 80.0F, blobAddButtonRectTransform.rect.width, 20.0F);
         base.Initialize(leftArrow, rightArrow, linearUiSpacing);
         base.RenderSliderElements();
-        blobSelectScreen.SelectBlob(this); // TODO move on button click
+    }
+
+    void SelectButtonClicked(int buttonID)
+    {
+        Debug.Log("Button " + buttonID);
+        blobSelectScreen.SelectBlob(this);
+        selectedButton = buttonID;
     }
 
     public void SelectedBlob(int blobID)
     {
-        Debug.Log(blobID);
-        throw new System.NotImplementedException();
+        blobButtons[selectedButton].GetComponent<AddBlobButton>().SwitchToSelectedBlob(BlobType.Survivor, "Blobby" + blobID); // TODO
+        selectedBlobIds.Add(blobID); // TODO also remove
+    }
+
+    public List<int> GetSelectedBlobIds()
+    {
+        return selectedBlobIds; // TODO
     }
 }

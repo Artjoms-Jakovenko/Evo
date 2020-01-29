@@ -2,12 +2,14 @@
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class BlobSelectScreen : MonoBehaviour
 {
     public GameObject blobSelectScreen;
 
     private IBlobSelectObserver blobSelectObserver;
+    private List<int> alreadySelectedBlobs = new List<int>();
 
     void Start()
     {
@@ -26,18 +28,31 @@ public class BlobSelectScreen : MonoBehaviour
 
             RectTransform blobBarRectTransform = blobBar.GetComponent<RectTransform>();
             blobBarRectTransform.transform.localPosition = new Vector3(0.0F, linearUiSpacing.GetNthPathPosition(i));
+
+            // Add events to buttons
+            blobBar.GetComponent<Button>().onClick.AddListener(() => BlobClicked(blob.Key));
+
             i++; // TODO fix loops
         }
     }
 
-    void MarkBlobsAsSelected(List<int> blobIds) // TODO 
+    void BlobClicked(int blobId)
     {
-
+        blobSelectObserver.SelectedBlob(blobId);
+        blobSelectScreen.SetActive(false);
     }
 
     public void SelectBlob(IBlobSelectObserver blobSelectObserver)
     {
         blobSelectScreen.SetActive(true);
         this.blobSelectObserver = blobSelectObserver;
+        //alreadySelectedBlobs = new List<int>();
     }
+
+    /*public void SelectBlob(IBlobSelectObserver blobSelectObserver, List<int> selectedBlobIds)
+    {
+        blobSelectScreen.SetActive(true);
+        this.blobSelectObserver = blobSelectObserver;
+        alreadySelectedBlobs = selectedBlobIds;
+    }*/
 }
