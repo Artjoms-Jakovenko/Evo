@@ -15,9 +15,4 @@ public static class SaveDataUtility
         SaveData saveData = SaveSystem.Load();
         return saveData.money;
     }
-
-    public static void SaveBlob() // TODO
-    {
-
-    }
 }

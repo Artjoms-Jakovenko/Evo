@@ -7,7 +7,7 @@ public static class GameRewardsSystem
     public static void AdministerRewards() // TODO
     {
         SaveData saveData = SaveSystem.Load();
-        saveData.money += 123;
+        saveData.money += 500;
         SaveSystem.Save(saveData);
     }
     // TODO rewards based on stars + dictionary of levels

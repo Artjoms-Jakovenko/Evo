@@ -10,20 +10,26 @@ public class GameManager : MonoBehaviour
     public GameObject blobSelector;
     public BlobSelector blobSelectorBar;
     public GameObject spawnPointsParent;
+    public LevelInfo levelInfo; // TODO remove if not used
 
     //public GameObject objectsList;
     float roundTime = 20.0F;
+    bool roundStarted;
 
     private void Update()
     {
-        roundTime -= Time.deltaTime;
-        var li = ObjectManager.GetInstance().GetAllWithTags(new List<ObjectTag>() { ObjectTag.Vegetarian });
-        if(li.Count == 0 || roundTime <= 0.0F)
+        if (roundStarted)
         {
-            //Time.timeScale = 0;
-            //Debug.Log("Game over");
-            //rewardScreen.SetActive(true);
-            //GameRewardsSystem.AdministerRewards(); // TODO get out of the loop with rewards
+            roundTime -= Time.deltaTime;
+            var li = ObjectManager.GetInstance().GetAllWithTags(new List<ObjectTag>() { ObjectTag.Vegetarian });
+            if (li.Count == 0 || roundTime <= 0.0F)
+            {
+                roundStarted = false;
+                Time.timeScale = 0;
+                Debug.Log("Game over");
+                rewardScreen.SetActive(true);
+                GameRewardsSystem.AdministerRewards(); // TODO get out of the loop with rewards
+            }
         }
     }
 
@@ -50,6 +56,7 @@ public class GameManager : MonoBehaviour
         }
 
         Destroy(spawnPointsParent);
+        roundStarted = true;
     }
 
     private bool CheckIfEnoughSpawnPoints(int blobCount, int spawnPointCount)

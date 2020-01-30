@@ -25,11 +25,12 @@ namespace Assets.Scripts.UI
             parentRectTransform = gameObject.GetComponent<RectTransform>();
         }
 
-        protected void RenderSliderElements()
+        protected void RenderSliderElements() // TODO fix, creates more buttons than needed, when maxPlayer count is low
         {
             DeleteButtons();
             SetSliderButtonActivity();
-            for (int i = 0; i < linearUiSpacing.partAmount; i++)
+            int partAmount = Mathf.Min(linearUiSpacing.partAmount, GetObjectCount());
+            for (int i = 0; i < partAmount; i++)
             {
                 GameObject element = GetObjectAt(currentPosition + i);
                 //GameObjectUtility.InstantiateChild(element, gameObject, true); // TODO consider this

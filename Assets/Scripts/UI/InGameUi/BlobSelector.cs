@@ -10,6 +10,7 @@ public class BlobSelector : SliderSelector
     public GameObject rightArrow;
     public GameObject blobSelectionBar;
     public BlobSelectScreen blobSelectScreen;
+    public LevelInfo levelInfo;
 
     List<int> selectedBlobIds = new List<int>();
 
@@ -18,7 +19,7 @@ public class BlobSelector : SliderSelector
 
     GameObject blobAddButton;
 
-    int blobCount = 2; // TODO max allowed blobs on this level
+    int blobCount = 0;
 
     private void OnEnable()
     {
@@ -52,8 +53,7 @@ public class BlobSelector : SliderSelector
         blobAddButton = Resources.Load("UI/BlobSelect/AddBlobButton") as GameObject;
         RectTransform blobAddButtonRectTransform = blobAddButton.GetComponent<RectTransform>();
 
-        SaveData saveData = SaveSystem.Load();
-        blobCount = saveData.blobData.Count;
+        blobCount = levelInfo.maxBlobCount;
 
         LinearUiSpacing linearUiSpacing = new LinearUiSpacing(blobSelectionBar.GetComponent<RectTransform>().rect.width, 80.0F, blobAddButtonRectTransform.rect.width, 20.0F);
         base.Initialize(leftArrow, rightArrow, linearUiSpacing);
