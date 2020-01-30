@@ -56,6 +56,7 @@ public class GameManager : MonoBehaviour
         }
 
         Destroy(spawnPointsParent);
+        Time.timeScale = 1.0F; // TODO manage timescale reset
         roundStarted = true;
     }
 
