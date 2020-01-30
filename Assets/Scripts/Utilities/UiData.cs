@@ -41,5 +41,12 @@ public class UiData
             statResourceImagePath = "UI/Stats/HealthIcon" // TODO
         }
         },
+        { StatName.Strength, new StatUI()
+        {
+            statDisplayName = "Strength",
+            statDescription = "How powerful this blob's hits are. Having a lot of strength helps fight other blobs.", // TODO
+            statResourceImagePath = "UI/Stats/HealthIcon" // TODO
+        }
+        },
     };
 }

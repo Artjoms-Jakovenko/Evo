@@ -8,15 +8,18 @@ using UnityEngine.UI;
 
 public class StatSelectionBarRenderer : SliderSelector
 {
+    public delegate void StatSelected();
+    public static event StatSelected OnStatSelected;
+
     public GameObject leftArrow;
     public GameObject rightArrow;
     public GameObject selectedStatWindow;
 
     GameObject statBackground;
     SelectedStatRenderer selectedStatRenderer;
-    private StatName? selectedStat = null;
 
     BlobStatsData lastBlobStatsData; // TODO rework
+    StatName? selectedStat = null;
 
     // Workaround to access dictionary by index, since dictionary element order is undefined
     List<KeyValuePair<StatName, Stat>> stats;
@@ -37,30 +40,43 @@ public class StatSelectionBarRenderer : SliderSelector
     public void RenderStatSelectionUI(BlobStatsData blobStatsData)
     {
         lastBlobStatsData = blobStatsData;
+        SelectDefaultStatIfNothingIsSelected(); // TODO
 
+        SetSelectedStat((StatName)selectedStat); // TODO look into default stat
+        base.RenderSliderElements();
+    }
+
+    StatName? SelectDefaultStatIfNothingIsSelected()
+    {
         // Sort keyValuePairs
         stats = lastBlobStatsData.stats.ToList();
         stats.Sort((x, y) => x.Key.CompareTo(y.Key));
 
         // Assign default stat
-        if(selectedStat == null) // TODO consider making cleaner
+        if (selectedStat == null) // TODO consider making cleaner
         {
             selectedStat = stats.First().Key;
         }
-        SetSelectedStat((StatName)selectedStat);
-        base.RenderSliderElements();
+
+        return selectedStat; // TODO
     }
 
-    public void SetSelectedStat(StatName statName)
+    public StatName GetSelectedStatName()
+    {
+        return (StatName)selectedStat;
+    }
+
+    private void SetSelectedStat(StatName statName)
     {
         selectedStat = statName;
         selectedStatWindow.SetActive(true);
         selectedStatRenderer.UpdateSelectedStatUI(statName, lastBlobStatsData.stats[statName]);
     }
 
-    public StatName GetSelectedStat()
+    public void StatButtonClicked(StatName statName)
     {
-        return (StatName)selectedStat;
+        SetSelectedStat(statName);
+        OnStatSelected();
     }
 
     public override GameObject GetObjectAt(int position)
@@ -70,7 +86,7 @@ public class StatSelectionBarRenderer : SliderSelector
 
         // Add events to buttons
         StatName statCaptured = stats[position].Key; // Important to keep this variable captured to avoid index issues
-        statBackgroundGameObject.GetComponent<Button>().onClick.AddListener(() => SetSelectedStat(statCaptured));
+        statBackgroundGameObject.GetComponent<Button>().onClick.AddListener(() => StatButtonClicked(statCaptured));
 
         // Add image
         string imagePath = UiData.statDescriptions[stats[position].Key].statResourceImagePath;

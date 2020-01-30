@@ -4,7 +4,7 @@ using System.Linq;
 using TMPro;
 using UnityEngine;
 
-public class UpgradeShop : MonoBehaviour
+public class UpgradeShop : MonoBehaviour, IBlobSelectObserver
 {
     public GameObject shopCanvas;
     public GameObject mainMenu;
@@ -12,39 +12,41 @@ public class UpgradeShop : MonoBehaviour
     public TextMeshProUGUI moneyText;
     public TextMeshProUGUI premiumMoneyText;
     public TextMeshProUGUI evolvePriceText;
-
-    public int blobID;
+    public BlobSelectScreen blobSelectScreen;
 
     StatSelectionBarRenderer statSelectionBarRenderer;
-    StatName lastSelectedStat;
+    StatName selectedStat;
+
+    private int selectedBlobId = 0; // TODO last opened blob
+
+    private void OnEnable()
+    {
+        StatSelectionBarRenderer.OnStatSelected += SelectedStatChanged;
+    }
+
+    private void OnDisable()
+    {
+        StatSelectionBarRenderer.OnStatSelected -= SelectedStatChanged;
+    }
 
     private void Start()
     {
-        SaveData saveData = SaveSystem.Load();
-
         statSelectionBarRenderer = gameObject.GetComponentInChildren<StatSelectionBarRenderer>();
-        statSelectionBarRenderer.RenderStatSelectionUI(saveData.blobData[blobID]); // TODO Remove
-
-        UpdateUI();
     }
 
-    private void Update()
+    private void SelectedStatChanged()
     {
-        StatName selectedStat = statSelectionBarRenderer.GetSelectedStat();
-        if(lastSelectedStat != selectedStat)
-        {
-            lastSelectedStat = selectedStat;
-            UpdateUI();
-        }
+        selectedStat = statSelectionBarRenderer.GetSelectedStatName();
+        UpdateUI();
     }
 
     public void Upgrade()
     {
         SaveData saveData = SaveSystem.Load();
-        int upgradeCost = UpgradeSystem.GetUpgradeCost(lastSelectedStat, saveData.blobData[blobID].stats[lastSelectedStat]);
-        if (EnoughMoneyToUpgrade(saveData.blobData[blobID].stats[lastSelectedStat], upgradeCost))
+        int upgradeCost = UpgradeSystem.GetUpgradeCost(selectedStat, saveData.blobData[selectedBlobId].stats[selectedStat]);
+        if (EnoughMoneyToUpgrade(saveData.blobData[selectedBlobId].stats[selectedStat], upgradeCost))
         {
-            if (saveData.blobData[blobID].stats[lastSelectedStat].Upgrade()) // Checks if stat is upgradeable
+            if (saveData.blobData[selectedBlobId].stats[selectedStat].Upgrade()) // Checks if stat is upgradeable
             {
                 SaveDataUtility.PayMoney(saveData, upgradeCost);
             }
@@ -76,16 +78,12 @@ public class UpgradeShop : MonoBehaviour
     {
         SaveData saveData = SaveSystem.Load();
 
-        StatSelectionBarRenderer statSelectionBarRenderer = gameObject.GetComponentInChildren<StatSelectionBarRenderer>();
-        statSelectionBarRenderer.RenderStatSelectionUI(saveData.blobData[blobID]); // TODO rewrite
-
         moneyText.text = saveData.money.ToString();
         premiumMoneyText.text = saveData.premiumMoney.ToString();
 
-        StatName selectedStat = statSelectionBarRenderer.GetSelectedStat();
+        //StatName selectedStat = statSelectionBarRenderer.GetSelectedStat();
 
-        Stat stat = saveData.blobData[blobID].stats[selectedStat];
-
+        Stat stat = saveData.blobData[selectedBlobId].stats[selectedStat];
         
         if (stat.IsMaxLevel())
         {
@@ -96,6 +94,8 @@ public class UpgradeShop : MonoBehaviour
             int upgradeCost = UpgradeSystem.GetUpgradeCost(selectedStat, stat);
             evolvePriceText.text = "Evolve " + upgradeCost;
         }
+
+        statSelectionBarRenderer.RenderStatSelectionUI(saveData.blobData[selectedBlobId]);
     }
 
     public void EnableUI()
@@ -113,5 +113,21 @@ public class UpgradeShop : MonoBehaviour
     {
         DisableUI();
         mainMenu.GetComponent<MainMenuUI>().EnableUI();
+    }
+
+    public void SelectBlobButton()
+    {
+        blobSelectScreen.SelectBlob(this);
+    }
+
+    public void SelectedBlob(int blobId)
+    {
+        selectedBlobId = blobId;
+
+        SaveData saveData = SaveSystem.Load();
+
+        statSelectionBarRenderer.RenderStatSelectionUI(saveData.blobData[selectedBlobId]); // TODO Remove
+
+        UpdateUI();
     }
 }

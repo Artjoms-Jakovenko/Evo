@@ -7,7 +7,7 @@ using UnityEngine.UI;
 
 public class BlobSelectScreen : MonoBehaviour
 {
-    public GameObject blobSelectScreen;
+    public GameObject blobSelectScreen; // TODO move this script to blobselectscreen
 
     private IBlobSelectObserver blobSelectObserver;
     private Dictionary<int, GameObject> buttons = new Dictionary<int, GameObject>();
