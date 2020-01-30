@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class BlobSelector : SliderSelector, IBlobSelectObserver
+public class BlobSelector : SliderSelector
 {
     public GameObject leftArrow;
     public GameObject rightArrow;
@@ -19,6 +19,17 @@ public class BlobSelector : SliderSelector, IBlobSelectObserver
     GameObject blobAddButton;
 
     int blobCount = 2; // TODO max allowed blobs on this level
+
+    private void OnEnable()
+    {
+        BlobSelectScreen.OnBlobSelected += SelectedBlob;
+    }
+
+    private void OnDisable()
+    {
+        BlobSelectScreen.OnBlobSelected -= SelectedBlob;
+    }
+
     public override GameObject GetObjectAt(int position)
     {
         GameObject blobButton = GameObjectUtility.InstantiateChild(blobAddButton, gameObject, true);
@@ -52,7 +63,7 @@ public class BlobSelector : SliderSelector, IBlobSelectObserver
     void SelectButtonClicked(int buttonID)
     {
         Debug.Log("Button " + buttonID);
-        blobSelectScreen.SelectBlob(this, selectedBlobIds);
+        blobSelectScreen.SelectBlob(selectedBlobIds);
         selectedButton = buttonID;
     }
 

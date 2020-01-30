@@ -4,7 +4,7 @@ using System.Linq;
 using TMPro;
 using UnityEngine;
 
-public class UpgradeShop : MonoBehaviour, IBlobSelectObserver
+public class UpgradeShop : MonoBehaviour
 {
     public GameObject shopCanvas;
     public GameObject mainMenu;
@@ -22,11 +22,13 @@ public class UpgradeShop : MonoBehaviour, IBlobSelectObserver
     private void OnEnable()
     {
         StatSelectionBarRenderer.OnStatSelected += SelectedStatChanged;
+        BlobSelectScreen.OnBlobSelected += SelectBlob;
     }
 
     private void OnDisable()
     {
         StatSelectionBarRenderer.OnStatSelected -= SelectedStatChanged;
+        BlobSelectScreen.OnBlobSelected -= SelectBlob;
     }
 
     private void Start()
@@ -117,10 +119,10 @@ public class UpgradeShop : MonoBehaviour, IBlobSelectObserver
 
     public void SelectBlobButton()
     {
-        blobSelectScreen.SelectBlob(this);
+        blobSelectScreen.SelectBlob();
     }
 
-    public void SelectedBlob(int blobId)
+    public void SelectBlob(int blobId)
     {
         selectedBlobId = blobId;
 

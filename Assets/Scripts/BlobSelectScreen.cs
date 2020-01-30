@@ -7,9 +7,11 @@ using UnityEngine.UI;
 
 public class BlobSelectScreen : MonoBehaviour
 {
+    public delegate void BlobSelected(int blobId);
+    public static event BlobSelected OnBlobSelected;
+
     public GameObject blobSelectScreen; // TODO move this script to blobselectscreen
 
-    private IBlobSelectObserver blobSelectObserver;
     private Dictionary<int, GameObject> buttons = new Dictionary<int, GameObject>();
 
     // Workaround to access dictionary by index, since dictionary element order is undefined
@@ -49,21 +51,19 @@ public class BlobSelectScreen : MonoBehaviour
 
     void BlobClicked(int blobId)
     {
-        blobSelectObserver.SelectedBlob(blobId);
+        OnBlobSelected(blobId);
         blobSelectScreen.SetActive(false);
     }
 
-    public void SelectBlob(IBlobSelectObserver blobSelectObserver)
+    public void SelectBlob()
     {
         blobSelectScreen.SetActive(true);
-        this.blobSelectObserver = blobSelectObserver;
         //alreadySelectedBlobs = new List<int>();
     }
 
-    public void SelectBlob(IBlobSelectObserver blobSelectObserver, List<int> selectedBlobIds)
+    public void SelectBlob(List<int> selectedBlobIds)
     {
         blobSelectScreen.SetActive(true);
-        this.blobSelectObserver = blobSelectObserver;
         foreach (var selectedBlobId in selectedBlobIds)
         {
             buttons[selectedBlobId].SetActive(false); // TODO dont remove, but make unclickable with text over them
