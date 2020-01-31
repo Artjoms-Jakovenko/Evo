@@ -2,8 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class LevelProgress : MonoBehaviour
+public class LevelProgress
 {
-    public bool unlocked = false;
     public int starCount = 0;
 }

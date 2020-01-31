@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -28,7 +29,9 @@ public class GameManager : MonoBehaviour
                 Time.timeScale = 0;
                 Debug.Log("Game over");
                 rewardScreen.SetActive(true);
-                GameRewardsSystem.AdministerRewards(); // TODO get out of the loop with rewards
+                GameRewardsSystem.AdministerRewards();
+
+                LevelManager.RecordLevelCompletion(SceneManager.GetActiveScene().name); // TODO add possibility to fail a level
             }
         }
     }

@@ -2,18 +2,35 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class LevelManager : MonoBehaviour
+public static class LevelManager
 {
-    /*Dictionary<string, Level> levels = new Dictionary<string, Level>();
-
-    private void Awake()
+    private static List<string> levels = new List<string>()
     {
-        // Intro Level 1
-        levels.Add("Intro_Level_1", new Level(2));
+        "TestingGround", // TODO remove
+        "IntroLevel1",
+        "IntroLevel2",
+        "IntroLevel3",
+    };
+
+    public static void RecordLevelCompletion(string levelName)
+    {
+        SaveData saveData = SaveSystem.Load();
+        if (!saveData.levelProgresses.ContainsKey(levelName)) // TODO also handle updating completed levels
+        {
+            saveData.levelProgresses.Add(levelName, new LevelProgress()); // TODO stars and stuff
+            saveData.levelProgresses.Add(GetNextLevelName(levelName), new LevelProgress());
+        }
+
+        SaveSystem.Save(saveData);
     }
 
-    public int GetMaxBlobCount(string levelName)
+    public static string GetNextLevelName(string currentLevelName)
     {
-        return levels[levelName].maxBlobCount;
-    }*/
+        int nextLevelNumber = levels.FindIndex(x => x == currentLevelName) + 1;
+        if (nextLevelNumber >= levels.Count)
+        {
+            return null;
+        }
+        return levels[nextLevelNumber];
+    }
 }

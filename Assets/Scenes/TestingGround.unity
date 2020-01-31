@@ -1230,6 +1230,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 799c93fb2f4d8834dbf2d3f3ee835edf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  nextLevelButton: {fileID: 1556867595}
 --- !u!1 &629927852
 GameObject:
   m_ObjectHideFlags: 0
@@ -3102,7 +3103,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1556867598}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 599015215}
+        m_MethodName: NextLevel
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1556867598
 MonoBehaviour:
   m_ObjectHideFlags: 0
