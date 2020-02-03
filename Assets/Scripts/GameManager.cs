@@ -20,10 +20,15 @@ public class GameManager : MonoBehaviour
 
     private void Awake()
     {
-        for(int i = 0; i < spawnPointsParent.transform.childCount; i++)
+        for (int i = 0; i < spawnPointsParent.transform.childCount; i++)
         {
             availableSpawnPoints.Add(spawnPointsParent.transform.GetChild(i));
         }
+    }
+
+    private void Start()
+    {
+        
         // Init enemies
     }
 
@@ -59,14 +64,14 @@ public class GameManager : MonoBehaviour
             blobStatsDatas.Add(saveData.blobData[selectedBlobId]);
         }
 
-        Spawn(blobStatsDatas);
+        Spawn(blobStatsDatas, ObjectTag.PlayerTeam); // TODO other teams too
 
         Destroy(spawnPointsParent);
         Time.timeScale = 1.0F; // TODO manage timescale reset
         roundStarted = true;
     }
 
-    private void Spawn(List<BlobStatsData> blobStatsDatas)
+    private void Spawn(List<BlobStatsData> blobStatsDatas, ObjectTag teamName)
     {
         CheckIfEnoughSpawnPoints(blobStatsDatas.Count, availableSpawnPoints.Count);
 
@@ -74,7 +79,7 @@ public class GameManager : MonoBehaviour
 
         for (int i = 0; i < blobStatsDatas.Count; i++)
         {
-            GameObject blob = BlobInstantiator.GetBlobGameObject(blobStatsDatas[i]);
+            GameObject blob = BlobInstantiator.GetBlobGameObject(blobStatsDatas[i], teamName);
 
             Transform spawnPoint = spawnPointsParent.transform.GetChild(spawnPointOrder[i]); // TODO
             blob.transform.localPosition = spawnPoint.localPosition;

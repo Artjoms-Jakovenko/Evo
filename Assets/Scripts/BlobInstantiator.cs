@@ -5,7 +5,7 @@ using UnityEngine;
 
 public static class BlobInstantiator
 {
-    public static GameObject GetBlobGameObject(BlobStatsData blobStats) // TODO finish
+    public static GameObject GetBlobGameObject(BlobStatsData blobStats, ObjectTag teamName) // TODO finish
     {
         GameObject blob = null;
         switch (blobStats.blobType)
@@ -19,6 +19,7 @@ public static class BlobInstantiator
         }
 
         blob.GetComponent<BlobStats>().stats = blobStats;
+        blob.GetComponent<TaggedObject>().AddTag(teamName);
 
         return blob;
     }
