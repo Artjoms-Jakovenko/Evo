@@ -16,6 +16,16 @@ public class GameManager : MonoBehaviour
     //public GameObject objectsList;
     float roundTime = 20.0F;
     bool roundStarted;
+    private List<Transform> availableSpawnPoints = new List<Transform>();
+
+    private void Awake()
+    {
+        for(int i = 0; i < spawnPointsParent.transform.childCount; i++)
+        {
+            availableSpawnPoints.Add(spawnPointsParent.transform.GetChild(i));
+        }
+        // Init enemies
+    }
 
     private void Update()
     {
@@ -43,24 +53,35 @@ public class GameManager : MonoBehaviour
         
         SaveData saveData = SaveSystem.Load();
 
-        int spawnPointCount = spawnPointsParent.transform.childCount;
-        CheckIfEnoughSpawnPoints(selectedBlobIds.Count, spawnPointCount);
-
-        List<int> spawnPointOrder = Enumerable.Range(0, spawnPointsParent.transform.childCount).OrderBy(x => Guid.NewGuid()).Take(selectedBlobIds.Count).ToList();
-
-        for (int i = 0; i < selectedBlobIds.Count; i++)
+        List<BlobStatsData> blobStatsDatas = new List<BlobStatsData>();
+        foreach(int selectedBlobId in selectedBlobIds)
         {
-            GameObject blob = BlobInstantiator.GetBlobGameObject(saveData.blobData[selectedBlobIds[i]]);
+            blobStatsDatas.Add(saveData.blobData[selectedBlobId]);
+        }
+
+        Spawn(blobStatsDatas);
+
+        Destroy(spawnPointsParent);
+        Time.timeScale = 1.0F; // TODO manage timescale reset
+        roundStarted = true;
+    }
+
+    private void Spawn(List<BlobStatsData> blobStatsDatas)
+    {
+        CheckIfEnoughSpawnPoints(blobStatsDatas.Count, availableSpawnPoints.Count);
+
+        List<int> spawnPointOrder = Enumerable.Range(0, availableSpawnPoints.Count).OrderBy(x => Guid.NewGuid()).Take(blobStatsDatas.Count).ToList();
+
+        for (int i = 0; i < blobStatsDatas.Count; i++)
+        {
+            GameObject blob = BlobInstantiator.GetBlobGameObject(blobStatsDatas[i]);
 
             Transform spawnPoint = spawnPointsParent.transform.GetChild(spawnPointOrder[i]); // TODO
             blob.transform.localPosition = spawnPoint.localPosition;
 
             ObjectManager.GetInstance().AddObject(blob);
+            availableSpawnPoints.RemoveAt(spawnPointOrder[i]);
         }
-
-        Destroy(spawnPointsParent);
-        Time.timeScale = 1.0F; // TODO manage timescale reset
-        roundStarted = true;
     }
 
     private bool CheckIfEnoughSpawnPoints(int blobCount, int spawnPointCount)
