@@ -16,6 +16,7 @@ public class MeleeFightAction : IAction
 
     public List<Component> RequiredComponents => throw new System.NotImplementedException();
 
+    ObjectTag teamTag;
     GameObject enemyToChase;
     GameObject enemyToFight;
     List<TaggedObject> enemies;
@@ -26,12 +27,15 @@ public class MeleeFightAction : IAction
         blobMovement = blobTransform.gameObject.GetComponent<BlobMovement>();
         blobAnimationController = blobTransform.gameObject.GetComponent<AnimationController>();
         blobStats = blobTransform.gameObject.GetComponent<BlobStats>();
+        teamTag = ObjectManager.GetInstance().GetObjectTeamTag(blobTransform.gameObject.GetComponent<TaggedObject>());
     }
 
     public float GetActionPriorityScore()
     {
         enemies = ObjectManager.GetInstance().GetAllWithTags(new List<ObjectTag>() { ObjectTag.Vegetarian }); // TODO rebalance
         enemies.RemoveAll(x => x.gameObject.GetInstanceID() == blobTransform.gameObject.GetInstanceID()); // Remove hunting blob if present
+        ObjectManager.GetInstance().RemoveWithTag(enemies, teamTag);
+
         float maxDistance = blobStats.stats.stats[StatName.Sight].value;
         TaggedObject taggedObject  = ObjectManager.GetInstance().GetClothestObject(maxDistance, blobTransform.gameObject, enemies);
         

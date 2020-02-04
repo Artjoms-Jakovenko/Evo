@@ -53,6 +53,29 @@ public class ObjectManager : MonoBehaviour
         return taggedObjects;
     }
 
+    public void RemoveWithTag(List<TaggedObject> taggedObjects, ObjectTag removalTag)
+    {
+        taggedObjects.RemoveAll(x => x.ObjectTagList.Contains(removalTag));
+    }
+
+    public ObjectTag GetObjectTeamTag(TaggedObject taggedObject)
+    {
+        if (taggedObject.ObjectTagList.Contains(ObjectTag.PlayerTeam))
+        {
+            return ObjectTag.PlayerTeam;
+        } 
+        else if (taggedObject.ObjectTagList.Contains(ObjectTag.EnemyTeam))
+        {
+            return ObjectTag.EnemyTeam;
+        }
+        else
+        {
+            Debug.LogError("Could not locate team tag");
+            throw new System.Exception();
+        }
+    }
+    
+
     public void AddObject(GameObject objectToAdd)
     {
         GameObjectUtility.MakeChild(objectToAdd, gameObject);

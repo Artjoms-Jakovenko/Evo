@@ -23,7 +23,7 @@ public class BlobSelectScreen : MonoBehaviour
 
         // Sort keyValuePairs
         blobData = saveData.blobData.ToList();
-        blobData.Sort((x, y) => x.Key.CompareTo(y.Key));
+        blobData.Sort((x, y) => x.Key.CompareTo(y.Key)); // Caused performance issues TODO
 
         float containerHeight = saveData.blobData.Count * 300.0F;
         LinearUiSpacing linearUiSpacing = new LinearUiSpacing(containerHeight, 0.0F, 200.0F, saveData.blobData.Count);
