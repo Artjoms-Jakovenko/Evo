@@ -19,9 +19,37 @@ public static class BlobInstantiator
         }
 
         blob.GetComponent<BlobStats>().stats = blobStats;
-        blob.GetComponent<TaggedObject>().AddTag(teamName);
+        AssignTeam(blob, teamName);
 
         return blob;
+    }
+
+    private static void AssignTeam(GameObject blob, ObjectTag teamName) // TODO make less nested loops
+    {
+        blob.GetComponent<TaggedObject>().AddTag(teamName);
+        SkinnedMeshRenderer[] models = blob.GetComponentsInChildren<SkinnedMeshRenderer>(); // TODO make material with certain name modifyable
+        for (int i = 0; i < models.Length; i++)
+        {
+            if(models[i].gameObject.name == "Cube")
+            {
+                List<Material> materials = new List<Material>();
+                foreach(var material in models[i].materials)
+                {
+                    Material localMaterial = material;
+                    if(material.name.Contains("Body"))
+                    {
+                        switch (teamName)
+                        {
+                            case ObjectTag.EnemyTeam:
+                                localMaterial = Resources.Load("TeamMaterials/Enemy") as Material;
+                                break;
+                        }
+                    }
+                    materials.Add(localMaterial);
+                }
+                models[i].materials = materials.ToArray();
+            }
+        }
     }
 
     public static BlobStatsData CreateBlob(BlobType blobType)

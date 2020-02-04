@@ -28,10 +28,11 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-        
-        // Init enemies
+        Time.timeScale = 0.0F;
+        List<BlobStatsData> enemiesData = levelInfo.GetLevelEnemies(LevelManager.GetLevelEnum(SceneManager.GetActiveScene().name));
+        Spawn(enemiesData, ObjectTag.EnemyTeam);
     }
-
+    
     private void Update()
     {
         if (roundStarted)
@@ -75,17 +76,18 @@ public class GameManager : MonoBehaviour
     {
         CheckIfEnoughSpawnPoints(blobStatsDatas.Count, availableSpawnPoints.Count);
 
-        List<int> spawnPointOrder = Enumerable.Range(0, availableSpawnPoints.Count).OrderBy(x => Guid.NewGuid()).Take(blobStatsDatas.Count).ToList();
-
         for (int i = 0; i < blobStatsDatas.Count; i++)
         {
             GameObject blob = BlobInstantiator.GetBlobGameObject(blobStatsDatas[i], teamName);
 
-            Transform spawnPoint = spawnPointsParent.transform.GetChild(spawnPointOrder[i]); // TODO
+            System.Random randomNumberGenerator = new System.Random();
+            int randomIndex = randomNumberGenerator.Next(0, availableSpawnPoints.Count);
+
+            Transform spawnPoint = availableSpawnPoints[randomIndex];
             blob.transform.localPosition = spawnPoint.localPosition;
 
             ObjectManager.GetInstance().AddObject(blob);
-            availableSpawnPoints.RemoveAt(spawnPointOrder[i]);
+            availableSpawnPoints.RemoveAt(randomIndex);
         }
     }
 

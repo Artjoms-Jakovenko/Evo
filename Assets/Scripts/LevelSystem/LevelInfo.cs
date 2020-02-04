@@ -18,11 +18,18 @@ public class LevelInfo : MonoBehaviour
         GetLevelEnemies(LevelManager.GetLevelEnum(SceneManager.GetActiveScene().name));
     }
 
-    private void GetLevelEnemies(LevelEnum levelEnum)
+    public List<BlobStatsData> GetLevelEnemies(LevelEnum levelEnum)
     {
+        List<BlobStatsData> blobStatsDatas = new List<BlobStatsData>();
         switch (levelEnum)
         {
-            // TODO
+            case LevelEnum.TestingGround:
+                blobStatsDatas.Add(BlobInstantiator.CreateBlob(BlobType.Fighter));
+                break;
+            default:
+                Debug.LogError("LevelEnemyInfo was not found.");
+                break;
         }
+        return blobStatsDatas; // TODO
     }
 }
