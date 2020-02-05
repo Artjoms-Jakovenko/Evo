@@ -15,37 +15,37 @@ public class BlobSelectScreen : MonoBehaviour
     private Dictionary<int, GameObject> buttons = new Dictionary<int, GameObject>();
 
     // Workaround to access dictionary by index, since dictionary element order is undefined
-    List<KeyValuePair<int, BlobStatsData>> blobData;
+    List<int> blobDataKeys;
 
     void Start()
     {
         SaveData saveData = SaveSystem.Load();
 
-        // Sort keyValuePairs
-        blobData = saveData.blobData.ToList();
-        blobData.Sort((x, y) => x.Key.CompareTo(y.Key)); // Caused performance issues TODO
+        // Sort blobDataKeys
+        blobDataKeys = new List<int>(saveData.blobData.Keys);
+        blobDataKeys.Sort(); // Caused performance issues TODO
 
         float containerHeight = saveData.blobData.Count * 300.0F;
         LinearUiSpacing linearUiSpacing = new LinearUiSpacing(containerHeight, 0.0F, 200.0F, saveData.blobData.Count);
 
         GameObject blobBarAsset = Resources.Load("TempButton") as GameObject; // TODO
 
-        for (int i = 0; i < blobData.Count; i++)
+        for (int i = 0; i < blobDataKeys.Count; i++)
         {
             // Create button
             GameObject blobBar = GameObjectUtility.InstantiateChild(blobBarAsset, gameObject, true);
-            blobBar.GetComponentInChildren<TextMeshProUGUI>().text = blobData[i].Key.ToString();
+            blobBar.GetComponentInChildren<TextMeshProUGUI>().text = blobDataKeys[i].ToString();
 
             // Place button
             RectTransform blobBarRectTransform = blobBar.GetComponent<RectTransform>();
             blobBarRectTransform.transform.localPosition = new Vector3(0.0F, linearUiSpacing.GetNthPathPosition(i));
 
             // Add events to buttons
-            int associatedBlobId = blobData[i].Key;
+            int associatedBlobId = blobDataKeys[i];
             blobBar.GetComponent<Button>().onClick.AddListener(() => BlobClicked(associatedBlobId));
 
             // Add button to the dictionary
-            buttons.Add(blobData[i].Key, blobBar);
+            buttons.Add(blobDataKeys[i], blobBar);
         }
     }
 

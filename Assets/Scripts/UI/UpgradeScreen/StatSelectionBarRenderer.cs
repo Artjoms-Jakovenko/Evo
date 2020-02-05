@@ -22,7 +22,7 @@ public class StatSelectionBarRenderer : SliderSelector
     StatName? selectedStat = null;
 
     // Workaround to access dictionary by index, since dictionary element order is undefined
-    List<KeyValuePair<StatName, Stat>> stats;
+    List<StatName> blobStatsDataKeys;
 
     public void Start()
     {
@@ -49,13 +49,13 @@ public class StatSelectionBarRenderer : SliderSelector
     StatName? SelectDefaultStatIfNothingIsSelected()
     {
         // Sort keyValuePairs
-        stats = lastBlobStatsData.stats.ToList();
-        stats.Sort((x, y) => x.Key.CompareTo(y.Key));
+        blobStatsDataKeys = new List<StatName>(lastBlobStatsData.stats.Keys);
+        blobStatsDataKeys.Sort();
 
         // Assign default stat
         if (selectedStat == null) // TODO consider making cleaner
         {
-            selectedStat = stats.First().Key;
+            selectedStat = blobStatsDataKeys.First();
         }
 
         return selectedStat; // TODO
@@ -85,23 +85,23 @@ public class StatSelectionBarRenderer : SliderSelector
         GameObject statBackgroundGameObject = GameObjectUtility.InstantiateChild(statBackground, gameObject, true);
 
         // Add events to buttons
-        StatName statCaptured = stats[position].Key; // Important to keep this variable captured to avoid index issues
+        StatName statCaptured = blobStatsDataKeys[position]; // Important to keep this variable captured to avoid index issues
         statBackgroundGameObject.GetComponent<Button>().onClick.AddListener(() => StatButtonClicked(statCaptured));
 
         // Add image
-        string imagePath = UiData.statDescriptions[stats[position].Key].statResourceImagePath;
+        string imagePath = UiData.statDescriptions[blobStatsDataKeys[position]].statResourceImagePath;
         GameObject image = GameObjectUtility.InstantiateChild(Resources.Load<GameObject>(imagePath), statBackgroundGameObject, true);
         image.transform.localPosition = new Vector3(-8.0F, 15.0F, 0.0F);
 
         // Change text
         TextMeshProUGUI statValueText = statBackgroundGameObject.GetComponentInChildren<TextMeshProUGUI>();
-        statValueText.text = stats[position].Value.value.ToString();
+        statValueText.text = lastBlobStatsData.stats[blobStatsDataKeys[position]].value.ToString();
 
         return statBackgroundGameObject;
     }
 
     public override int GetObjectCount()
     {
-        return stats.Count;
+        return blobStatsDataKeys.Count;
     }
 }

@@ -21,6 +21,9 @@ public class UpgradeShop : MonoBehaviour
 
     private void OnEnable()
     {
+        SaveData saveData = SaveSystem.Load();
+        UpdateMoney(saveData);
+
         StatSelectionBarRenderer.OnStatSelected += SelectedStatChanged;
         BlobSelectScreen.OnBlobSelected += SelectBlob;
     }
@@ -76,14 +79,16 @@ public class UpgradeShop : MonoBehaviour
         return false;
     }
 
+    private void UpdateMoney(SaveData saveData)
+    {
+        moneyText.text = saveData.money.ToString();
+        premiumMoneyText.text = saveData.premiumMoney.ToString();
+    }
+
     private void UpdateUI()
     {
         SaveData saveData = SaveSystem.Load();
-
-        moneyText.text = saveData.money.ToString();
-        premiumMoneyText.text = saveData.premiumMoney.ToString();
-
-        //StatName selectedStat = statSelectionBarRenderer.GetSelectedStat();
+        UpdateMoney(saveData);
 
         Stat stat = saveData.blobData[selectedBlobId].stats[selectedStat];
         
