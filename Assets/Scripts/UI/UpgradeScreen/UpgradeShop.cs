@@ -50,7 +50,7 @@ public class UpgradeShop : MonoBehaviour
     public void Upgrade()
     {
         SaveData saveData = SaveSystem.Load();
-        int upgradeCost = UpgradeSystem.GetUpgradeCost(selectedStat, saveData.blobData[selectedBlobId].stats[selectedStat]);
+        int upgradeCost = GetUpgradeCost(saveData);
         if (EnoughMoneyToUpgrade(saveData, upgradeCost))
         {
             if (saveData.blobData[selectedBlobId].stats[selectedStat].Upgrade()) // Checks if stat is upgradeable
@@ -70,6 +70,11 @@ public class UpgradeShop : MonoBehaviour
         }
 
         UpdateUI();
+    }
+
+    private int GetUpgradeCost(SaveData saveData)
+    {
+        return UpgradeSystem.GetUpgradeCost(selectedStat, saveData.blobData[selectedBlobId].stats[selectedStat]);
     }
 
     bool EnoughMoneyToUpgrade(SaveData saveData, int upgradeCost)
@@ -93,7 +98,15 @@ public class UpgradeShop : MonoBehaviour
         UpdateMoney(saveData);
 
         Stat stat = saveData.blobData[selectedBlobId].stats[selectedStat];
-        
+        UpdateEvolveButton(saveData);
+
+        statSelectionBarRenderer.RenderStatSelectionUI(saveData.blobData[selectedBlobId]);
+    }
+
+    private void UpdateEvolveButton(SaveData saveData)
+    {
+        Stat stat = saveData.blobData[selectedBlobId].stats[selectedStat];
+
         if (stat.IsMaxLevel())
         {
             evolvePriceText.text = "Max level";
@@ -102,11 +115,18 @@ public class UpgradeShop : MonoBehaviour
         else
         {
             int upgradeCost = UpgradeSystem.GetUpgradeCost(selectedStat, stat);
-            evolvePriceText.text = "Evolve " + upgradeCost;
-            evolveButton.interactable = true;
-        }
 
-        statSelectionBarRenderer.RenderStatSelectionUI(saveData.blobData[selectedBlobId]);
+            if (EnoughMoneyToUpgrade(saveData, upgradeCost))
+            {
+                evolvePriceText.text = "Evolve " + upgradeCost;
+                evolveButton.interactable = true;
+            }
+            else
+            {
+                evolvePriceText.text = "Not enough evo";
+                evolveButton.interactable = false;
+            }
+        }
     }
 
     public void EnableUI()
