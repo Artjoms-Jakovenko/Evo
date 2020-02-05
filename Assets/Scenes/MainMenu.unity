@@ -291,7 +291,6 @@ MonoBehaviour:
   leftArrow: {fileID: 67341549}
   rightArrow: {fileID: 1298099814}
   selectedStatWindow: {fileID: 1623396720}
-  upgradeShop: {fileID: 1503370309}
 --- !u!1 &152105856
 GameObject:
   m_ObjectHideFlags: 0
@@ -2432,6 +2431,7 @@ MonoBehaviour:
   moneyText: {fileID: 506692053}
   premiumMoneyText: {fileID: 693816343}
   evolvePriceText: {fileID: 477959545}
+  evolveButton: {fileID: 1666521039}
   blobSelectScreen: {fileID: 1325333009}
 --- !u!1 &1559537697
 GameObject:

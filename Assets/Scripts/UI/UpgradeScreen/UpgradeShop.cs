@@ -19,7 +19,7 @@ public class UpgradeShop : MonoBehaviour
     StatSelectionBarRenderer statSelectionBarRenderer;
     StatName selectedStat;
 
-    private int selectedBlobId = 0; // TODO last opened blob
+    private int selectedBlobId;
 
     private void OnEnable()
     {
@@ -39,12 +39,10 @@ public class UpgradeShop : MonoBehaviour
     private void Start()
     {
         statSelectionBarRenderer = gameObject.GetComponentInChildren<StatSelectionBarRenderer>();
-    }
 
-    private void SelectedStatChanged()
-    {
-        selectedStat = statSelectionBarRenderer.GetSelectedStatName();
-        UpdateUI();
+        SaveData saveData = SaveSystem.Load();
+        selectedBlobId = saveData.lastSelectedBlobInUpgradeShop;
+        UpdateBlobUI(saveData);
     }
 
     public void Upgrade()
@@ -72,12 +70,40 @@ public class UpgradeShop : MonoBehaviour
         UpdateUI();
     }
 
+    public void EnableUI()
+    {
+        shopCanvas.SetActive(true);
+        UpdateUI();
+    }
+
+    public void DisableUI()
+    {
+        shopCanvas.SetActive(false);
+    }
+
+    public void GoBackToMenu()
+    {
+        DisableUI();
+        mainMenu.GetComponent<MainMenuUI>().EnableUI();
+    }
+
+    public void SelectBlobButton()
+    {
+        blobSelectScreen.SelectBlob();
+    }
+
+    private void SelectedStatChanged()
+    {
+        selectedStat = statSelectionBarRenderer.GetSelectedStatName();
+        UpdateUI();
+    }
+
     private int GetUpgradeCost(SaveData saveData)
     {
         return UpgradeSystem.GetUpgradeCost(selectedStat, saveData.blobData[selectedBlobId].stats[selectedStat]);
     }
 
-    bool EnoughMoneyToUpgrade(SaveData saveData, int upgradeCost)
+    private bool EnoughMoneyToUpgrade(SaveData saveData, int upgradeCost)
     {
         if (upgradeCost <= saveData.money) 
         {
@@ -96,10 +122,7 @@ public class UpgradeShop : MonoBehaviour
     {
         SaveData saveData = SaveSystem.Load();
         UpdateMoney(saveData);
-
-        Stat stat = saveData.blobData[selectedBlobId].stats[selectedStat];
         UpdateEvolveButton(saveData);
-
         statSelectionBarRenderer.RenderStatSelectionUI(saveData.blobData[selectedBlobId]);
     }
 
@@ -129,35 +152,19 @@ public class UpgradeShop : MonoBehaviour
         }
     }
 
-    public void EnableUI()
-    {
-        shopCanvas.SetActive(true);
-        UpdateUI();
-    }
-
-    public void DisableUI()
-    {
-        shopCanvas.SetActive(false);
-    }
-
-    public void GoBackToMenu()
-    {
-        DisableUI();
-        mainMenu.GetComponent<MainMenuUI>().EnableUI();
-    }
-
-    public void SelectBlobButton()
-    {
-        blobSelectScreen.SelectBlob();
-    }
-
-    public void SelectBlob(int blobId)
+    private void SelectBlob(int blobId)
     {
         selectedBlobId = blobId;
 
         SaveData saveData = SaveSystem.Load();
+        UpdateBlobUI(saveData);
+        saveData.lastSelectedBlobInUpgradeShop = blobId;
+        SaveSystem.Save(saveData);
+    }
 
-        statSelectionBarRenderer.RenderStatSelectionUI(saveData.blobData[selectedBlobId]); // TODO Remove
+    private void UpdateBlobUI(SaveData saveData)
+    {
+        statSelectionBarRenderer.RenderStatSelectionUI(saveData.blobData[selectedBlobId]);
 
         UpdateUI();
     }

@@ -19,7 +19,7 @@ GameObject:
   - component: {fileID: 7688684780397118112}
   - component: {fileID: 3604893891822423180}
   - component: {fileID: 367668952058923686}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Fighter
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -79,8 +79,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   stats:
-    maxXPLevel: 3
+    blobType: 0
+    blobName: 
     possibleActions: 0000000001000000
+    maxXPLevel: 3
+    currentXPLevel: 0
+    blobXp: 0
 --- !u!114 &2309064092759327430
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -240,10 +244,55 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -3820234686781493890, guid: cbee362e921bb8e4b801e36984f1e541,
+        type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: -1615571430751397193, guid: cbee362e921bb8e4b801e36984f1e541,
+        type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: -927199367670048503, guid: cbee362e921bb8e4b801e36984f1e541,
         type: 3}
       propertyPath: m_Name
       value: FighterBlob_v4
+      objectReference: {fileID: 0}
+    - target: {fileID: -927199367670048503, guid: cbee362e921bb8e4b801e36984f1e541,
+        type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 129350255495253916, guid: cbee362e921bb8e4b801e36984f1e541,
+        type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 2502203975881118265, guid: cbee362e921bb8e4b801e36984f1e541,
+        type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 5133913965574556032, guid: cbee362e921bb8e4b801e36984f1e541,
+        type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 5330926027544965682, guid: cbee362e921bb8e4b801e36984f1e541,
+        type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 6308758497074773516, guid: cbee362e921bb8e4b801e36984f1e541,
+        type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 8421416397384994322, guid: cbee362e921bb8e4b801e36984f1e541,
+        type: 3}
+      propertyPath: m_Layer
+      value: 8
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: -6057140222963153312, guid: cbee362e921bb8e4b801e36984f1e541, type: 3}

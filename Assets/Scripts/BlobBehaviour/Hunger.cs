@@ -5,7 +5,6 @@ using UnityEngine;
 public class Hunger : MonoBehaviour
 {
     private Energy energy;
-    //private float hungerIntensity; // TODO add hunger intensity
 
     private void Start()
     {

@@ -11,12 +11,11 @@ public class GameManager : MonoBehaviour
     public GameObject blobSelector;
     public BlobSelector blobSelectorBar;
     public GameObject spawnPointsParent;
-    public LevelInfo levelInfo; // TODO remove if not used
+    public LevelInfo levelInfo;
 
-    //public GameObject objectsList;
     float roundTime = 20.0F;
     bool roundStarted;
-    private List<Transform> availableSpawnPoints = new List<Transform>();
+    private readonly List<Transform> availableSpawnPoints = new List<Transform>();
 
     private void Awake()
     {
@@ -30,7 +29,7 @@ public class GameManager : MonoBehaviour
     {
         Time.timeScale = 0.0F;
         List<BlobStatsData> enemiesData = levelInfo.GetLevelEnemies(LevelManager.GetLevelEnum(SceneManager.GetActiveScene().name));
-        Spawn(enemiesData, ObjectTag.EnemyTeam);
+        Spawn(enemiesData, TeamTag.Enemy);
     }
     
     private void Update()
@@ -65,20 +64,20 @@ public class GameManager : MonoBehaviour
             blobStatsDatas.Add(saveData.blobData[selectedBlobId]);
         }
 
-        Spawn(blobStatsDatas, ObjectTag.PlayerTeam); // TODO other teams too
+        Spawn(blobStatsDatas, TeamTag.Player);
 
         Destroy(spawnPointsParent);
-        Time.timeScale = 1.0F; // TODO manage timescale reset
+        Time.timeScale = 1.0F;
         roundStarted = true;
     }
 
-    private void Spawn(List<BlobStatsData> blobStatsDatas, ObjectTag teamName)
+    private void Spawn(List<BlobStatsData> blobStatsDatas, TeamTag teamTag)
     {
         CheckIfEnoughSpawnPoints(blobStatsDatas.Count, availableSpawnPoints.Count);
 
         for (int i = 0; i < blobStatsDatas.Count; i++)
         {
-            GameObject blob = BlobInstantiator.GetBlobGameObject(blobStatsDatas[i], teamName);
+            GameObject blob = BlobInstantiator.GetBlobGameObject(blobStatsDatas[i], teamTag);
 
             System.Random randomNumberGenerator = new System.Random();
             int randomIndex = randomNumberGenerator.Next(0, availableSpawnPoints.Count);

@@ -5,7 +5,7 @@ using UnityEngine;
 
 public static class BlobInstantiator
 {
-    public static GameObject GetBlobGameObject(BlobStatsData blobStats, ObjectTag teamName) // TODO finish
+    public static GameObject GetBlobGameObject(BlobStatsData blobStats, TeamTag teamTag)
     {
         GameObject blob = null;
         switch (blobStats.blobType)
@@ -19,14 +19,14 @@ public static class BlobInstantiator
         }
 
         blob.GetComponent<BlobStats>().stats = blobStats;
-        AssignTeam(blob, teamName);
+        AssignTeam(blob, teamTag);
 
         return blob;
     }
 
-    private static void AssignTeam(GameObject blob, ObjectTag teamName) // TODO make less nested loops
+    private static void AssignTeam(GameObject blob, TeamTag teamName) // TODO make less nested loops
     {
-        blob.GetComponent<TaggedObject>().AddTag(teamName);
+        blob.GetComponent<TaggedObject>().teamTag = teamName;
         SkinnedMeshRenderer[] models = blob.GetComponentsInChildren<SkinnedMeshRenderer>(); // TODO make material with certain name modifyable
         for (int i = 0; i < models.Length; i++)
         {
@@ -40,7 +40,7 @@ public static class BlobInstantiator
                     {
                         switch (teamName)
                         {
-                            case ObjectTag.EnemyTeam:
+                            case TeamTag.Enemy:
                                 localMaterial = Resources.Load("TeamMaterials/Enemy") as Material;
                                 break;
                         }
@@ -80,6 +80,6 @@ public static class BlobInstantiator
                 break;
         }
 
-        return blobStatsData; // TODO
+        return blobStatsData;
     }
 }

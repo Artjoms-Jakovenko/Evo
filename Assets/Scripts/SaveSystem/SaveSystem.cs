@@ -38,6 +38,8 @@ public static class SaveSystem
             premiumMoney = 0
         };
 
+        saveData.lastSelectedBlobInUpgradeShop = 0; // TODO must match first blob id
+
         BlobStatsData blobStatsData = BlobInstantiator.CreateBlob(BlobType.Survivor);
         saveData.blobData.Add(0, blobStatsData); // TODO dict key
         BlobStatsData blobStatsData2 = BlobInstantiator.CreateBlob(BlobType.Fighter);

@@ -10,7 +10,4 @@ public enum ObjectTag
     Living,
     Vegetarian,
     Carnivorous,
-    // Team
-    PlayerTeam,
-    EnemyTeam
 }

@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -53,28 +54,28 @@ public class ObjectManager : MonoBehaviour
         return taggedObjects;
     }
 
+    public List<TaggedObject> GetAllEnemies(TeamTag ownTeamTag)
+    {
+        List<TaggedObject> taggedObjects = new List<TaggedObject>();
+
+        List<TeamTag> teamTags = Enum.GetValues(typeof(TeamTag)).Cast<TeamTag>().ToList();
+        teamTags.Remove(ownTeamTag);
+        teamTags.Remove(TeamTag.None);
+
+        foreach (var taggedObject in TaggedObjects)
+        {
+            if (teamTags.Contains(taggedObject.teamTag))
+            {
+                taggedObjects.Add(taggedObject);
+            }
+        }
+        return taggedObjects;
+    }
+
     public void RemoveWithTag(List<TaggedObject> taggedObjects, ObjectTag removalTag)
     {
         taggedObjects.RemoveAll(x => x.ObjectTagList.Contains(removalTag));
-    }
-
-    public ObjectTag GetObjectTeamTag(TaggedObject taggedObject)
-    {
-        if (taggedObject.ObjectTagList.Contains(ObjectTag.PlayerTeam))
-        {
-            return ObjectTag.PlayerTeam;
-        } 
-        else if (taggedObject.ObjectTagList.Contains(ObjectTag.EnemyTeam))
-        {
-            return ObjectTag.EnemyTeam;
-        }
-        else
-        {
-            Debug.LogError("Could not locate team tag");
-            throw new System.Exception();
-        }
-    }
-    
+    }    
 
     public void AddObject(GameObject objectToAdd)
     {

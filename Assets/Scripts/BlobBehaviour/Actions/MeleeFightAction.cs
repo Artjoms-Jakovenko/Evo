@@ -16,7 +16,7 @@ public class MeleeFightAction : IAction
 
     public List<Component> RequiredComponents => throw new System.NotImplementedException();
 
-    ObjectTag teamTag;
+    readonly TeamTag teamTag;
     GameObject enemyToChase;
     GameObject enemyToFight;
     List<TaggedObject> enemies;
@@ -27,14 +27,13 @@ public class MeleeFightAction : IAction
         blobMovement = blobTransform.gameObject.GetComponent<BlobMovement>();
         blobAnimationController = blobTransform.gameObject.GetComponent<AnimationController>();
         blobStats = blobTransform.gameObject.GetComponent<BlobStats>();
-        teamTag = ObjectManager.GetInstance().GetObjectTeamTag(blobTransform.gameObject.GetComponent<TaggedObject>());
+        teamTag = blobTransform.gameObject.GetComponent<TaggedObject>().teamTag;
     }
 
     public float GetActionPriorityScore()
     {
-        enemies = ObjectManager.GetInstance().GetAllWithTags(new List<ObjectTag>() { ObjectTag.Vegetarian }); // TODO rebalance
+        enemies = ObjectManager.GetInstance().GetAllEnemies(teamTag);
         enemies.RemoveAll(x => x.gameObject.GetInstanceID() == blobTransform.gameObject.GetInstanceID()); // Remove hunting blob if present
-        ObjectManager.GetInstance().RemoveWithTag(enemies, teamTag);
 
         float maxDistance = blobStats.stats.stats[StatName.Sight].value;
         TaggedObject taggedObject  = ObjectManager.GetInstance().GetClothestObject(maxDistance, blobTransform.gameObject, enemies);
@@ -61,7 +60,7 @@ public class MeleeFightAction : IAction
         {
             Vector3 colliderPosition = blobTransform.position;
             colliderPosition.y += blobTransform.localScale.y / 2;
-            Collider[] hitColliders = Physics.OverlapSphere(colliderPosition, blobTransform.localScale.x / 2.0F * 1.2F, 0x01); // TODO change layermask, change scale*/
+            Collider[] hitColliders = Physics.OverlapSphere(colliderPosition, 0.5F * 1.2F, 0x0100);
             if (hitColliders.Any(x => x.gameObject.GetInstanceID() == enemyToChase.GetInstanceID()))
             {
                 blobAnimationController.PlayAnimation(this);

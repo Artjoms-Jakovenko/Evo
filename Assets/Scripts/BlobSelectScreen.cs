@@ -10,7 +10,7 @@ public class BlobSelectScreen : MonoBehaviour
     public delegate void BlobSelected(int blobId);
     public static event BlobSelected OnBlobSelected;
 
-    public GameObject blobSelectScreen; // TODO move this script to blobselectscreen
+    public GameObject blobContainer; // TODO move this script to blobselectscreen
 
     private readonly Dictionary<int, GameObject> buttons = new Dictionary<int, GameObject>();
 
@@ -23,7 +23,7 @@ public class BlobSelectScreen : MonoBehaviour
 
         // Sort blobDataKeys
         blobDataKeys = new List<int>(saveData.blobData.Keys);
-        blobDataKeys.Sort(); // Caused performance issues TODO
+        blobDataKeys.Sort();
 
         float containerHeight = saveData.blobData.Count * 300.0F;
         LinearUiSpacing linearUiSpacing = new LinearUiSpacing(containerHeight, 0.0F, 200.0F, saveData.blobData.Count);
@@ -33,7 +33,7 @@ public class BlobSelectScreen : MonoBehaviour
         for (int i = 0; i < blobDataKeys.Count; i++)
         {
             // Create button
-            GameObject blobBar = GameObjectUtility.InstantiateChild(blobBarAsset, gameObject, true);
+            GameObject blobBar = GameObjectUtility.InstantiateChild(blobBarAsset, blobContainer, true);
             blobBar.GetComponentInChildren<TextMeshProUGUI>().text = blobDataKeys[i].ToString();
 
             // Place button
@@ -52,18 +52,18 @@ public class BlobSelectScreen : MonoBehaviour
     void BlobClicked(int blobId)
     {
         OnBlobSelected(blobId);
-        blobSelectScreen.SetActive(false);
+        gameObject.SetActive(false);
     }
 
     public void SelectBlob()
     {
-        blobSelectScreen.SetActive(true);
+        gameObject.SetActive(true);
         //alreadySelectedBlobs = new List<int>();
     }
 
     public void SelectBlob(List<int> selectedBlobIds)
     {
-        blobSelectScreen.SetActive(true);
+        gameObject.SetActive(true);
         foreach (var selectedBlobId in selectedBlobIds)
         {
             buttons[selectedBlobId].SetActive(false); // TODO dont remove, but make unclickable with text over them

@@ -40,7 +40,7 @@ public class EatAction : IAction
         {
             Vector3 colliderPosition = blobTransform.position;
             colliderPosition.y += blobTransform.localScale.y / 2;
-            Collider[] hitColliders = Physics.OverlapSphere(colliderPosition, blobTransform.localScale.x / 2, 0x01); // TODO change layermask, change scale
+            Collider[] hitColliders = Physics.OverlapSphere(colliderPosition, 0.5F, 0x0100); // 0x0100 is layermask for layer 8
 
             if (hitColliders.Any(x => x.gameObject.GetInstanceID() == food.GetInstanceID()))
             {

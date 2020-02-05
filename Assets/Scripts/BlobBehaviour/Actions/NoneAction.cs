@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class NoneAction : IAction // TODO add animation idle
+public class NoneAction : IAction
 {
     private AnimationController blobAnimationController;
 

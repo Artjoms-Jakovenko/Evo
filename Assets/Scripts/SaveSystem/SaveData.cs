@@ -8,6 +8,8 @@ public class SaveData
     public string protection = "FFFF";
     public int money;
     public int premiumMoney;
-    public Dictionary<int, BlobStatsData> blobData = new Dictionary<int, BlobStatsData>(); // TODO move dictionary creation to instantiator on first save
-    public Dictionary<string, LevelProgress> levelProgresses = new Dictionary<string, LevelProgress>(); // TODO
+    public Dictionary<int, BlobStatsData> blobData = new Dictionary<int, BlobStatsData>();
+    public Dictionary<string, LevelProgress> levelProgresses = new Dictionary<string, LevelProgress>();
+
+    public int lastSelectedBlobInUpgradeShop;
 }
