@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class UpgradeShop : MonoBehaviour
 {
@@ -12,6 +13,7 @@ public class UpgradeShop : MonoBehaviour
     public TextMeshProUGUI moneyText;
     public TextMeshProUGUI premiumMoneyText;
     public TextMeshProUGUI evolvePriceText;
+    public Button evolveButton;
     public BlobSelectScreen blobSelectScreen;
 
     StatSelectionBarRenderer statSelectionBarRenderer;
@@ -95,11 +97,13 @@ public class UpgradeShop : MonoBehaviour
         if (stat.IsMaxLevel())
         {
             evolvePriceText.text = "Max level";
+            evolveButton.interactable = false;
         }
         else
         {
             int upgradeCost = UpgradeSystem.GetUpgradeCost(selectedStat, stat);
             evolvePriceText.text = "Evolve " + upgradeCost;
+            evolveButton.interactable = true;
         }
 
         statSelectionBarRenderer.RenderStatSelectionUI(saveData.blobData[selectedBlobId]);

@@ -18,7 +18,7 @@ public class StatSelectionBarRenderer : SliderSelector
     GameObject statBackground;
     SelectedStatRenderer selectedStatRenderer;
 
-    BlobStatsData lastBlobStatsData; // TODO rework
+    BlobStatsData selectedBlobStatsData;
     StatName? selectedStat = null;
 
     // Workaround to access dictionary by index, since dictionary element order is undefined
@@ -39,39 +39,19 @@ public class StatSelectionBarRenderer : SliderSelector
 
     public void RenderStatSelectionUI(BlobStatsData blobStatsData)
     {
-        lastBlobStatsData = blobStatsData;
-        SelectDefaultStatIfNothingIsSelected(); // TODO
+        selectedBlobStatsData = blobStatsData;
+        SelectDefaultStatIfNothingIsSelected();
 
-        SetSelectedStat((StatName)selectedStat); // TODO look into default stat
+        SetSelectedStat((StatName)selectedStat);
+
         base.RenderSliderElements();
-    }
-
-    StatName? SelectDefaultStatIfNothingIsSelected()
-    {
-        // Sort keyValuePairs
-        blobStatsDataKeys = new List<StatName>(lastBlobStatsData.stats.Keys);
-        blobStatsDataKeys.Sort();
-
-        // Assign default stat
-        if (selectedStat == null) // TODO consider making cleaner
-        {
-            selectedStat = blobStatsDataKeys.First();
-        }
-
-        return selectedStat; // TODO
-    }
+    }    
 
     public StatName GetSelectedStatName()
     {
         return (StatName)selectedStat;
     }
 
-    private void SetSelectedStat(StatName statName)
-    {
-        selectedStat = statName;
-        selectedStatWindow.SetActive(true);
-        selectedStatRenderer.UpdateSelectedStatUI(statName, lastBlobStatsData.stats[statName]);
-    }
 
     public void StatButtonClicked(StatName statName)
     {
@@ -95,7 +75,7 @@ public class StatSelectionBarRenderer : SliderSelector
 
         // Change text
         TextMeshProUGUI statValueText = statBackgroundGameObject.GetComponentInChildren<TextMeshProUGUI>();
-        statValueText.text = lastBlobStatsData.stats[blobStatsDataKeys[position]].value.ToString();
+        statValueText.text = selectedBlobStatsData.stats[blobStatsDataKeys[position]].value.ToString();
 
         return statBackgroundGameObject;
     }
@@ -103,5 +83,25 @@ public class StatSelectionBarRenderer : SliderSelector
     public override int GetObjectCount()
     {
         return blobStatsDataKeys.Count;
+    }
+
+    private void SetSelectedStat(StatName statName)
+    {
+        selectedStat = statName;
+        selectedStatWindow.SetActive(true);
+        selectedStatRenderer.UpdateSelectedStatUI(statName, selectedBlobStatsData.stats[statName]);
+    }
+
+    private void SelectDefaultStatIfNothingIsSelected()
+    {
+        // Sort keyValuePairs
+        blobStatsDataKeys = new List<StatName>(selectedBlobStatsData.stats.Keys);
+        blobStatsDataKeys.Sort();
+
+        // Assign default stat
+        if (selectedStat == null)
+        {
+            selectedStat = blobStatsDataKeys.First();
+        }
     }
 }
