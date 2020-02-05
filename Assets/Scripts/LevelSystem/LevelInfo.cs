@@ -30,6 +30,6 @@ public class LevelInfo : MonoBehaviour
                 Debug.LogError("LevelEnemyInfo was not found.");
                 break;
         }
-        return blobStatsDatas; // TODO
+        return blobStatsDatas;
     }
 }

@@ -70,7 +70,7 @@ public class BlobSelector : SliderSelector
     public void SelectedBlob(int blobID)
     {
         blobButtons[selectedButton].GetComponent<AddBlobButton>().SwitchToSelectedBlob(BlobType.Survivor, "Blobby" + blobID); // TODO
-        selectedBlobIds.Add(blobID); // TODO also remove
+        selectedBlobIds.Add(blobID); // TODO also make possible to remove blobs
     }
 
     public List<int> GetSelectedBlobIds()

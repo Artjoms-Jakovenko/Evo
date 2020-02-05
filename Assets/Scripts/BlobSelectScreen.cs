@@ -10,7 +10,7 @@ public class BlobSelectScreen : MonoBehaviour
     public delegate void BlobSelected(int blobId);
     public static event BlobSelected OnBlobSelected;
 
-    public GameObject blobContainer; // TODO move this script to blobselectscreen
+    public GameObject blobContainer;
 
     private readonly Dictionary<int, GameObject> buttons = new Dictionary<int, GameObject>();
 
