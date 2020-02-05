@@ -8,9 +8,9 @@ using UnityEngine;
 public class MeleeFightAction : IAction
 {
     private readonly Transform blobTransform;
-    private AnimationController blobAnimationController;
+    private readonly AnimationController blobAnimationController;
     private readonly BlobMovement blobMovement;
-    private BlobStats blobStats; // Get rid of these in all actions
+    private readonly BlobStats blobStats; // Get rid of these in all actions
 
     public List<StatName> RequiredStats => throw new System.NotImplementedException();
 

@@ -20,7 +20,14 @@ public class SelectedStatRenderer : MonoBehaviour
     }
     public void UpdateSelectedStatUI(StatName statName, Stat stat) // TODO move creation to separate class
     {
-        evolveValueText.text = stat.value + " <size=150%>→<size=100%> " + stat.GetNextLevelValue();
+        if (!stat.IsMaxLevel())
+        {
+            evolveValueText.text = stat.value + " <size=150%>→<size=100%> " + stat.GetNextLevelValue();
+        }
+        else
+        {
+            evolveValueText.text = "";
+        }
         maxValueText.text = "Max " + stat.maxValue.ToString();
         statTitleText.text = UiData.statDescriptions[statName].statDisplayName;
 
@@ -46,7 +53,7 @@ public class SelectedStatRenderer : MonoBehaviour
 
         for (int i = 0; i < stat.upgradeLevels; i++)
         {
-            GameObject gameObject = null;
+            GameObject gameObject;
             if (i < stat.currentUpgradeLevel)
             {
                 gameObject = GameObjectUtility.InstantiateChild(upgradedLevel, upgradeLevelBackground, true);

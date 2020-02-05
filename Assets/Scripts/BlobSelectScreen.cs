@@ -12,7 +12,7 @@ public class BlobSelectScreen : MonoBehaviour
 
     public GameObject blobSelectScreen; // TODO move this script to blobselectscreen
 
-    private Dictionary<int, GameObject> buttons = new Dictionary<int, GameObject>();
+    private readonly Dictionary<int, GameObject> buttons = new Dictionary<int, GameObject>();
 
     // Workaround to access dictionary by index, since dictionary element order is undefined
     List<int> blobDataKeys;
