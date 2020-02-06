@@ -26,6 +26,9 @@ public class LevelInfo : MonoBehaviour
             case LevelEnum.TestingGround:
                 blobStatsDatas.Add(BlobInstantiator.CreateBlob(BlobType.Fighter));
                 break;
+            case LevelEnum.IntroLevel1:
+                // No enemies on this level
+                break;
             default:
                 Debug.LogError("LevelEnemyInfo was not found.");
                 break;

@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 403616909722218597}
   - component: {fileID: 2233319099223755813}
   - component: {fileID: 1259682231927428674}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Cone.003
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -90,7 +90,7 @@ GameObject:
   - component: {fileID: 2696294279242585387}
   - component: {fileID: 7867342459794686791}
   - component: {fileID: 4518504194056207407}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Cone
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -169,7 +169,7 @@ GameObject:
   - component: {fileID: 8162495979383988589}
   - component: {fileID: 769253519074642844}
   - component: {fileID: 3688808543064964881}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Cone.002
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -248,7 +248,7 @@ GameObject:
   - component: {fileID: 4134285181524605656}
   - component: {fileID: 4456563089678176454}
   - component: {fileID: 7028146545033113944}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Cone.004
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -327,7 +327,7 @@ GameObject:
   - component: {fileID: 2961641754030302641}
   - component: {fileID: 7120438902790412786}
   - component: {fileID: 3613070228690473634}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Cone.005
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -406,7 +406,7 @@ GameObject:
   - component: {fileID: 6340799584947167540}
   - component: {fileID: 6627191428403826742}
   - component: {fileID: 5407597255741787289}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Cone.001
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -486,7 +486,7 @@ GameObject:
   - component: {fileID: 6400645819154176424}
   - component: {fileID: 1071676288026452202}
   - component: {fileID: 3619462150919863714}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Grass1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -526,6 +526,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ObjectTagList: 0000000002000000
+  teamTag: 0
 --- !u!65 &1071676288026452202
 BoxCollider:
   m_ObjectHideFlags: 0
