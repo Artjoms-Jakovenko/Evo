@@ -98,6 +98,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ObjectTagList: 04000000
+  teamTag: 0
 --- !u!114 &2309064092759327431
 MonoBehaviour:
   m_ObjectHideFlags: 0
