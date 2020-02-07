@@ -75,6 +75,6 @@ public class BlobSelector : SliderSelector
 
     public List<int> GetSelectedBlobIds()
     {
-        return selectedBlobIds; // TODO
+        return selectedBlobIds;
     }
 }
