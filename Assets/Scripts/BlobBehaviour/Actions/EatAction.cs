@@ -3,15 +3,16 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class EatAction : IAction
 {
-    
-    private readonly Transform blobTransform;
+    private readonly GameObject blob;
+    private readonly List<List<ObjectTag>> EdibleTagCombinations;
+
     private readonly Energy energy;
     private readonly BlobMovement blobMovement;
     private AnimationController blobAnimationController;
-    List<List<ObjectTag>> EdibleTagCombinations;
     public List<StatName> RequiredStats { get; } = new List<StatName>() { StatName.Speed, StatName.MaxEnergy };
     public List<Component> RequiredComponents { get; } = new List<Component>() { Component.Hunger, Component.BlobMovement };
 
@@ -19,14 +20,14 @@ public class EatAction : IAction
 
     GameObject food;
 
-    public EatAction(Transform blobTransform, List<List<ObjectTag>> edibleTagCombinations)
+    public EatAction(GameObject blob, List<List<ObjectTag>> edibleTagCombinations)
     {
-        this.blobTransform = blobTransform;
-        energy = blobTransform.gameObject.GetComponent<Energy>();
-        blobMovement = blobTransform.gameObject.GetComponent<BlobMovement>();
+        this.blob = blob;
+        energy = blob.GetComponent<Energy>();
+        blobMovement = blob.GetComponent<BlobMovement>();
         EdibleTagCombinations = edibleTagCombinations;
-        blobStats = blobTransform.gameObject.GetComponent<BlobStats>();
-        blobAnimationController = blobTransform.gameObject.GetComponent<AnimationController>();
+        blobStats = blob.GetComponent<BlobStats>();
+        blobAnimationController = blob.GetComponent<AnimationController>();
     }
 
     public float GetActionPriorityScore() // 0.0 - 1000.0F 
@@ -38,8 +39,8 @@ public class EatAction : IAction
     {
         if(food != null)
         {
-            Vector3 colliderPosition = blobTransform.position;
-            colliderPosition.y += blobTransform.localScale.y / 2;
+            Vector3 colliderPosition = blob.transform.position;
+            colliderPosition.y += blob.transform.localScale.y / 2;
             Collider[] hitColliders = Physics.OverlapSphere(colliderPosition, 0.25F, 0x0100); // 0x0100 is layermask for layer 8
 
             if (hitColliders.Any(x => x.gameObject.GetInstanceID() == food.GetInstanceID()))
@@ -51,7 +52,9 @@ public class EatAction : IAction
             else
             {
                 blobAnimationController.PlayAnimation(AnimationState.Walk);
-                blobMovement.RunAndLookTo(blobTransform, food.transform);
+                //blobMovement.RunAndLookTo(blobTransform, food.transform);
+                blobMovement.RunTo(food.transform.position);
+                //navMeshAgent.speed = 0; // TODO read speed from blob
             }
         }
         else
@@ -69,7 +72,7 @@ public class EatAction : IAction
         }
 
         float maxDistance = blobStats.stats.stats[StatName.Sight].value;
-        TaggedObject taggedObject = ObjectManager.GetInstance().GetClothestObject(maxDistance, blobTransform.gameObject, foodCandidates);
+        TaggedObject taggedObject = ObjectManager.GetInstance().GetClothestObject(maxDistance, blob, foodCandidates);
 
         if(taggedObject != null)
         {

@@ -20,6 +20,8 @@ public class BehaviourSystem : MonoBehaviour
 
     private Dictionary<Action, IAction> ActionDictionary = new Dictionary<Action, IAction>();
 
+    private 
+
     /*void OnDrawGizmos() // To test colliders
     {
         Gizmos.color = Color.red;
@@ -59,10 +61,10 @@ public class BehaviourSystem : MonoBehaviour
                 ActionDictionary.Add(Action.None, new NoneAction(gameObject));
                 break;
             case Action.Eat:
-                ActionDictionary.Add(Action.Eat, new EatAction(gameObject.transform, blobStats.stats.edibleTagCombinations));
+                ActionDictionary.Add(Action.Eat, new EatAction(gameObject, blobStats.stats.edibleTagCombinations));
                 break;
             case Action.MeleeFight:
-                ActionDictionary.Add(Action.MeleeFight, new MeleeFightAction(gameObject.transform));
+                ActionDictionary.Add(Action.MeleeFight, new MeleeFightAction(gameObject));
                 break;
         }
     }

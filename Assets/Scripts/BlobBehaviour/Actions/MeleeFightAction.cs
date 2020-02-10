@@ -7,7 +7,7 @@ using UnityEngine;
 
 public class MeleeFightAction : IAction
 {
-    private readonly Transform blobTransform;
+    private readonly GameObject blob;
     private readonly AnimationController blobAnimationController;
     private readonly BlobMovement blobMovement;
     private readonly BlobStats blobStats; // Get rid of these in all actions
@@ -21,22 +21,22 @@ public class MeleeFightAction : IAction
     GameObject enemyToFight;
     List<TaggedObject> enemies;
 
-    public MeleeFightAction(Transform blobTransform)
+    public MeleeFightAction(GameObject blob)
     {
-        this.blobTransform = blobTransform;
-        blobMovement = blobTransform.gameObject.GetComponent<BlobMovement>();
-        blobAnimationController = blobTransform.gameObject.GetComponent<AnimationController>();
-        blobStats = blobTransform.gameObject.GetComponent<BlobStats>();
-        teamTag = blobTransform.gameObject.GetComponent<TaggedObject>().teamTag;
+        this.blob = blob;
+        blobMovement = blob.GetComponent<BlobMovement>();
+        blobAnimationController = blob.GetComponent<AnimationController>();
+        blobStats = blob.GetComponent<BlobStats>();
+        teamTag = blob.GetComponent<TaggedObject>().teamTag;
     }
 
     public float GetActionPriorityScore()
     {
         enemies = ObjectManager.GetInstance().GetAllEnemies(teamTag);
-        enemies.RemoveAll(x => x.gameObject.GetInstanceID() == blobTransform.gameObject.GetInstanceID()); // Remove hunting blob if present
+        enemies.RemoveAll(x => x.gameObject.GetInstanceID() == blob.GetInstanceID()); // Remove hunting blob if present
 
         float maxDistance = blobStats.stats.stats[StatName.Sight].value;
-        TaggedObject taggedObject  = ObjectManager.GetInstance().GetClothestObject(maxDistance, blobTransform.gameObject, enemies);
+        TaggedObject taggedObject  = ObjectManager.GetInstance().GetClothestObject(maxDistance, blob, enemies);
         
         if (taggedObject != null)
         {
@@ -58,20 +58,20 @@ public class MeleeFightAction : IAction
     {
         if (enemyToChase != null)
         {
-            Vector3 colliderPosition = blobTransform.position;
-            colliderPosition.y += blobTransform.localScale.y / 2;
+            Vector3 colliderPosition = blob.transform.position;
+            colliderPosition.y += blob.transform.localScale.y / 2;
             Collider[] hitColliders = Physics.OverlapSphere(colliderPosition, 0.5F * 1.2F, 0x0100);
             if (hitColliders.Any(x => x.gameObject.GetInstanceID() == enemyToChase.GetInstanceID()))
             {
                 blobAnimationController.PlayAnimation(this);
-                blobMovement.LookTo(blobTransform, enemyToChase.transform);
+                blobMovement.LookTo(blob.transform, enemyToChase.transform); // TODO remove
                 enemyToFight = enemyToChase;
                 enemyToChase = null;
             }
             else
             {
                 blobAnimationController.PlayAnimation(AnimationState.Walk);
-                blobMovement.RunAndLookTo(blobTransform, enemyToChase.transform);
+                blobMovement.RunTo(enemyToChase.transform.position); // TODO move outside the loop
             }
         }
         else
