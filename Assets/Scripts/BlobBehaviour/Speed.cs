@@ -14,17 +14,6 @@ public class Speed : MonoBehaviour
         SetSpeed(GetComponent<BlobStats>().stats.stats[StatName.Speed].value);
     }
 
-    private void Update()
-    {
-        if(Time.time > 5.0F)
-        {
-            if (!gameObject.GetComponent<BlobStats>().stats.possibleActions.Contains(Action.MeleeFight))
-            {
-                SetSpeed(10.0F);
-            }
-        }
-    }
-
     public void SetSpeed(float newSpeedValue)
     {
         speed = newSpeedValue;
