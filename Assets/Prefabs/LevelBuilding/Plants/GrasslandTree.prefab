@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7795828636892246467}
   - component: {fileID: 7494503307429994063}
+  - component: {fileID: 8234684564877693977}
   m_Layer: 8
   m_Name: GrasslandTree
   m_TagString: Untagged
@@ -46,6 +47,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ObjectTagList: 02000000
   teamTag: 0
+--- !u!114 &8234684564877693977
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6515302452950025168}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e3fdca004f2d45fe8abbed571a8abd5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_OverrideArea: 1
+  m_Area: 1
+  m_IgnoreFromBuild: 0
+  m_AffectedAgents: ffffffff
 --- !u!1001 &8532539516490578951
 PrefabInstance:
   m_ObjectHideFlags: 0
