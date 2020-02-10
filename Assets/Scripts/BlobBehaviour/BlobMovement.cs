@@ -6,22 +6,37 @@ using UnityEngine.AI;
 public class BlobMovement : MonoBehaviour
 {
     private NavMeshAgent navMeshAgent;
-    private BlobStats blobStats;
+    private Speed speed;
     private void Awake()
     {
         navMeshAgent = gameObject.GetComponent<NavMeshAgent>();
+        speed = gameObject.GetComponent<Speed>(); // Equal to zero because called before Speed initialization
+    }
+
+    private void OnEnable()
+    {
+        speed.OnSpeedChanged += UpdateSpeed;
+    }
+
+    private void OnDisable()
+    {
+        speed.OnSpeedChanged -= UpdateSpeed;
     }
 
     private void Start()
     {
-        blobStats = gameObject.GetComponent<BlobStats>();
+        navMeshAgent.speed = 0.0F; // Equal to zero because called before Speed initialization
     }
+
+    private void UpdateSpeed()
+    {
+        navMeshAgent.speed = speed.GetSpeed();
+    }
+
     public void RunTo(Vector3 targetLocation) // TODO rename to setdestination
     {
         navMeshAgent.SetDestination(targetLocation);
         navMeshAgent.isStopped = false;
-
-        navMeshAgent.speed = blobStats.stats.stats[StatName.Speed].value; // TODO speed should be updated live inside speed component
     }
 
     public void LookTo(Transform runner, Transform targetLocation)
@@ -34,6 +49,11 @@ public class BlobMovement : MonoBehaviour
     {
         navMeshAgent.isStopped = true;
         navMeshAgent.velocity = Vector3.zero;
+    }
+
+    public void SetSpeed(float speed)
+    {
+        navMeshAgent.speed = speed;
     }
 
     public void Wander() // TODO distance mask etc
