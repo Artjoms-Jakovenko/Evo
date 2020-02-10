@@ -48,13 +48,7 @@ public class EatAction : IAction
                 energy.AddEnergy(food.GetComponent<Edible>().Bite(1));
                 food = null;
                 blobAnimationController.PlayAnimation(AnimationState.Idle); // Presumably this doesnt work
-            }
-            else
-            {
-                blobAnimationController.PlayAnimation(AnimationState.Walk);
-                //blobMovement.RunAndLookTo(blobTransform, food.transform);
-                blobMovement.RunTo(food.transform.position);
-                //navMeshAgent.speed = 0; // TODO read speed from blob
+                blobMovement.Stop();
             }
         }
         else
@@ -77,6 +71,8 @@ public class EatAction : IAction
         if(taggedObject != null)
         {
             food = taggedObject.gameObject;
+            blobAnimationController.PlayAnimation(AnimationState.Walk);
+            blobMovement.RunTo(food.transform.position);
         }
         else
         {

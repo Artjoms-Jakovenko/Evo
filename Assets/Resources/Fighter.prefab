@@ -19,6 +19,7 @@ GameObject:
   - component: {fileID: 7688684780397118112}
   - component: {fileID: 3604893891822423180}
   - component: {fileID: 367668952058923686}
+  - component: {fileID: 8243738958675844305}
   m_Layer: 8
   m_Name: Fighter
   m_TagString: Untagged
@@ -178,6 +179,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0c8a0bc9a6067fc4b8fc060feffa9a99, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!195 &8243738958675844305
+NavMeshAgent:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2309064092759327427}
+  m_Enabled: 1
+  m_AgentTypeID: 0
+  m_Radius: 0.5
+  m_Speed: 1
+  m_Acceleration: 60
+  avoidancePriority: 50
+  m_AngularSpeed: 720
+  m_StoppingDistance: 0
+  m_AutoTraverseOffMeshLink: 1
+  m_AutoBraking: 1
+  m_AutoRepath: 1
+  m_Height: 2
+  m_BaseOffset: 0
+  m_WalkableMask: 4294967295
+  m_ObstacleAvoidanceType: 4
 --- !u!1001 &144703075708472892
 PrefabInstance:
   m_ObjectHideFlags: 0

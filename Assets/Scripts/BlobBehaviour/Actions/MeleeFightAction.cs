@@ -51,7 +51,11 @@ public class MeleeFightAction : IAction
 
     public void MakeDecision()
     {
-        
+        if (enemyToChase != null)
+        {
+            blobAnimationController.PlayAnimation(AnimationState.Walk);
+            blobMovement.RunTo(enemyToChase.transform.position); // TODO move outside the loop
+        }
     }
 
     public void PerformAction()
@@ -60,18 +64,14 @@ public class MeleeFightAction : IAction
         {
             Vector3 colliderPosition = blob.transform.position;
             colliderPosition.y += blob.transform.localScale.y / 2;
-            Collider[] hitColliders = Physics.OverlapSphere(colliderPosition, 0.5F * 1.2F, 0x0100);
+            Collider[] hitColliders = Physics.OverlapSphere(colliderPosition, 0.5F * 1.3F, 0x0100);
             if (hitColliders.Any(x => x.gameObject.GetInstanceID() == enemyToChase.GetInstanceID()))
             {
                 blobAnimationController.PlayAnimation(this);
                 blobMovement.LookTo(blob.transform, enemyToChase.transform); // TODO remove
                 enemyToFight = enemyToChase;
                 enemyToChase = null;
-            }
-            else
-            {
-                blobAnimationController.PlayAnimation(AnimationState.Walk);
-                blobMovement.RunTo(enemyToChase.transform.position); // TODO move outside the loop
+                blobMovement.Stop();
             }
         }
         else
