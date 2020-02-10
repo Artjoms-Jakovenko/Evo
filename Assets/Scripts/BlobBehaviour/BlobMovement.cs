@@ -25,7 +25,7 @@ public class BlobMovement : MonoBehaviour
 
     private void Start()
     {
-        navMeshAgent.speed = 0.0F; // Equal to zero because called before Speed initialization
+        navMeshAgent.speed = 0.0F;
     }
 
     private void UpdateSpeed()

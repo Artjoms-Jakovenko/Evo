@@ -11,6 +11,7 @@ public class BlobSelector : SliderSelector
     public GameObject blobSelectionBar;
     public BlobSelectScreen blobSelectScreen;
     public LevelInfo levelInfo;
+    public Button startRoundButton;
 
     List<int> selectedBlobIds = new List<int>();
 
@@ -58,6 +59,8 @@ public class BlobSelector : SliderSelector
         LinearUiSpacing linearUiSpacing = new LinearUiSpacing(blobSelectionBar.GetComponent<RectTransform>().rect.width, 80.0F, blobAddButtonRectTransform.rect.width, 20.0F);
         base.Initialize(leftArrow, rightArrow, linearUiSpacing);
         base.RenderSliderElements();
+
+        SetStartButtonInteractability();
     }
 
     void SelectButtonClicked(int buttonID)
@@ -71,10 +74,24 @@ public class BlobSelector : SliderSelector
     {
         blobButtons[selectedButton].GetComponent<AddBlobButton>().SwitchToSelectedBlob(BlobType.Survivor, "Blobby" + blobID); // TODO
         selectedBlobIds.Add(blobID); // TODO also make possible to remove blobs
+
+        SetStartButtonInteractability();
     }
 
     public List<int> GetSelectedBlobIds()
     {
         return selectedBlobIds;
+    }
+
+    private void SetStartButtonInteractability()
+    {
+        if (GetSelectedBlobIds().Count > 0)
+        {
+            startRoundButton.interactable = true;
+        }
+        else
+        {
+            startRoundButton.interactable = false;
+        }
     }
 }

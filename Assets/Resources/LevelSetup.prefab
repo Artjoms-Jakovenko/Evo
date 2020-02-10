@@ -2748,6 +2748,7 @@ MonoBehaviour:
   blobSelectionBar: {fileID: 2409603966282025395}
   blobSelectScreen: {fileID: 2409603965521571987}
   levelInfo: {fileID: 2409603965729290404}
+  startRoundButton: {fileID: 2409603965114303614}
 --- !u!1 &2409603966380763795
 GameObject:
   m_ObjectHideFlags: 0
