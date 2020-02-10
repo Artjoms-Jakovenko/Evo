@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -19,7 +20,7 @@ public class Energy : MonoBehaviour
     {
         if(energy <= 0.0F)
         {
-            health.TakeDamage(Time.deltaTime);
+            health.TakeDamage(Math.Abs(Time.deltaTime * energy));
         }
     }
 
