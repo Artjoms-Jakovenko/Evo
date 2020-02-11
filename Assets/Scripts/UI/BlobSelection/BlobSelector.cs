@@ -4,23 +4,20 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class BlobSelector : SliderSelector
+public class BlobSelector : MonoBehaviour
 {
-    public GameObject leftArrow;
-    public GameObject rightArrow;
     public GameObject blobSelectionBar;
     public BlobSelectScreen blobSelectScreen;
     public LevelInfo levelInfo;
     public Button startRoundButton;
 
     List<int> selectedBlobIds = new List<int>();
+    LinearSlider linearSlider;
 
     List<GameObject> blobButtons = new List<GameObject>();
     int selectedButton = 0;
 
     GameObject blobAddButton;
-
-    int blobCount = 0;
 
     private void OnEnable()
     {
@@ -30,9 +27,23 @@ public class BlobSelector : SliderSelector
     private void OnDisable()
     {
         BlobSelectScreen.OnBlobSelected -= SelectedBlob;
+    }    
+
+    void Start()
+    {
+        blobAddButton = Resources.Load("UI/BlobSelect/AddBlobButton") as GameObject;
+        RectTransform blobAddButtonRectTransform = blobAddButton.GetComponent<RectTransform>();
+
+        List<GameObject> blobAddButtons = new List<GameObject>();
+        for (int i = 0; i < levelInfo.maxBlobCount; i++)
+        {
+            blobAddButtons.Add(GetObjectAt(i));
+        }
+
+        SetStartButtonInteractability();
     }
 
-    public override GameObject GetObjectAt(int position)
+    private GameObject GetObjectAt(int position)
     {
         GameObject blobButton = GameObjectUtility.InstantiateChild(blobAddButton, gameObject, true);
 
@@ -42,25 +53,6 @@ public class BlobSelector : SliderSelector
         blobButton.GetComponent<Button>().onClick.AddListener(() => SelectButtonClicked(buttonID));
 
         return blobButton;
-    }
-
-    public override int GetObjectCount()
-    {
-        return blobCount;
-    }
-
-    void Start()
-    {
-        blobAddButton = Resources.Load("UI/BlobSelect/AddBlobButton") as GameObject;
-        RectTransform blobAddButtonRectTransform = blobAddButton.GetComponent<RectTransform>();
-
-        blobCount = levelInfo.maxBlobCount;
-
-        LinearUiSpacing linearUiSpacing = new LinearUiSpacing(blobSelectionBar.GetComponent<RectTransform>().rect.width, 80.0F, blobAddButtonRectTransform.rect.width, 20.0F);
-        base.Initialize(leftArrow, rightArrow, linearUiSpacing);
-        base.RenderSliderElements();
-
-        SetStartButtonInteractability();
     }
 
     void SelectButtonClicked(int buttonID)

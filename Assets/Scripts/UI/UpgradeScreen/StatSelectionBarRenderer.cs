@@ -6,7 +6,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class StatSelectionBarRenderer : SliderSelector
+public class StatSelectionBarRenderer : MonoBehaviour
 {
     public delegate void StatSelected();
     public static event StatSelected OnStatSelected;
@@ -14,9 +14,13 @@ public class StatSelectionBarRenderer : SliderSelector
     public GameObject leftArrow;
     public GameObject rightArrow;
     public GameObject selectedStatWindow;
+    public GameObject sliderContent;
+
+    private LinearSlider linearSlider;
 
     GameObject statBackground;
     SelectedStatRenderer selectedStatRenderer;
+    RectTransform statBackgroundRectTransform;
 
     BlobStatsData selectedBlobStatsData;
     StatName? selectedStat = null;
@@ -30,21 +34,25 @@ public class StatSelectionBarRenderer : SliderSelector
         selectedStatRenderer = selectedStatWindow.GetComponent<SelectedStatRenderer>();
 
         RectTransform parentRectTransform = gameObject.GetComponent<RectTransform>();
-        RectTransform statBackgroundRectTransform = statBackground.GetComponent<RectTransform>();
+        statBackgroundRectTransform = statBackground.GetComponent<RectTransform>();
 
-        LinearUiSpacing linearUiSpacing = new LinearUiSpacing(parentRectTransform.rect.width, 80.0F, statBackgroundRectTransform.rect.width, 20.0F);
-
-        base.Initialize(leftArrow, rightArrow, linearUiSpacing);
+        linearSlider = new LinearSlider(sliderContent);
+        linearSlider.offset = 20.0F;
+        linearSlider.spacing = 20.0F;
     }
 
     public void RenderStatSelectionUI(BlobStatsData blobStatsData)
     {
         selectedBlobStatsData = blobStatsData;
         SelectDefaultStatIfNothingIsSelected();
-
         SetSelectedStat((StatName)selectedStat);
 
-        base.RenderSliderElements();
+        List<GameObject> statButtons = new List<GameObject>();
+        for(int i = 0; i < blobStatsDataKeys.Count; i++)
+        {
+            statButtons.Add(GetObjectAt(i));
+        }
+        linearSlider.RenderSliderElements(statButtons);
     }    
 
     public StatName GetSelectedStatName()
@@ -59,10 +67,10 @@ public class StatSelectionBarRenderer : SliderSelector
         OnStatSelected();
     }
 
-    public override GameObject GetObjectAt(int position)
+    private GameObject GetObjectAt(int position)
     {
         // Create background
-        GameObject statBackgroundGameObject = GameObjectUtility.InstantiateChild(statBackground, gameObject, true);
+        GameObject statBackgroundGameObject = GameObjectUtility.InstantiateChild(statBackground, sliderContent, true);
 
         // Add events to buttons
         StatName statCaptured = blobStatsDataKeys[position]; // Important to keep this variable captured to avoid index issues
@@ -78,11 +86,6 @@ public class StatSelectionBarRenderer : SliderSelector
         statValueText.text = selectedBlobStatsData.stats[blobStatsDataKeys[position]].value.ToString();
 
         return statBackgroundGameObject;
-    }
-
-    public override int GetObjectCount()
-    {
-        return blobStatsDataKeys.Count;
     }
 
     private void SetSelectedStat(StatName statName)

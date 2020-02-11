@@ -6,10 +6,10 @@ using UnityEngine;
 public class LinearUiSpacing
 {
     public float totalLength = 0.0F;
-    public int partAmount = 0;
+    private int partAmount = 0;
     public float partLength = 0.0F;
-    public float offset = 0.0F;
-    public float spacing = 0.0F;
+    private float offset = 0.0F;
+    private float spacing = 0.0F;
 
     public LinearUiSpacing(float totalLength, float offset, float spacing, int partAmount)
     {
@@ -21,16 +21,14 @@ public class LinearUiSpacing
         this.spacing = spacing;
     }
 
-    public LinearUiSpacing(float totalLength, float offset, float partLength, float minimumSpacing)
+    public LinearUiSpacing(int partAmount, float offset, float partLength, float spacing)
     {
-        float workingSpace = totalLength - offset * 2;
+        totalLength = offset * 2 + partLength * partAmount + (partAmount - 1) * spacing;
 
-        partAmount = (int)((workingSpace + minimumSpacing) / (partLength + minimumSpacing)); // TODO investigate floating point errors
-        spacing = (workingSpace - (partLength * partAmount)) / (partAmount - 1);
-
-        this.totalLength = totalLength;
+        this.partAmount = partAmount;
         this.partLength = partLength;
         this.offset = offset;
+        this.spacing = spacing;
     }
 
     public float GetNthPathPosition(int position)
