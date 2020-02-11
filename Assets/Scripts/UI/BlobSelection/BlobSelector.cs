@@ -10,6 +10,7 @@ public class BlobSelector : MonoBehaviour
     public BlobSelectScreen blobSelectScreen;
     public LevelInfo levelInfo;
     public Button startRoundButton;
+    public GameObject sliderContent;
 
     List<int> selectedBlobIds = new List<int>();
     LinearSlider linearSlider;
@@ -39,13 +40,15 @@ public class BlobSelector : MonoBehaviour
         {
             blobAddButtons.Add(GetObjectAt(i));
         }
+        linearSlider = new LinearSlider(sliderContent);
+        linearSlider.RenderSliderElements(blobAddButtons);
 
         SetStartButtonInteractability();
     }
 
     private GameObject GetObjectAt(int position)
     {
-        GameObject blobButton = GameObjectUtility.InstantiateChild(blobAddButton, gameObject, true);
+        GameObject blobButton = GameObjectUtility.InstantiateChild(blobAddButton, sliderContent, true);
 
         int buttonID = blobButtons.Count;
         blobButtons.Add(blobButton);
