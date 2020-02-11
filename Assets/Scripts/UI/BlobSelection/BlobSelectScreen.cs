@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using Assets.Scripts.UI;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using TMPro;
@@ -10,12 +11,19 @@ public class BlobSelectScreen : MonoBehaviour
     public delegate void BlobSelected(int blobId);
     public static event BlobSelected OnBlobSelected;
 
-    public GameObject blobContainer;
+    public GameObject blobContent;
 
+    private LinearSlider linearSlider;
     private readonly Dictionary<int, GameObject> buttons = new Dictionary<int, GameObject>();
 
     // Workaround to access dictionary by index, since dictionary element order is undefined
     List<int> blobDataKeys;
+    GameObject blobBarAsset;
+
+    private void Awake()
+    {
+        blobBarAsset = Resources.Load("TempButton") as GameObject; // TODO
+    }
 
     void Start()
     {
@@ -25,28 +33,33 @@ public class BlobSelectScreen : MonoBehaviour
         blobDataKeys = new List<int>(saveData.blobData.Keys);
         blobDataKeys.Sort();
 
-        float containerHeight = saveData.blobData.Count * 300.0F;
-        LinearUiSpacing linearUiSpacing = new LinearUiSpacing(containerHeight, 0.0F, 200.0F, saveData.blobData.Count);
+        linearSlider = new LinearSlider(blobContent, LinearSliderOrientation.Vertical);
+        linearSlider.offset = 100.0F;
+        linearSlider.spacing = 40.0F;
 
-        GameObject blobBarAsset = Resources.Load("TempButton") as GameObject; // TODO
-
+        List<GameObject> blobButtons = new List<GameObject>();
         for (int i = 0; i < blobDataKeys.Count; i++)
         {
-            // Create button
-            GameObject blobBar = GameObjectUtility.InstantiateChild(blobBarAsset, blobContainer, true);
-            blobBar.GetComponentInChildren<TextMeshProUGUI>().text = blobDataKeys[i].ToString();
-
-            // Place button
-            RectTransform blobBarRectTransform = blobBar.GetComponent<RectTransform>();
-            blobBarRectTransform.transform.localPosition = new Vector3(0.0F, linearUiSpacing.GetNthPathPosition(i));
-
-            // Add events to buttons
-            int associatedBlobId = blobDataKeys[i];
-            blobBar.GetComponent<Button>().onClick.AddListener(() => BlobClicked(associatedBlobId));
-
-            // Add button to the dictionary
-            buttons.Add(blobDataKeys[i], blobBar);
+            blobButtons.Add(GetObjectAt(i));
         }
+
+        linearSlider.RenderSliderElements(blobButtons);
+    }
+
+    private GameObject GetObjectAt(int position)
+    {
+        // Create button
+        GameObject blobBar = GameObjectUtility.InstantiateChild(blobBarAsset, blobContent, true);
+        blobBar.GetComponentInChildren<TextMeshProUGUI>().text = blobDataKeys[position].ToString();
+
+        // Add events to buttons
+        int associatedBlobId = blobDataKeys[position];
+        blobBar.GetComponent<Button>().onClick.AddListener(() => BlobClicked(associatedBlobId));
+
+        // Add button to the dictionary
+        buttons.Add(blobDataKeys[position], blobBar);
+
+        return blobBar;
     }
 
     void BlobClicked(int blobId)

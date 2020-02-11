@@ -165,7 +165,7 @@ public class UpgradeShop : MonoBehaviour
     private void UpdateBlobUI(SaveData saveData)
     {
         statSelectionBarRenderer.RenderStatSelectionUI(saveData.blobData[selectedBlobId]);
-
+        selectedStat = statSelectionBarRenderer.GetSelectedStatName();
         UpdateUI();
     }
 }

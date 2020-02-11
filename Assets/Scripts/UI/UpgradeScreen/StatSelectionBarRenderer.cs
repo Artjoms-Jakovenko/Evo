@@ -11,8 +11,6 @@ public class StatSelectionBarRenderer : MonoBehaviour
     public delegate void StatSelected();
     public static event StatSelected OnStatSelected;
 
-    public GameObject leftArrow;
-    public GameObject rightArrow;
     public GameObject selectedStatWindow;
     public GameObject sliderContent;
 
@@ -20,7 +18,6 @@ public class StatSelectionBarRenderer : MonoBehaviour
 
     GameObject statBackground;
     SelectedStatRenderer selectedStatRenderer;
-    RectTransform statBackgroundRectTransform;
 
     BlobStatsData selectedBlobStatsData;
     StatName? selectedStat = null;
@@ -32,9 +29,6 @@ public class StatSelectionBarRenderer : MonoBehaviour
     {
         statBackground = Resources.Load("UI/EvolveShop/StatButton") as GameObject;
         selectedStatRenderer = selectedStatWindow.GetComponent<SelectedStatRenderer>();
-
-        RectTransform parentRectTransform = gameObject.GetComponent<RectTransform>();
-        statBackgroundRectTransform = statBackground.GetComponent<RectTransform>();
 
         linearSlider = new LinearSlider(sliderContent);
         linearSlider.offset = 20.0F;
@@ -103,6 +97,10 @@ public class StatSelectionBarRenderer : MonoBehaviour
 
         // Assign default stat
         if (selectedStat == null)
+        {
+            selectedStat = blobStatsDataKeys.First();
+        }
+        else if (!blobStatsDataKeys.Contains((StatName)selectedStat))
         {
             selectedStat = blobStatsDataKeys.First();
         }

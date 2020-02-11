@@ -21,16 +21,6 @@ public class LinearUiSpacing
         this.spacing = spacing;
     }
 
-    public LinearUiSpacing(int partAmount, float offset, float partLength, float spacing)
-    {
-        totalLength = offset * 2 + partLength * partAmount + (partAmount - 1) * spacing;
-
-        this.partAmount = partAmount;
-        this.partLength = partLength;
-        this.offset = offset;
-        this.spacing = spacing;
-    }
-
     public float GetNthPathPosition(int position)
     {
         return offset + (partLength + spacing) * position;

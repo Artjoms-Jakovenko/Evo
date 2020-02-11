@@ -174,8 +174,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1572c2e50c28bd549a1ff00e00592c8a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  leftArrow: {fileID: 0}
-  rightArrow: {fileID: 0}
   selectedStatWindow: {fileID: 1623396720}
   sliderContent: {fileID: 857908618}
 --- !u!114 &120595178
@@ -1407,7 +1405,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 0, y: 0.5}
-  m_AnchoredPosition: {x: 0.00036621094, y: 0.000061035156}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 100, y: 300}
   m_Pivot: {x: 0, y: 0.5}
 --- !u!1 &902368412
