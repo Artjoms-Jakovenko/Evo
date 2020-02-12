@@ -1,5 +1,4 @@
-﻿using Assets.Scripts.UI;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -13,7 +12,6 @@ public class BlobSelector : MonoBehaviour
     public GameObject sliderContent;
 
     List<int> selectedBlobIds = new List<int>();
-    LinearSlider linearSlider;
 
     List<GameObject> blobButtons = new List<GameObject>();
     int selectedButton = 0;
@@ -35,13 +33,10 @@ public class BlobSelector : MonoBehaviour
         blobAddButton = Resources.Load("UI/BlobSelect/AddBlobButton") as GameObject;
         RectTransform blobAddButtonRectTransform = blobAddButton.GetComponent<RectTransform>();
 
-        List<GameObject> blobAddButtons = new List<GameObject>();
         for (int i = 0; i < levelInfo.maxBlobCount; i++)
         {
-            blobAddButtons.Add(GetObjectAt(i));
+            GetObjectAt(i);
         }
-        linearSlider = new LinearSlider(sliderContent);
-        linearSlider.RenderSliderElements(blobAddButtons);
 
         SetStartButtonInteractability();
     }

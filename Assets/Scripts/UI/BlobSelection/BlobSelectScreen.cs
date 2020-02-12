@@ -1,5 +1,4 @@
-﻿using Assets.Scripts.UI;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using TMPro;
@@ -13,7 +12,6 @@ public class BlobSelectScreen : MonoBehaviour
 
     public GameObject blobContent;
 
-    private LinearSlider linearSlider;
     private readonly Dictionary<int, GameObject> buttons = new Dictionary<int, GameObject>();
 
     // Workaround to access dictionary by index, since dictionary element order is undefined
@@ -33,17 +31,10 @@ public class BlobSelectScreen : MonoBehaviour
         blobDataKeys = new List<int>(saveData.blobData.Keys);
         blobDataKeys.Sort();
 
-        linearSlider = new LinearSlider(blobContent, LinearSliderOrientation.Vertical);
-        linearSlider.offset = 100.0F;
-        linearSlider.spacing = 40.0F;
-
-        List<GameObject> blobButtons = new List<GameObject>();
         for (int i = 0; i < blobDataKeys.Count; i++)
         {
-            blobButtons.Add(GetObjectAt(i));
+            GetObjectAt(i);
         }
-
-        linearSlider.RenderSliderElements(blobButtons);
     }
 
     private GameObject GetObjectAt(int position)
@@ -71,12 +62,12 @@ public class BlobSelectScreen : MonoBehaviour
     public void SelectBlob()
     {
         gameObject.SetActive(true);
-        //alreadySelectedBlobs = new List<int>();
     }
 
     public void SelectBlob(List<int> selectedBlobIds)
     {
         gameObject.SetActive(true);
+
         foreach (var selectedBlobId in selectedBlobIds)
         {
             buttons[selectedBlobId].SetActive(false); // TODO dont remove, but make unclickable with text over them

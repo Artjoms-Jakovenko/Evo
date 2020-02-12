@@ -1,5 +1,4 @@
-﻿using Assets.Scripts.UI;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using TMPro;
@@ -14,8 +13,6 @@ public class StatSelectionBarRenderer : MonoBehaviour
     public GameObject selectedStatWindow;
     public GameObject sliderContent;
 
-    private LinearSlider linearSlider;
-
     GameObject statBackground;
     SelectedStatRenderer selectedStatRenderer;
 
@@ -29,10 +26,6 @@ public class StatSelectionBarRenderer : MonoBehaviour
     {
         statBackground = Resources.Load("UI/EvolveShop/StatButton") as GameObject;
         selectedStatRenderer = selectedStatWindow.GetComponent<SelectedStatRenderer>();
-
-        linearSlider = new LinearSlider(sliderContent);
-        linearSlider.offset = 20.0F;
-        linearSlider.spacing = 20.0F;
     }
 
     public void RenderStatSelectionUI(BlobStatsData blobStatsData)
@@ -41,12 +34,11 @@ public class StatSelectionBarRenderer : MonoBehaviour
         SelectDefaultStatIfNothingIsSelected();
         SetSelectedStat((StatName)selectedStat);
 
-        List<GameObject> statButtons = new List<GameObject>();
+        DeleteOldButtons();
         for(int i = 0; i < blobStatsDataKeys.Count; i++)
         {
-            statButtons.Add(GetObjectAt(i));
+            CreateObjectAt(i);
         }
-        linearSlider.RenderSliderElements(statButtons);
     }    
 
     public StatName GetSelectedStatName()
@@ -61,7 +53,7 @@ public class StatSelectionBarRenderer : MonoBehaviour
         OnStatSelected();
     }
 
-    private GameObject GetObjectAt(int position)
+    private GameObject CreateObjectAt(int position)
     {
         // Create background
         GameObject statBackgroundGameObject = GameObjectUtility.InstantiateChild(statBackground, sliderContent, true);
@@ -80,6 +72,14 @@ public class StatSelectionBarRenderer : MonoBehaviour
         statValueText.text = selectedBlobStatsData.stats[blobStatsDataKeys[position]].value.ToString();
 
         return statBackgroundGameObject;
+    }
+
+    private void DeleteOldButtons()
+    {
+        foreach (Transform child in sliderContent.transform)
+        {
+            Destroy(child.gameObject);
+        }
     }
 
     private void SetSelectedStat(StatName statName)
