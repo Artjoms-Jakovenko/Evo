@@ -13,7 +13,7 @@ public class GameManager : MonoBehaviour
     public GameObject spawnPointsParent;
     public LevelInfo levelInfo;
 
-    float roundTime = 20.0F;
+    float roundTime = 60.0F;
     bool roundStarted;
     private readonly List<Transform> availableSpawnPoints = new List<Transform>();
 

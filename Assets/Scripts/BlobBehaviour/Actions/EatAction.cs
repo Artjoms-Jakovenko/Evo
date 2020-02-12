@@ -12,13 +12,13 @@ public class EatAction : IAction
 
     private readonly Energy energy;
     private readonly BlobMovement blobMovement;
-    private AnimationController blobAnimationController;
     public List<StatName> RequiredStats { get; } = new List<StatName>() { StatName.Speed, StatName.MaxEnergy };
     public List<Component> RequiredComponents { get; } = new List<Component>() { Component.Hunger, Component.BlobMovement };
 
     private BlobStats blobStats;
 
     GameObject food;
+    bool isWandering = false;
 
     public EatAction(GameObject blob, List<List<ObjectTag>> edibleTagCombinations)
     {
@@ -27,7 +27,6 @@ public class EatAction : IAction
         blobMovement = blob.GetComponent<BlobMovement>();
         EdibleTagCombinations = edibleTagCombinations;
         blobStats = blob.GetComponent<BlobStats>();
-        blobAnimationController = blob.GetComponent<AnimationController>();
     }
 
     public float GetActionPriorityScore() // 0.0 - 1000.0F 
@@ -47,13 +46,12 @@ public class EatAction : IAction
             {
                 energy.AddEnergy(food.GetComponent<Edible>().Bite(1));
                 food = null;
-                blobAnimationController.PlayAnimation(AnimationState.Idle); // Presumably this doesnt work
                 blobMovement.Stop();
             }
         }
-        else
+        else if (!isWandering)
         {
-            blobAnimationController.PlayAnimation(AnimationState.Idle);
+            blobMovement.Stop();
         }
     }
 
@@ -71,12 +69,16 @@ public class EatAction : IAction
         if(taggedObject != null)
         {
             food = taggedObject.gameObject;
-            blobAnimationController.PlayAnimation(AnimationState.Walk);
             blobMovement.RunTo(food.transform.position);
+            isWandering = false;
         }
         else
         {
-            // TODO implement wandering for food
+            if (isWandering)
+            {
+                blobMovement.StartWandering();
+                isWandering = true;
+            }
         }
     }
 }

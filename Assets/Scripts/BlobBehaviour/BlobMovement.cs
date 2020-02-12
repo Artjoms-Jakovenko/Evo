@@ -3,14 +3,32 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class BlobMovement : MonoBehaviour
+public class BlobMovement : MonoBehaviour // TODO consider adding target reached events
 {
     private NavMeshAgent navMeshAgent;
     private Speed speed;
+    private Sight sight;
+    private AnimationController blobAnimationController;
+
     private void Awake()
     {
         navMeshAgent = gameObject.GetComponent<NavMeshAgent>();
-        speed = gameObject.GetComponent<Speed>(); // Equal to zero because called before Speed initialization
+        speed = gameObject.GetComponent<Speed>();
+        sight = gameObject.GetComponent<Sight>();
+        blobAnimationController = gameObject.GetComponent<AnimationController>();
+    }
+
+    private void Update()
+    {
+        if (navMeshAgent.remainingDistance < 0.1f)
+        {
+            blobAnimationController.PlayAnimation(AnimationState.Idle);
+        }
+    }
+
+    private void Start()
+    {
+        navMeshAgent.speed = 0.0F;
     }
 
     private void OnEnable()
@@ -23,11 +41,6 @@ public class BlobMovement : MonoBehaviour
         speed.OnSpeedChanged -= UpdateSpeed;
     }
 
-    private void Start()
-    {
-        navMeshAgent.speed = 0.0F;
-    }
-
     private void UpdateSpeed()
     {
         navMeshAgent.speed = speed.GetSpeed();
@@ -37,6 +50,7 @@ public class BlobMovement : MonoBehaviour
     {
         navMeshAgent.SetDestination(targetLocation);
         navMeshAgent.isStopped = false;
+        blobAnimationController.PlayAnimation(AnimationState.Walk);
     }
 
     public void LookTo(Transform runner, Transform targetLocation)
@@ -49,6 +63,7 @@ public class BlobMovement : MonoBehaviour
     {
         navMeshAgent.isStopped = true;
         navMeshAgent.velocity = Vector3.zero;
+        blobAnimationController.PlayAnimation(AnimationState.Idle); // Presumably this doesnt work
     }
 
     public void SetSpeed(float speed)
@@ -56,18 +71,12 @@ public class BlobMovement : MonoBehaviour
         navMeshAgent.speed = speed;
     }
 
-    public void Wander() // TODO distance mask etc
+    public void StartWandering()
     {
-        /*Vector3 randomDirection = UnityEngine.Random.insideUnitCircle;
-
-        randomDirection += gameObject.transform.position;
-
-        NavMeshHit navHit;
-
-        NavMesh.SamplePosition(randomDirection, out navHit, 10, -1);
-
-        navMeshAgent.SetDestination(navHit.position);
-        navMeshAgent.isStopped = false;*/
+        Vector2 randomDestination = Random.insideUnitCircle;
+        navMeshAgent.SetDestination(sight.GetSight() * new Vector3(randomDestination.x, 0.0F, randomDestination.y) + gameObject.transform.position);
+        navMeshAgent.isStopped = false;
+        blobAnimationController.PlayAnimation(AnimationState.Walk);
     }
 
     private Vector3 GetDirectionBetweenObjects(Transform runner, Transform targetLocation)
