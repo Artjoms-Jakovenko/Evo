@@ -64,8 +64,9 @@ public static class BlobInstantiator
         blobStatsData.stats.Add(StatName.Sight, new Stat(5.0F, 5.0F, 10.0F, 0, 4));
         blobStatsData.stats.Add(StatName.ReactionTime, new Stat(3.0F, 3.0F, 2.0F, 0, 4));
 
-        blobStatsData.possibleActions.Add(Action.None);
-        blobStatsData.possibleActions.Add(Action.Eat);
+        blobStatsData.possibleActions.Add(ActionEnum.None);
+        blobStatsData.possibleActions.Add(ActionEnum.Eat);
+        //blobStatsData.possibleActions.Add(ActionEnum.Wander);
 
         blobStatsData.edibleTagCombinations.Add(new List<ObjectTag>() { ObjectTag.Edible, ObjectTag.Small, ObjectTag.Plant });
 
@@ -75,7 +76,7 @@ public static class BlobInstantiator
 
                 break;
             case BlobType.Fighter:
-                blobStatsData.possibleActions.Add(Action.MeleeFight);
+                blobStatsData.possibleActions.Add(ActionEnum.MeleeFight);
                 blobStatsData.stats.Add(StatName.Strength, new Stat(1.0F, 1.0F, 2.0F, 0, 4));
                 break;
         }

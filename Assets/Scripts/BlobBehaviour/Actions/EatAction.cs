@@ -12,9 +12,6 @@ public class EatAction : IAction
 
     private readonly Energy energy;
     private readonly BlobMovement blobMovement;
-    public List<StatName> RequiredStats { get; } = new List<StatName>() { StatName.Speed, StatName.MaxEnergy };
-    public List<Component> RequiredComponents { get; } = new List<Component>() { Component.Hunger, Component.BlobMovement };
-
     private BlobStats blobStats;
 
     GameObject food;
@@ -74,11 +71,8 @@ public class EatAction : IAction
         }
         else
         {
-            if (isWandering)
-            {
-                blobMovement.StartWandering();
-                isWandering = true;
-            }
+            blobMovement.StartWandering();
+            isWandering = true;
         }
     }
 }

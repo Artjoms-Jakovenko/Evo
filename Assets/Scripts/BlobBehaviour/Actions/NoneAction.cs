@@ -6,9 +6,6 @@ public class NoneAction : IAction
 {
     private AnimationController blobAnimationController;
 
-    public List<StatName> RequiredStats { get; } = new List<StatName>();
-    public List<Component> RequiredComponents { get; } = new List<Component>();
-
     public NoneAction(GameObject blob)
     {
         blobAnimationController = blob.GetComponent<AnimationController>();

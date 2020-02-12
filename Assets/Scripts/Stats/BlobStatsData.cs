@@ -9,7 +9,7 @@ public class BlobStatsData
     public string blobName;
 
     public Dictionary<StatName, Stat> stats = new Dictionary<StatName, Stat>();
-    public List<Action> possibleActions = new List<Action>();
+    public List<ActionEnum> possibleActions = new List<ActionEnum>();
     public List<List<ObjectTag>> edibleTagCombinations = new List<List<ObjectTag>>();
 
     public int maxXPLevel = 3;

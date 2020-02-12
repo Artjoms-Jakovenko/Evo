@@ -12,10 +12,6 @@ public class MeleeFightAction : IAction
     private readonly BlobMovement blobMovement;
     private readonly BlobStats blobStats; // Get rid of these in all actions
 
-    public List<StatName> RequiredStats => throw new System.NotImplementedException();
-
-    public List<Component> RequiredComponents => throw new System.NotImplementedException();
-
     readonly TeamTag teamTag;
     GameObject enemyToChase;
     GameObject enemyToFight;
@@ -33,7 +29,6 @@ public class MeleeFightAction : IAction
     public float GetActionPriorityScore()
     {
         enemies = ObjectManager.GetInstance().GetAllEnemies(teamTag);
-        enemies.RemoveAll(x => x.gameObject.GetInstanceID() == blob.GetInstanceID()); // Remove hunting blob if present
 
         float maxDistance = blobStats.stats.stats[StatName.Sight].value;
         TaggedObject taggedObject  = ObjectManager.GetInstance().GetClothestObject(maxDistance, blob, enemies);
@@ -71,7 +66,6 @@ public class MeleeFightAction : IAction
                 blobMovement.LookTo(blob.transform, enemyToChase.transform); // TODO remove
                 enemyToFight = enemyToChase;
                 enemyToChase = null;
-                blobMovement.Stop();
             }
         }
         else

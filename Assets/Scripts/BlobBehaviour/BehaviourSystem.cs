@@ -3,22 +3,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum Action
-{
-    Eat,
-    None,
-    MeleeFight,
-}
-
 public class BehaviourSystem : MonoBehaviour
 {
     private float reactionPeriod;
     private float timeWithoutReaction;
-    private Action CurrentStrategy = Action.None;
+    private ActionEnum CurrentStrategy = ActionEnum.None;
     private AnimationController animationController;
     private BlobStats blobStats;
 
-    private Dictionary<Action, IAction> ActionDictionary = new Dictionary<Action, IAction>();
+    private Dictionary<ActionEnum, IAction> ActionDictionary = new Dictionary<ActionEnum, IAction>();
 
     private 
 
@@ -53,18 +46,18 @@ public class BehaviourSystem : MonoBehaviour
         }
     }
 
-    void AddAction(Action action)
+    void AddAction(ActionEnum action)
     {
         switch (action)
         {
-            case Action.None:
-                ActionDictionary.Add(Action.None, new NoneAction(gameObject));
+            case ActionEnum.None:
+                ActionDictionary.Add(ActionEnum.None, new NoneAction(gameObject));
                 break;
-            case Action.Eat:
-                ActionDictionary.Add(Action.Eat, new EatAction(gameObject, blobStats.stats.edibleTagCombinations));
+            case ActionEnum.Eat:
+                ActionDictionary.Add(ActionEnum.Eat, new EatAction(gameObject, blobStats.stats.edibleTagCombinations));
                 break;
-            case Action.MeleeFight:
-                ActionDictionary.Add(Action.MeleeFight, new MeleeFightAction(gameObject));
+            case ActionEnum.MeleeFight:
+                ActionDictionary.Add(ActionEnum.MeleeFight, new MeleeFightAction(gameObject));
                 break;
         }
     }
@@ -86,9 +79,9 @@ public class BehaviourSystem : MonoBehaviour
         }
     }
 
-    private Action GetBestAction()
+    private ActionEnum GetBestAction()
     {
-        Action bestAction = Action.None;
+        ActionEnum bestAction = ActionEnum.None;
         float bestActionScore = float.MinValue;
         foreach (var potentialAction in ActionDictionary)
         {
