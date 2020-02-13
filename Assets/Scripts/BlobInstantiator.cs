@@ -66,14 +66,13 @@ public static class BlobInstantiator
 
         blobStatsData.possibleActions.Add(ActionEnum.None);
         blobStatsData.possibleActions.Add(ActionEnum.Eat);
-        //blobStatsData.possibleActions.Add(ActionEnum.Wander);
 
         blobStatsData.edibleTagCombinations.Add(new List<ObjectTag>() { ObjectTag.Edible, ObjectTag.Small, ObjectTag.Plant });
 
         switch (blobType)
         {
             case BlobType.Survivor:
-
+                blobStatsData.possibleActions.Add(ActionEnum.RunAway);
                 break;
             case BlobType.Fighter:
                 blobStatsData.possibleActions.Add(ActionEnum.MeleeFight);

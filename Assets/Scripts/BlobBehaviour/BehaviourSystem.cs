@@ -59,6 +59,9 @@ public class BehaviourSystem : MonoBehaviour
             case ActionEnum.MeleeFight:
                 ActionDictionary.Add(ActionEnum.MeleeFight, new MeleeFightAction(gameObject));
                 break;
+            case ActionEnum.RunAway:
+                ActionDictionary.Add(ActionEnum.RunAway, new RunAwayAction(gameObject));
+                break;
         }
     }
     #endregion

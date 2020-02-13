@@ -79,6 +79,12 @@ public class BlobMovement : MonoBehaviour // TODO consider adding target reached
         blobAnimationController.PlayAnimation(AnimationState.Walk);
     }
 
+    public void RunAway(Transform runFrom)
+    {
+        Vector3 runDirection = GetDirectionBetweenObjects(runFrom, gameObject.transform);
+        RunTo(gameObject.transform.position + runDirection * sight.GetSight());
+    }
+
     private Vector3 GetDirectionBetweenObjects(Transform runner, Transform targetLocation)
     {
         Vector3 movement = targetLocation.position - runner.position;
