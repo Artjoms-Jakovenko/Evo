@@ -32,11 +32,9 @@ public static class SaveSystem
 
     private static void MakeFirstSave()
     {
-        SaveData saveData = new SaveData
-        {
-            money = 100000, // TODO adjust numbers for release
-            premiumMoney = 0
-        };
+        SaveData saveData = new SaveData();
+
+        saveData.inventory.AddToInventory(InventoryEnum.Money, 10000);
 
         saveData.lastSelectedBlobInUpgradeShop = 0; // TODO must match first blob id
 

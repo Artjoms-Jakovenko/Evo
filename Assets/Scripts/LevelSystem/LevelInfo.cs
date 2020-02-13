@@ -6,17 +6,6 @@ using UnityEngine.SceneManagement;
 public class LevelInfo : MonoBehaviour
 {
     public int maxBlobCount;
-    string nextLevelName;
-    string participationReward;
-    string oneStarReward;
-    string twoStarReward;
-    string threeStarReward;
-    string completionReward;
-
-    private void Awake()
-    {
-        GetLevelEnemies(LevelManager.GetLevelEnum(SceneManager.GetActiveScene().name));
-    }
 
     public List<BlobStatsData> GetLevelEnemies(LevelEnum levelEnum)
     {
@@ -40,5 +29,31 @@ public class LevelInfo : MonoBehaviour
                 break;
         }
         return blobStatsDatas;
+    }
+
+    public Dictionary<InventoryEnum, int> GetLevelRewards(LevelEnum levelEnum, int lastAchievedStars, int achievedStars)
+    {
+        Dictionary<InventoryEnum, int> rewards = new Dictionary<InventoryEnum, int>();
+
+        switch (levelEnum)
+        {
+            case LevelEnum.TestingGround:
+                // No rewards in test level
+                break;
+            case LevelEnum.IntroLevel1:
+                rewards.Add(InventoryEnum.Money, 20); // TODO rebalance
+                break;
+            case LevelEnum.IntroLevel2:
+                // TODO
+                break;
+            case LevelEnum.IntroLevel3:
+                // TODO
+                break;
+            default:
+                Debug.LogError("LevelRewardInfo was not found.");
+                break;
+        }
+
+        return null; // TODO
     }
 }

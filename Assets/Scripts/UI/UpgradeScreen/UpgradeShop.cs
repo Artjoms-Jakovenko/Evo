@@ -105,7 +105,7 @@ public class UpgradeShop : MonoBehaviour
 
     private bool EnoughMoneyToUpgrade(SaveData saveData, int upgradeCost)
     {
-        if (upgradeCost <= saveData.money) 
+        if (upgradeCost <= saveData.inventory.GetInventoryInfo(InventoryEnum.Money)) 
         {
             return true;
         }
@@ -114,8 +114,8 @@ public class UpgradeShop : MonoBehaviour
 
     private void UpdateMoney(SaveData saveData)
     {
-        moneyText.text = saveData.money.ToString();
-        premiumMoneyText.text = saveData.premiumMoney.ToString();
+        moneyText.text = saveData.inventory.GetInventoryInfo(InventoryEnum.Money).ToString();
+        premiumMoneyText.text = saveData.inventory.GetInventoryInfo(InventoryEnum.PremiumMoney).ToString();
     }
 
     private void UpdateUI()
