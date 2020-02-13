@@ -21,13 +21,18 @@ public static class LevelManager
         { "IntroLevel3", LevelEnum.IntroLevel3},
     };
 
-    public static void RecordLevelCompletion(string levelName)
+    public static void RecordLevelCompletion(string levelName, int starCount)
     {
         SaveData saveData = SaveSystem.Load();
         if (!saveData.levelProgresses.ContainsKey(levelName)) // TODO also handle updating completed levels
         {
             saveData.levelProgresses.Add(levelName, new LevelProgress()); // TODO stars and stuff
-            saveData.levelProgresses.Add(GetNextLevelName(levelName), new LevelProgress());
+            saveData.levelProgresses[levelName].starCount = starCount;
+            saveData.levelProgresses.Add(GetNextLevelName(levelName), new LevelProgress()); // TODO handle max level
+        }
+        else if (starCount > saveData.levelProgresses[levelName].starCount)
+        {
+            saveData.levelProgresses[levelName].starCount = starCount;
         }
 
         SaveSystem.Save(saveData);
