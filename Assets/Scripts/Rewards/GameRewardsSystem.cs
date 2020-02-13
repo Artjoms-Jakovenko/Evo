@@ -4,11 +4,17 @@ using UnityEngine;
 
 public static class GameRewardsSystem
 {
-    public static void AdministerRewards() // TODO
+    public static void AdministerRewards(LevelEnum levelName, int starsAchieved) // TODO
     {
         SaveData saveData = SaveSystem.Load();
-        saveData.inventory.AddToInventory(InventoryEnum.Money, 500);
+
+        Dictionary<InventoryEnum, int> rewards = LevelInfoData.GetLevelRewards(levelName, 0, starsAchieved); // TODO read stars from savefile
+
+        foreach (var reward in rewards)
+        {
+            saveData.inventory.AddToInventory(reward.Key, reward.Value);
+        }
+
         SaveSystem.Save(saveData);
     }
-    // TODO rewards based on stars + dictionary of levels
 }

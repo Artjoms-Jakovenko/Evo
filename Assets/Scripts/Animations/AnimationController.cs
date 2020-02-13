@@ -17,7 +17,7 @@ public class AnimationController : MonoBehaviour
     private AnimationState lockedState;
     private bool lockActionCompleted = false;
 
-    void Start()
+    void Awake()
     {
         blobAnimator = gameObject.GetComponent<Animator>();
     }

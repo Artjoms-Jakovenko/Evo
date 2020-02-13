@@ -21,8 +21,6 @@ public class LevelRewards
             AddCombineReward(rewards, victoryReward);
         }
 
-
-
         if(starsAchieved == 3 || maxStarsAchieved < 3)
         {
             AddCombineReward(rewards, threeStarReward);
@@ -43,7 +41,7 @@ public class LevelRewards
 
     private void AddCombineReward(Dictionary<InventoryEnum, int> dictionary, Dictionary<InventoryEnum, int> rewards)
     {
-        foreach (var reward in dictionary)
+        foreach (var reward in rewards)
         {
             if (dictionary.ContainsKey(reward.Key))
             {

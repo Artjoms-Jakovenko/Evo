@@ -13,6 +13,7 @@ public class GameManager : MonoBehaviour
     public GameObject spawnPointsParent;
     public LevelInfo levelInfo;
 
+    private LevelEnum currentLevel;
     float roundTime = 60.0F;
     bool roundStarted;
     private readonly List<Transform> availableSpawnPoints = new List<Transform>();
@@ -28,7 +29,8 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         Time.timeScale = 0.0F;
-        List<BlobStatsData> enemiesData = levelInfo.GetLevelEnemies(LevelManager.GetLevelEnum(SceneManager.GetActiveScene().name));
+        currentLevel = LevelManager.GetLevelEnum(SceneManager.GetActiveScene().name);
+        List<BlobStatsData> enemiesData = LevelInfoData.GetLevelEnemies(currentLevel);
         Spawn(enemiesData, TeamTag.Enemy);
     }
     
@@ -44,7 +46,7 @@ public class GameManager : MonoBehaviour
                 Time.timeScale = 0;
                 Debug.Log("Game over");
                 rewardScreen.SetActive(true);
-                GameRewardsSystem.AdministerRewards();
+                GameRewardsSystem.AdministerRewards(currentLevel, 3); // TODO stars based on achievements
 
                 LevelManager.RecordLevelCompletion(SceneManager.GetActiveScene().name); // TODO add possibility to fail a level
             }
