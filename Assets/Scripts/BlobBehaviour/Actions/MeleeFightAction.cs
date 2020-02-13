@@ -66,6 +66,7 @@ public class MeleeFightAction : IAction
                 blobMovement.LookTo(blob.transform, enemyToChase.transform); // TODO remove
                 enemyToFight = enemyToChase;
                 enemyToChase = null;
+                blobMovement.Stop();
             }
         }
         else

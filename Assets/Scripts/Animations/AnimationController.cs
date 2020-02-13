@@ -46,7 +46,10 @@ public class AnimationController : MonoBehaviour
 
     public void PlayAnimation(AnimationState animationState)
     {
-        blobAnimator.Play(animationStates[animationState]); // TODO isanimationlocked here
+        if (!IsAnimationLocked())
+        {
+            blobAnimator.Play(animationStates[animationState]); // TODO isanimationlocked here
+        }
     }
 
     public void PlayAnimation(MeleeFightAction meleeFightAction) // Workaround due to restriction to a single thread while Actions are not Monobehaviour and can't be invoked
