@@ -50,19 +50,36 @@ public class BlobSelector : MonoBehaviour
         // Add events to buttons
         blobButton.GetComponent<Button>().onClick.AddListener(() => SelectButtonClicked(buttonID));
 
+        foreach (Button button in blobButton.GetComponentsInChildren<Button>(true))
+        {
+            if (button.gameObject.GetInstanceID() != blobButton.GetInstanceID())
+            {
+                button.onClick.AddListener(() => DeselectBlob(buttonID));
+                break;
+            }
+        }
+
         return blobButton;
     }
 
-    void SelectButtonClicked(int buttonID)
+    void SelectButtonClicked(int buttonId)
     {
-        Debug.Log("Button " + buttonID);
+        Debug.Log("Button " + buttonId);
         blobSelectScreen.SelectBlob(selectedBlobIds);
-        selectedButton = buttonID;
+        selectedButton = buttonId;
+    }
+
+    void DeselectBlob(int buttonId)
+    {
+        AddBlobButton addBlobButton = blobButtons[buttonId].GetComponent<AddBlobButton>();
+        addBlobButton.SwitchToPlusSign();
+        selectedBlobIds.RemoveAll(x => x == addBlobButton.buttonBlobId);
+        Debug.Log("Deselect");
     }
 
     public void SelectedBlob(int blobID)
     {
-        blobButtons[selectedButton].GetComponent<AddBlobButton>().SwitchToSelectedBlob(BlobType.Survivor, "Blobby" + blobID); // TODO
+        blobButtons[selectedButton].GetComponent<AddBlobButton>().SwitchToSelectedBlob(BlobType.Survivor, blobID); // TODO
         selectedBlobIds.Add(blobID); // TODO also make possible to remove blobs
 
         SetStartButtonInteractability();

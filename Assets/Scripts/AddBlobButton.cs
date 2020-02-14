@@ -8,6 +8,8 @@ public class AddBlobButton : MonoBehaviour
 {
     public GameObject selectedBlobView;
     public GameObject plusSignView;
+    
+    public int buttonBlobId;
 
     Image blobImage;
     TextMeshProUGUI blobNameText;
@@ -18,13 +20,15 @@ public class AddBlobButton : MonoBehaviour
         blobNameText = selectedBlobView.GetComponentInChildren<TextMeshProUGUI>();
     }
 
-    public void SwitchToSelectedBlob(BlobType blobType, string blobName)
+    public void SwitchToSelectedBlob(BlobType blobType, int buttonBlobId)
     {
+        this.buttonBlobId = buttonBlobId;
+
         selectedBlobView.gameObject.SetActive(true);
         plusSignView.gameObject.SetActive(false);
 
         // TODO image
-        blobNameText.text = blobName;
+        blobNameText.text = buttonBlobId.ToString();
     }
 
     public void SwitchToPlusSign()

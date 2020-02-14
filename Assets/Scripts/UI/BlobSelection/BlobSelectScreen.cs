@@ -68,6 +68,11 @@ public class BlobSelectScreen : MonoBehaviour
     {
         gameObject.SetActive(true);
 
+        foreach (var button in buttons)
+        {
+            button.Value.SetActive(true);
+        }
+
         foreach (var selectedBlobId in selectedBlobIds)
         {
             buttons[selectedBlobId].SetActive(false); // TODO dont remove, but make unclickable with text over them
