@@ -30,7 +30,6 @@ public class ObjectManager : MonoBehaviour
         List<TaggedObject> taggedObjects = new List<TaggedObject>();
         foreach (var taggedObject in TaggedObjects)
         {
-            //if (taggedObject.ObjectTagList.Contains(objectTags))
             if (!objectTags.Except(taggedObject.ObjectTagList).Any())
             {
                 taggedObjects.Add(taggedObject);
@@ -45,7 +44,6 @@ public class ObjectManager : MonoBehaviour
         List<TaggedObject> taggedObjects = new List<TaggedObject>();
         foreach (var taggedObject in TaggedObjects)
         {
-            //if (taggedObject.ObjectTagList.Contains(objectTags))
             if (taggedObject.ObjectTagList.Any(x => objectTags.Contains(x)))
             {
                 taggedObjects.Add(taggedObject);
@@ -65,6 +63,20 @@ public class ObjectManager : MonoBehaviour
         foreach (var taggedObject in TaggedObjects)
         {
             if (teamTags.Contains(taggedObject.teamTag))
+            {
+                taggedObjects.Add(taggedObject);
+            }
+        }
+        return taggedObjects;
+    }
+
+    public List<TaggedObject> GetAllTeammates(TeamTag teamTag)
+    {
+        List<TaggedObject> taggedObjects = new List<TaggedObject>();
+
+        foreach (var taggedObject in TaggedObjects)
+        {
+            if (taggedObject.teamTag == teamTag)
             {
                 taggedObjects.Add(taggedObject);
             }

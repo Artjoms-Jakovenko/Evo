@@ -28,7 +28,7 @@ public static class LevelManager
         {
             saveData.levelProgresses.Add(levelName, new LevelProgress()); // TODO stars and stuff
             saveData.levelProgresses[levelName].starCount = starCount;
-            saveData.levelProgresses.Add(GetNextLevelName(levelName), new LevelProgress()); // TODO handle max level
+            saveData.levelProgresses.Add(GetNextLevelName(levelName), new LevelProgress()); // TODO handle max level // TODO handle if next level is already unlocked
         }
         else if (starCount > saveData.levelProgresses[levelName].starCount)
         {

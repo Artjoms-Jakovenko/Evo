@@ -39,16 +39,23 @@ public class GameManager : MonoBehaviour
         if (roundStarted)
         {
             roundTime -= Time.deltaTime;
-            var li = ObjectManager.GetInstance().GetAllWithTags(new List<ObjectTag>() { ObjectTag.Vegetarian });
-            if (li.Count == 0 || roundTime <= 0.0F)
+            List<TaggedObject> playerBlobs = ObjectManager.GetInstance().GetAllTeammates(TeamTag.Player);
+            if (playerBlobs.Count == 0 || roundTime <= 0.0F) // TODO add small delay to observe last player death
             {
                 roundStarted = false;
                 Time.timeScale = 0;
                 Debug.Log("Game over");
                 rewardScreen.SetActive(true);
-                GameRewardsSystem.AdministerRewards(currentLevel, 3); // TODO stars based on achievements
 
-                LevelManager.RecordLevelCompletion(SceneManager.GetActiveScene().name, 3); // TODO add possibility to fail a level and stars on achievements
+                if (roundTime > 0.0F)
+                {
+                    GameRewardsSystem.AdministerRewards(currentLevel, 0); // TODO stars based on achievements
+                }
+                else
+                {
+                    GameRewardsSystem.AdministerRewards(currentLevel, 3); // TODO stars based on achievements
+                    LevelManager.RecordLevelCompletion(SceneManager.GetActiveScene().name, 3); // TODO add possibility to fail a level and stars on achievements
+                }
             }
         }
     }
