@@ -10,6 +10,11 @@ public class Health : MonoBehaviour
         health = GetComponent<BlobStats>().stats.stats[StatName.Health].value;
     }
 
+    public float GetHealth()
+    {
+        return health;
+    }
+
     public void TakeDamage(float damage)
     {
         health -= damage;
