@@ -74,13 +74,21 @@ public class BlobSelector : MonoBehaviour
         AddBlobButton addBlobButton = blobButtons[buttonId].GetComponent<AddBlobButton>();
         addBlobButton.SwitchToPlusSign();
         selectedBlobIds.RemoveAll(x => x == addBlobButton.buttonBlobId);
-        Debug.Log("Deselect");
+
+        SetStartButtonInteractability();
     }
 
     public void SelectedBlob(int blobID)
     {
-        blobButtons[selectedButton].GetComponent<AddBlobButton>().SwitchToSelectedBlob(BlobType.Survivor, blobID); // TODO
-        selectedBlobIds.Add(blobID); // TODO also make possible to remove blobs
+        AddBlobButton addBlobButton = blobButtons[selectedButton].GetComponent<AddBlobButton>();
+
+        if (addBlobButton.HasBlobSelected())
+        {
+            selectedBlobIds.RemoveAll(x => x == addBlobButton.buttonBlobId);
+        }
+
+        addBlobButton.SwitchToSelectedBlob(BlobType.Survivor, blobID); // TODO
+        selectedBlobIds.Add(blobID);
 
         SetStartButtonInteractability();
     }

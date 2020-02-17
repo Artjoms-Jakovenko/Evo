@@ -14,6 +14,8 @@ public class AddBlobButton : MonoBehaviour
     Image blobImage;
     TextMeshProUGUI blobNameText;
 
+    bool hasBlobSelected = false;
+
     private void Start()
     {
         blobImage = selectedBlobView.GetComponent<Image>();
@@ -22,6 +24,7 @@ public class AddBlobButton : MonoBehaviour
 
     public void SwitchToSelectedBlob(BlobType blobType, int buttonBlobId)
     {
+        hasBlobSelected = true;
         this.buttonBlobId = buttonBlobId;
 
         selectedBlobView.gameObject.SetActive(true);
@@ -33,7 +36,13 @@ public class AddBlobButton : MonoBehaviour
 
     public void SwitchToPlusSign()
     {
+        hasBlobSelected = false;
         selectedBlobView.gameObject.SetActive(false);
         plusSignView.gameObject.SetActive(true);
+    }
+
+    public bool HasBlobSelected()
+    {
+        return hasBlobSelected;
     }
 }

@@ -64,6 +64,10 @@ public class BlobSelectScreen : MonoBehaviour
         gameObject.SetActive(true);
     }
 
+    public void CloseBlobSelectScreen()
+    {
+        gameObject.SetActive(false);
+    }
     public void SelectBlob(List<int> selectedBlobIds)
     {
         gameObject.SetActive(true);
