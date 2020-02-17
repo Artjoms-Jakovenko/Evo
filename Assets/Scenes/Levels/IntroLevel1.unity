@@ -26,7 +26,7 @@ RenderSettings:
   m_AmbientIntensity: 1
   m_AmbientMode: 0
   m_SubtractiveShadowColor: {r: 0.42, g: 0.478, b: 0.627, a: 1}
-  m_SkyboxMaterial: {fileID: 10304, guid: 0000000000000000f000000000000000, type: 0}
+  m_SkyboxMaterial: {fileID: 2100000, guid: 0ffaa0b7117ba8c47a9d05ae701d4b4d, type: 2}
   m_HaloStrength: 0.5
   m_FlareStrength: 1
   m_FlareFadeSpeed: 3
@@ -37,7 +37,7 @@ RenderSettings:
   m_ReflectionBounces: 1
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
-  m_Sun: {fileID: 0}
+  m_Sun: {fileID: 716917963}
   m_IndirectSpecularColor: {r: 0.18154702, g: 0.22719009, b: 0.30740646, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
@@ -202,6 +202,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 334ec365a65791c4094b25e9ed493124, type: 3}
+--- !u!108 &716917963 stripped
+Light:
+  m_CorrespondingSourceObject: {fileID: 2409603966336067317, guid: cf9d0fbd52201f245a9cb298a2158ebe,
+    type: 3}
+  m_PrefabInstance: {fileID: 762511060}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &721508461
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -342,6 +348,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: LevelSetup
+      objectReference: {fileID: 0}
+    - target: {fileID: 6079989619078939378, guid: cf9d0fbd52201f245a9cb298a2158ebe,
+        type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8981827363179452716, guid: cf9d0fbd52201f245a9cb298a2158ebe,
         type: 3}
