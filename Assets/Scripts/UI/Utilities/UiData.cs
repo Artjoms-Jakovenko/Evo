@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class UiData
+public static class UiData
 {
     public static Dictionary<StatName, StatUI> statDescriptions = new Dictionary<StatName, StatUI>()
     {
@@ -46,6 +46,20 @@ public class UiData
             statDisplayName = "Strength",
             statDescription = "How powerful this blob's hits are. Having a lot of strength helps fight other blobs.", // TODO
             statResourceImagePath = "UI/Stats/HealthIcon" // TODO
+        }
+        },
+    };
+
+    public static Dictionary<BlobType, BlobUI> blobTypeDescription = new Dictionary<BlobType, BlobUI>()
+    {
+        { BlobType.Survivor, new BlobUI()
+        {
+            iconSpritePath = "TODO" // TODO
+        }
+        },
+        { BlobType.Fighter, new BlobUI()
+        {
+            iconSpritePath = "TODO" // TODO
         }
         },
     };

@@ -2121,6 +2121,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1503370308}
     m_Modifications:
+    - target: {fileID: 4712803853194955572, guid: 983824505938f244d85c44215b7b7df2,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4712803854741983928, guid: 983824505938f244d85c44215b7b7df2,
         type: 3}
       propertyPath: m_Name
@@ -2179,6 +2184,11 @@ PrefabInstance:
     - target: {fileID: 4712803854741983935, guid: 983824505938f244d85c44215b7b7df2,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5961020219704902882, guid: 983824505938f244d85c44215b7b7df2,
+        type: 3}
+      propertyPath: m_SizeDelta.y
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -2845,7 +2855,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 8d05e437112bc36419ef6136140c8564, type: 3}
+  m_Sprite: {fileID: 21300000, guid: c86bf37deb867554f91845cff78b416a, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1

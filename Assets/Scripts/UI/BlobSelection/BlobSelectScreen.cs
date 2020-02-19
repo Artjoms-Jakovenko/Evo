@@ -33,15 +33,15 @@ public class BlobSelectScreen : MonoBehaviour
 
         for (int i = 0; i < blobDataKeys.Count; i++)
         {
-            GetObjectAt(i);
+            GetObjectAt(i, saveData.blobData[blobDataKeys[i]]);
         }
     }
 
-    private GameObject GetObjectAt(int position)
+    private GameObject GetObjectAt(int position, BlobStatsData blobStatsData)
     {
         // Create button
         GameObject blobBar = GameObjectUtility.InstantiateChild(blobBarAsset, blobContent, true);
-        blobBar.GetComponentInChildren<TextMeshProUGUI>().text = blobDataKeys[position].ToString();
+        blobBar.GetComponent<BlobSelectButton>().RenderButton(blobStatsData);
 
         // Add events to buttons
         int associatedBlobId = blobDataKeys[position];
