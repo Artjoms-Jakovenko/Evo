@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BlobUI
+public class RewardUI
 {
-    public string iconSpritePath;
+    public string iconPath;
 }

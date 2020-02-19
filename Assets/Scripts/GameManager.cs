@@ -49,11 +49,11 @@ public class GameManager : MonoBehaviour
 
                 if (roundTime > 0.0F)
                 {
-                    GameRewardsSystem.AdministerRewards(currentLevel, 0); // TODO stars based on achievements
+                    rewardScreen.GetComponent<RewardScreen>().AdministerRewards(currentLevel, 0); // TODO stars based on achievements
                 }
                 else
                 {
-                    GameRewardsSystem.AdministerRewards(currentLevel, 3); // TODO stars based on achievements
+                    rewardScreen.GetComponent<RewardScreen>().AdministerRewards(currentLevel, 3); // TODO stars based on achievements
                     LevelManager.RecordLevelCompletion(SceneManager.GetActiveScene().name, 3); // TODO add possibility to fail a level and stars on achievements
                 }
             }

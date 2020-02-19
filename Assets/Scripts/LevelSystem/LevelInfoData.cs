@@ -35,6 +35,7 @@ public static class LevelInfoData
         switch (levelEnum)
         {
             case LevelEnum.TestingGround:
+                levelRewards.participationReward.Add(InventoryEnum.Money, 3); // TODO rebalance
                 // No rewards in test level
                 break;
             case LevelEnum.IntroLevel1:
