@@ -64,6 +64,25 @@ public static class UiData
         },
     };
 
+    public static Dictionary<ActionEnum, ActionIconUI> actionIconDescription = new Dictionary<ActionEnum, ActionIconUI>()
+    {
+        { ActionEnum.Eat, new ActionIconUI()
+        {
+            iconPath = "TODO" // TODO
+        }
+        },
+        { ActionEnum.MeleeFight, new ActionIconUI()
+        {
+            iconPath = "TODO" // TODO
+        }
+        },
+        { ActionEnum.RunAway, new ActionIconUI()
+        {
+            iconPath = "TODO" // TODO
+        }
+        },
+    };
+
     public static Dictionary<InventoryEnum, RewardUI> inventoryDescription = new Dictionary<InventoryEnum, RewardUI>()
     {
         { InventoryEnum.Money, new RewardUI()

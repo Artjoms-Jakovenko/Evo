@@ -13,7 +13,8 @@ public class BehaviourSystem : MonoBehaviour
 
     private Dictionary<ActionEnum, IAction> ActionDictionary = new Dictionary<ActionEnum, IAction>();
 
-    private 
+    public delegate void ActionChanged(ActionEnum actionEnum);
+    public event ActionChanged OnActionChanged;
 
     /*void OnDrawGizmos() // To test colliders
     {
@@ -75,6 +76,7 @@ public class BehaviourSystem : MonoBehaviour
             {
                 timeWithoutReaction -= reactionPeriod;
                 CurrentStrategy = GetBestAction();
+                OnActionChanged(CurrentStrategy);
                 ActionDictionary[CurrentStrategy].MakeDecision();
             }
 
