@@ -60,4 +60,34 @@ public static class LevelInfoData
 
         return rewards;
     }
+
+    public static List<ILevelGoal> GetLevelGoals(LevelEnum levelEnum)
+    {
+        List<ILevelGoal> levelGoals = new List<ILevelGoal>();
+
+        switch (levelEnum)
+        {
+            case LevelEnum.TestingGround:
+                levelGoals.Add(new SurviveGoal(10.0F));
+                levelGoals.Add(new SurviveGoal(20.0F));
+                levelGoals.Add(new SurviveGoal(90.0F));
+                break;
+            case LevelEnum.IntroLevel1:
+                break;
+            case LevelEnum.IntroLevel2:
+                break;
+            case LevelEnum.IntroLevel3:
+                break;
+            default:
+                Debug.LogError("LevelGoalInfo was not found.");
+                break;
+        }
+
+        if(levelGoals.Count != 3)
+        {
+            Debug.LogError("Level goal number is not equal to three:" + levelGoals.Count);
+        }
+
+        return levelGoals;
+    }
 }
