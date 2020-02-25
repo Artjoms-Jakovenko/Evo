@@ -21,8 +21,8 @@ public class SurviveGoal : ILevelGoal
         return false;
     }
 
-    public string GoalDescription()
+    public string GetGoalDescription()
     {
-        throw new System.NotImplementedException();
+        return "Survive for " + neededSurviveTime + " seconds";
     }
 }

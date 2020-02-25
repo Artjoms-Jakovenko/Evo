@@ -27,6 +27,11 @@ public class LevelGoalSystem : MonoBehaviour
         }*/
     }
 
+    public List<ILevelGoal> GetLevelGoals()
+    {
+        return LevelInfoData.GetLevelGoals(LevelManager.GetLevelEnum(SceneManager.GetActiveScene().name));
+    }
+
     public int GetLevelCompletedGoalCount()
     {
         int completedGoalCount = 0;

@@ -5,5 +5,5 @@ using UnityEngine;
 public interface ILevelGoal
 {
     bool IsRequirementMet();
-    string GoalDescription(); // TODO to explain goals
+    string GetGoalDescription(); // TODO to explain goals
 }
