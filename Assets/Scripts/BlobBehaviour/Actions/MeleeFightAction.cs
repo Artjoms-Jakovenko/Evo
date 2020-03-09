@@ -24,6 +24,7 @@ public class MeleeFightAction : IAction
         blobAnimationController = blob.GetComponent<AnimationController>();
         blobStats = blob.GetComponent<BlobStats>();
         teamTag = blob.GetComponent<TaggedObject>().teamTag;
+        blobAnimationController.OnKicked += DealDamage;
     }
 
     public float GetActionPriorityScore()

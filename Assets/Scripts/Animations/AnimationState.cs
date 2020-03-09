@@ -6,5 +6,6 @@ public enum AnimationState
 {
     Idle,
     Walk,
-    Kick
+    Kick,
+    Death
 }

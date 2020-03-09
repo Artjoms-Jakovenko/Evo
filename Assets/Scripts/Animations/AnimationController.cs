@@ -4,16 +4,19 @@ using UnityEngine;
 
 public class AnimationController : MonoBehaviour
 {
+    public delegate void AnimationEventHappened();
+    public event AnimationEventHappened OnKicked;
+
     Animator blobAnimator;
     Dictionary<AnimationState, string> animationStates = new Dictionary<AnimationState, string>()
     {
         { AnimationState.Idle, "Idle" },
         { AnimationState.Walk, "Walk" },
         { AnimationState.Kick, "Kick" },
+        { AnimationState.Death, "Death" },
     };
     float lockTime = 0.0F;
 
-    private MeleeFightAction meleeFightAction;
     private AnimationState lockedState;
     private bool lockActionCompleted = false;
 
@@ -26,21 +29,7 @@ public class AnimationController : MonoBehaviour
     {
         if (IsAnimationLocked())
         {
-            lockTime -= Time.deltaTime;
-
-            if (!lockActionCompleted)
-            {
-                switch (lockedState)
-                {
-                    case AnimationState.Kick:
-                        if (lockTime < 0.25F)
-                        {
-                            meleeFightAction.DealDamage();
-                            lockActionCompleted = true;
-                        }
-                        break;
-                }
-            }
+            lockTime -= Time.deltaTime; // TODO move into play animation can be deterministcally calculated
         }
     }
 
@@ -52,7 +41,7 @@ public class AnimationController : MonoBehaviour
         }
     }
 
-    public void PlayAnimation(MeleeFightAction meleeFightAction) // Workaround due to restriction to a single thread while Actions are not Monobehaviour and can't be invoked
+    public void PlayAnimation(MeleeFightAction meleeFightAction) // Workaround due to restriction to a single thread while Actions are not Monobehaviour and can't be invoked TODO remove
     {
         lockActionCompleted = false;
         this.meleeFightAction = meleeFightAction;
@@ -64,5 +53,13 @@ public class AnimationController : MonoBehaviour
     public bool IsAnimationLocked()
     {
         return lockTime > 0.0F;
+    }
+
+    public void KickAnimationEvent()
+    {
+        if(OnKicked != null)
+        {
+            OnKicked();
+        }
     }
 }
