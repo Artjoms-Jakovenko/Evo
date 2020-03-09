@@ -44,7 +44,6 @@ public class AnimationController : MonoBehaviour
     public void PlayAnimation(MeleeFightAction meleeFightAction) // Workaround due to restriction to a single thread while Actions are not Monobehaviour and can't be invoked TODO remove
     {
         lockActionCompleted = false;
-        this.meleeFightAction = meleeFightAction;
         lockTime = 1.25F;
         lockedState = AnimationState.Kick;
         blobAnimator.Play(animationStates[AnimationState.Kick]);

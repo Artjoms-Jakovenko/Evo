@@ -62,7 +62,7 @@ public static class BlobInstantiator
         blobStatsData.stats.Add(StatName.Health, new Stat(1.0F, 1.0F, 2.0F, 0, 4));
         blobStatsData.stats.Add(StatName.MaxEnergy, new Stat(20.0F, 20.0F, 40.0F, 0, 4));
         blobStatsData.stats.Add(StatName.Sight, new Stat(5.0F, 5.0F, 10.0F, 0, 4));
-        blobStatsData.stats.Add(StatName.ReactionTime, new Stat(3.0F, 3.0F, 2.0F, 0, 4));
+        blobStatsData.stats.Add(StatName.ReactionTime, new Stat(5.0F, 5.0F, 2.0F, 0, 4));
 
         blobStatsData.possibleActions.Add(ActionEnum.None);
         blobStatsData.possibleActions.Add(ActionEnum.Eat);
