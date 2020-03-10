@@ -101,6 +101,12 @@ public class ObjectManager : MonoBehaviour
         Destroy(gameObject);
     }
 
+    public void DestroyObject(GameObject gameObject, float delay)
+    {
+        RemoveFromObjectList(gameObject);
+        Destroy(gameObject, delay);
+    }
+
     public void RemoveFromObjectList(GameObject gameObject)
     {
         TaggedObjects.RemoveAll(x => x.gameObject.GetInstanceID() == gameObject.GetInstanceID());

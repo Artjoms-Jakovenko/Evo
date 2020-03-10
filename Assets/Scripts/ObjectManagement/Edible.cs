@@ -7,7 +7,7 @@ public class Edible : MonoBehaviour
     public float portionEnergyValue = 0.0F;
     public int portionNumber = 1;
 
-    private void Awake()
+    public void Awake()
     {
         gameObject.GetComponent<TaggedObject>().AddTag(ObjectTag.Edible);
     }
@@ -16,7 +16,7 @@ public class Edible : MonoBehaviour
     {
         if(biteSize >= portionNumber)
         {
-            ObjectManager.GetInstance().DestroyObject(gameObject);
+            HandleDestruction();
             return portionNumber * portionEnergyValue;
         }
         else
@@ -24,5 +24,10 @@ public class Edible : MonoBehaviour
             portionNumber -= biteSize;
             return portionNumber * biteSize;
         }
+    }
+
+    public virtual void HandleDestruction()
+    {
+        ObjectManager.GetInstance().DestroyObject(gameObject);
     }
 }
