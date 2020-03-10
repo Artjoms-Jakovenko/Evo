@@ -16,6 +16,8 @@ public class AnimationController : MonoBehaviour
         { AnimationState.Death, "Death" },
     };
 
+    bool animationLocked = false;
+
     void Awake()
     {
         blobAnimator = gameObject.GetComponent<Animator>();
@@ -23,20 +25,32 @@ public class AnimationController : MonoBehaviour
 
     public void PlayAnimation(AnimationState animationState)
     {
-        if (!IsAnimationLocked())
+        AnimatorStateInfo stateInfo = blobAnimator.GetCurrentAnimatorStateInfo(0); // Base layer 0
+        animationLocked = !stateInfo.loop;
+
+        if (!IsAnimationLocked() || animationState == AnimationState.Death)
         {
             blobAnimator.Play(animationStates[animationState]);
+            blobAnimator.Update(0.0F); // Have to call this, because otherwise does not register stateInfo change
         }
     }
 
     public bool IsAnimationLocked()
     {
-        AnimatorStateInfo stateInfo = blobAnimator.GetCurrentAnimatorStateInfo(0); // Base layer 0
-        return !stateInfo.loop;
+        return animationLocked;
     }
+
+    #region Animation events
 
     public void KickAnimationEvent()
     {
         OnKicked?.Invoke();
     }
+
+    public void DeathAnimationEvent()
+    {
+        Destroy(gameObject);
+    }
+
+    #endregion
 }

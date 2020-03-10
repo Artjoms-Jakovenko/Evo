@@ -63,7 +63,7 @@ public class BlobMovement : MonoBehaviour // TODO consider adding target reached
     {
         navMeshAgent.isStopped = true;
         navMeshAgent.velocity = Vector3.zero;
-        blobAnimationController.PlayAnimation(AnimationState.Idle); // Presumably this doesnt work
+        blobAnimationController.PlayAnimation(AnimationState.Idle); // TODO Presumably this doesnt work
     }
 
     public void SetSpeed(float speed)

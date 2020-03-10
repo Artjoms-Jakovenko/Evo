@@ -97,8 +97,13 @@ public class ObjectManager : MonoBehaviour
 
     public void DestroyObject(GameObject gameObject)
     {
-        TaggedObjects.RemoveAll(x => x.gameObject.GetInstanceID() == gameObject.GetInstanceID());
+        RemoveFromObjectList(gameObject);
         Destroy(gameObject);
+    }
+
+    public void RemoveFromObjectList(GameObject gameObject)
+    {
+        TaggedObjects.RemoveAll(x => x.gameObject.GetInstanceID() == gameObject.GetInstanceID());
     }
 
     public TaggedObject GetClothestObject(float maxDistance, GameObject origin, List<TaggedObject> objects)

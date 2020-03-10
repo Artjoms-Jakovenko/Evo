@@ -20,7 +20,10 @@ public class Health : MonoBehaviour
         health -= damage;
         if(health <= 0.0F)
         {
-            ObjectManager.GetInstance().DestroyObject(gameObject);
+            ObjectManager.GetInstance().RemoveFromObjectList(gameObject);
+            GetComponent<BoxCollider>().enabled = false;
+            GetComponent<AnimationController>().PlayAnimation(AnimationState.Death);
+            GetComponent<BlobMovement>().Stop();
         }
     }
 }
