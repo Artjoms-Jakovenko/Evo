@@ -4,8 +4,8 @@ ModelImporter:
   serializedVersion: 19300
   internalIDToNameTable:
   - first:
-      74: -3251886212090908864
-    second: Cube|Death
+      74: 2131864205095655572
+    second: Cube|Idle
   - first:
       74: -982115091633673366
     second: Armature|Death
@@ -47,11 +47,11 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: Cube|Death
-      takeName: Cube|Death
+      name: Cube|Idle
+      takeName: Cube|Idle
       internalID: 0
       firstFrame: 0
-      lastFrame: 32
+      lastFrame: 180
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
@@ -167,7 +167,7 @@ ModelImporter:
       takeName: Armature|Walk
       internalID: 0
       firstFrame: 0
-      lastFrame: 35
+      lastFrame: 36
       wrapMode: 0
       orientationOffsetY: 0
       level: 0

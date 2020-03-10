@@ -63,7 +63,7 @@ public class MeleeFightAction : IAction
             Collider[] hitColliders = Physics.OverlapSphere(colliderPosition, 0.5F * 1.3F, 0x0100);
             if (hitColliders.Any(x => x.gameObject.GetInstanceID() == enemyToChase.GetInstanceID()))
             {
-                blobAnimationController.PlayAnimation(this);
+                blobAnimationController.PlayAnimation(AnimationState.Kick);
                 blobMovement.LookTo(blob.transform, enemyToChase.transform); // TODO remove
                 enemyToFight = enemyToChase;
                 enemyToChase = null;
