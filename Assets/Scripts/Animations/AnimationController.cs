@@ -16,7 +16,15 @@ public class AnimationController : MonoBehaviour
         { AnimationState.Death, "Death" },
     };
 
-    bool animationLocked = false;
+    float lockTime = 0.0F;
+
+    private void Update()
+    {
+        if (IsAnimationLocked())
+        {
+            lockTime -= Time.deltaTime;
+        }
+    }
 
     void Awake()
     {
@@ -25,19 +33,26 @@ public class AnimationController : MonoBehaviour
 
     public void PlayAnimation(AnimationState animationState)
     {
-        AnimatorStateInfo stateInfo = blobAnimator.GetCurrentAnimatorStateInfo(0); // Base layer 0
-        animationLocked = !stateInfo.loop;
-
         if (!IsAnimationLocked() || animationState == AnimationState.Death)
         {
             blobAnimator.Play(animationStates[animationState]);
             blobAnimator.Update(0.0F); // Have to call this, because otherwise does not register stateInfo change
         }
+
+        switch (animationState)
+        {
+            case AnimationState.Death:
+                lockTime = float.MaxValue;
+                break;
+            case AnimationState.Kick:
+                lockTime = 1.25F;
+                break;
+        }
     }
 
     public bool IsAnimationLocked()
     {
-        return animationLocked;
+        return lockTime > 0.0F;
     }
 
     #region Animation events
