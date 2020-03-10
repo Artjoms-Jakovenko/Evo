@@ -11,7 +11,7 @@ public class AnimationController : MonoBehaviour
     Dictionary<AnimationState, string> animationStates = new Dictionary<AnimationState, string>()
     {
         { AnimationState.Idle, "Idle" },
-        { AnimationState.Walk, "Walk" },
+        { AnimationState.Walk, "Death" },
         { AnimationState.Kick, "Kick" },
         { AnimationState.Death, "Death" },
     };
