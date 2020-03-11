@@ -5,8 +5,8 @@ using UnityEngine;
 
 public static class SaveDataUtility
 {
-    public static void PayMoney(SaveData saveData, int amount) // TODO get rid off?
+    public static void PayMoney(int amount) // TODO get rid off?
     {
-        saveData.inventory.AddToInventory(InventoryEnum.Money, -amount);
+        SaveSystem.saveData.inventory.AddToInventory(InventoryEnum.Money, -amount);
     }
 }

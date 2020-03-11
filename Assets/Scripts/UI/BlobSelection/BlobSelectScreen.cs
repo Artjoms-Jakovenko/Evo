@@ -25,15 +25,13 @@ public class BlobSelectScreen : MonoBehaviour
 
     void Start()
     {
-        SaveData saveData = SaveSystem.Load();
-
         // Sort blobDataKeys
-        blobDataKeys = new List<int>(saveData.blobData.Keys);
+        blobDataKeys = new List<int>(SaveSystem.saveData.blobData.Keys);
         blobDataKeys.Sort();
 
         for (int i = 0; i < blobDataKeys.Count; i++)
         {
-            GetObjectAt(i, saveData.blobData[blobDataKeys[i]]);
+            GetObjectAt(i, SaveSystem.saveData.blobData[blobDataKeys[i]]);
         }
     }
 

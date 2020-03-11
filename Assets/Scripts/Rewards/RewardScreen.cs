@@ -26,16 +26,14 @@ public class RewardScreen : MonoBehaviour
 
     public void AdministerRewards(LevelEnum levelName, int starsAchieved) // TODO
     {
-        SaveData saveData = SaveSystem.Load();
-
         Dictionary<InventoryEnum, int> rewards = LevelInfoData.GetLevelRewards(levelName, 0, starsAchieved); // TODO read stars from savefile
 
         foreach (var reward in rewards)
         {
-            saveData.inventory.AddToInventory(reward.Key, reward.Value);
+            SaveSystem.saveData.inventory.AddToInventory(reward.Key, reward.Value);
         }
 
-        SaveSystem.Save(saveData);
+        SaveSystem.Save();
 
         RenderRewards(rewards);
     }

@@ -24,7 +24,7 @@ public static class LevelManager
 
     public static void RecordLevelCompletion(string levelName, int starCount)
     {
-        SaveData saveData = SaveSystem.Load();
+        SaveData saveData = SaveSystem.saveData;
         if (!saveData.levelProgresses.ContainsKey(levelName)) // TODO also handle updating completed levels
         {
             saveData.levelProgresses.Add(levelName, new LevelProgress()); // TODO stars and stuff
@@ -37,7 +37,7 @@ public static class LevelManager
             saveData.levelProgresses[levelName].starCount = starCount;
         }
 
-        SaveSystem.Save(saveData);
+        SaveSystem.Save();
     }
 
     public static void UnlockLevel(LevelEnum levelEnum)
@@ -47,16 +47,15 @@ public static class LevelManager
 
     private static void UnlockLevel(string levelName)
     {
-        SaveData saveData = SaveSystem.Load();
-        if (!saveData.levelProgresses.ContainsKey(levelName))
+        if (!SaveSystem.saveData.levelProgresses.ContainsKey(levelName))
         {
             if (!levelNameMapping.ContainsKey(levelName))
             {
                 Debug.LogError(levelName + ": such level does not exist.");
             }
-            saveData.levelProgresses.Add(levelName, new LevelProgress());
+            SaveSystem.saveData.levelProgresses.Add(levelName, new LevelProgress());
         }
-        saveData.levelProgresses[levelName].unlocked = true;
+        SaveSystem.saveData.levelProgresses[levelName].unlocked = true;
     }
 
     public static LevelEnum GetLevelEnum(string levelSceneName)
@@ -81,8 +80,7 @@ public static class LevelManager
 
     public static bool IsLevelUnlocked(LevelEnum levelEnum)
     {
-        SaveData saveData = SaveSystem.Load();
-        return saveData.levelProgresses[GetLevelName(levelEnum)].unlocked;
+        return SaveSystem.saveData.levelProgresses[GetLevelName(levelEnum)].unlocked;
     }
 
     public static void StartLevel(LevelEnum levelEnum)

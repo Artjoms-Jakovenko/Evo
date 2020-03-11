@@ -69,12 +69,10 @@ public class GameManager : MonoBehaviour
         List<int> selectedBlobIds = blobSelectorBar.GetSelectedBlobIds();
         blobSelector.SetActive(false);
         
-        SaveData saveData = SaveSystem.Load();
-
         List<BlobStatsData> blobStatsDatas = new List<BlobStatsData>();
         foreach(int selectedBlobId in selectedBlobIds)
         {
-            blobStatsDatas.Add(saveData.blobData[selectedBlobId]);
+            blobStatsDatas.Add(SaveSystem.saveData.blobData[selectedBlobId]);
         }
 
         Spawn(blobStatsDatas, TeamTag.Player);
