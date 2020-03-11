@@ -10,6 +10,8 @@ public static class SaveSystem
     private readonly static string savePath = Application.persistentDataPath + "/evo.json";
     private readonly static JsonSerializerSettings jsonSerializerSettings = new JsonSerializerSettings();
 
+
+
     static SaveSystem()
     {
         jsonSerializerSettings.ObjectCreationHandling = ObjectCreationHandling.Replace;
@@ -20,9 +22,9 @@ public static class SaveSystem
         return JsonConvert.SerializeObject(saveData, jsonSerializerSettings);
     }
 
-    public static void Save(SaveData saveData) // TODO create save file on first game launch
+    public static void Save(SaveData saveData)
     {
-        using (var fileStream = new FileStream(savePath, FileMode.Create)) // TODO check if openorcreate is best, if using open, must clear file beforehand
+        using (var fileStream = new FileStream(savePath, FileMode.Create))
         {
             string todo = SaveToString(saveData);
             byte[] data = new UTF8Encoding(true).GetBytes(SaveToString(saveData));

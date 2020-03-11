@@ -5,4 +5,5 @@ using UnityEngine;
 public class LevelProgress
 {
     public int starCount = 0;
+    public bool unlocked = false;
 }
