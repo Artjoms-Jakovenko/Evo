@@ -29,16 +29,16 @@ public static class LevelManager
         {
             saveData.levelProgresses.Add(levelName, new LevelProgress()); // TODO stars and stuff
             saveData.levelProgresses[levelName].starCount = starCount;
-
-            string nextLevelName = GetNextLevelName(levelName);
-            if(nextLevelName != null)
-            {
-                UnlockLevel(nextLevelName);
-            }
         }
         else if (starCount > saveData.levelProgresses[levelName].starCount)
         {
             saveData.levelProgresses[levelName].starCount = starCount;
+        }
+
+        string nextLevelName = GetNextLevelName(levelName);
+        if (nextLevelName != null && starCount > 0)
+        {
+            UnlockLevel(nextLevelName);
         }
 
         SaveSystem.Save();
@@ -67,7 +67,7 @@ public static class LevelManager
         return levelNameMapping[levelSceneName];
     }
 
-    public static string GetNextLevelName(string currentLevelName)
+    private static string GetNextLevelName(string currentLevelName)
     {
         int nextLevelNumber = levelOrder.FindIndex(x => x == levelNameMapping[currentLevelName]) + 1;
         if (nextLevelNumber >= levelOrder.Count)
@@ -94,9 +94,34 @@ public static class LevelManager
             return false;
         }
     }
+    
+    public static bool IsNextLevelUnlocked(LevelEnum levelEnum)
+    {
+        string levelName = GetNextLevelName(GetLevelName(levelEnum));
+        if (SaveSystem.saveData.levelProgresses.ContainsKey(levelName))
+        {
+            return SaveSystem.saveData.levelProgresses[levelName].unlocked;
+        }
+        else
+        {
+            return false;
+        }
+    }
 
     public static void StartLevel(LevelEnum levelEnum)
     {
         SceneManager.LoadScene(GetLevelName(levelEnum));
+    }
+
+    public static void Load(LevelEnum levelEnum, bool loadNextLevel = false)
+    {
+        if (loadNextLevel)
+        {
+            SceneManager.LoadScene(GetNextLevelName(GetLevelName(levelEnum))); // Should not be called on the last level
+        }
+        else
+        {
+            SceneManager.LoadScene(GetLevelName(levelEnum));
+        }
     }
 }

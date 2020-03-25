@@ -70,9 +70,12 @@ public static class LevelInfoData
             case LevelEnum.TestingGround:
                 levelGoals.Add(new SurviveGoal(10.0F));
                 levelGoals.Add(new SurviveGoal(20.0F));
-                levelGoals.Add(new SurviveGoal(90.0F));
+                levelGoals.Add(new SurviveGoal(30.0F));
                 break;
-            case LevelEnum.IntroLevel1:
+            case LevelEnum.IntroLevel1: // TODO adjust
+                levelGoals.Add(new SurviveGoal(5.0F));
+                levelGoals.Add(new SurviveGoal(10.0F));
+                levelGoals.Add(new SurviveGoal(20.0F));
                 break;
             case LevelEnum.IntroLevel2:
                 break;

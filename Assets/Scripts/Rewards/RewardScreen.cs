@@ -12,15 +12,18 @@ public class RewardScreen : MonoBehaviour
 
     private GameObject rewardBlockAsset;
 
-    string nextLevelName;
-    private void Awake()
+    LevelEnum nextLevel;
+    private void OnEnable()
     {
-        nextLevelName = LevelManager.GetNextLevelName(SceneManager.GetActiveScene().name);
-        if(nextLevelName == null)
+        nextLevel = LevelManager.GetLevelEnum(SceneManager.GetActiveScene().name);
+        if (!LevelManager.IsNextLevelUnlocked(nextLevel))
         {
             nextLevelButton.SetActive(false);
         }
+    }
 
+    private void Awake()
+    {
         rewardBlockAsset = Resources.Load<GameObject>("UI/RewardBlock");
     }
 
@@ -58,6 +61,6 @@ public class RewardScreen : MonoBehaviour
 
     public void NextLevel()
     {
-        SceneManager.LoadScene(nextLevelName);
+        LevelManager.Load(nextLevel, true);
     }
 }
