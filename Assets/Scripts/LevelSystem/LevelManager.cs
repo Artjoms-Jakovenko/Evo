@@ -29,8 +29,12 @@ public static class LevelManager
         {
             saveData.levelProgresses.Add(levelName, new LevelProgress()); // TODO stars and stuff
             saveData.levelProgresses[levelName].starCount = starCount;
-            saveData.levelProgresses.Add(GetNextLevelName(levelName), new LevelProgress()); // TODO handle max level // TODO handle if next level is already unlocked
-            UnlockLevel(levelName); // TODO adjust with raii savesystem
+
+            string nextLevelName = GetNextLevelName(levelName);
+            if(nextLevelName != null)
+            {
+                UnlockLevel(nextLevelName);
+            }
         }
         else if (starCount > saveData.levelProgresses[levelName].starCount)
         {
