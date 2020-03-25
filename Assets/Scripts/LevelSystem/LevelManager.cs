@@ -80,7 +80,15 @@ public static class LevelManager
 
     public static bool IsLevelUnlocked(LevelEnum levelEnum)
     {
-        return SaveSystem.saveData.levelProgresses[GetLevelName(levelEnum)].unlocked;
+        string levelName = GetLevelName(levelEnum);
+        if (SaveSystem.saveData.levelProgresses.ContainsKey(levelName))
+        {
+            return SaveSystem.saveData.levelProgresses[levelName].unlocked;
+        }
+        else
+        {
+            return false;
+        }
     }
 
     public static void StartLevel(LevelEnum levelEnum)

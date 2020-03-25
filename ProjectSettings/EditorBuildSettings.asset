@@ -23,4 +23,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Levels/IntroLevel3.unity
     guid: fc10fc44b38295546ac5e850ae513611
+  - enabled: 1
+    path: Assets/Scenes/LevelSelectScreen.unity
+    guid: df87466833b502848879537ae8a6cc30
   m_configObjects: {}

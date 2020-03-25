@@ -2027,7 +2027,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1143911481
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2381,6 +2381,7 @@ MonoBehaviour:
   evolvePriceText: {fileID: 477959545}
   evolveButton: {fileID: 1666521039}
   blobSelectScreen: {fileID: 1748666079}
+  statSelectionBarRenderer: {fileID: 120595177}
 --- !u!1 &1559537697
 GameObject:
   m_ObjectHideFlags: 0
@@ -3160,7 +3161,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1905776824
 RectTransform:
   m_ObjectHideFlags: 0

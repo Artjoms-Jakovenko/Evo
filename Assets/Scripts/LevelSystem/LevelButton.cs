@@ -11,6 +11,7 @@ public class LevelButton : MonoBehaviour
         if (!LevelManager.IsLevelUnlocked(associatedLevel))
         {
             Debug.Log("Not unlocked " + associatedLevel.ToString()); // TODO change color or so
+            gameObject.SetActive(false); // TODO rework into make nonclickable
         }
     }
 

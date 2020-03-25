@@ -22,7 +22,7 @@ public class StatSelectionBarRenderer : MonoBehaviour
     // Workaround to access dictionary by index, since dictionary element order is undefined
     List<StatName> blobStatsDataKeys;
 
-    public void Start()
+    public void Awake()
     {
         statBackground = Resources.Load("UI/EvolveShop/StatButton") as GameObject;
         selectedStatRenderer = selectedStatWindow.GetComponent<SelectedStatRenderer>();

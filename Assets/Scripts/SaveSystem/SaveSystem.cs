@@ -59,6 +59,8 @@ public static class SaveSystem
         BlobStatsData blobStatsData2 = BlobInstantiator.CreateBlob(BlobType.Fighter);
         _saveData.blobData.Add(1, blobStatsData2); // TODO dict key
 
+        LevelManager.UnlockLevel(LevelEnum.IntroLevel1); // Adds first level data to _saveData
+
         Save();
     }
 

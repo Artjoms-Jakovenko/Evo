@@ -15,8 +15,8 @@ public class UpgradeShop : MonoBehaviour
     public TextMeshProUGUI evolvePriceText;
     public Button evolveButton;
     public BlobSelectScreen blobSelectScreen;
+    public StatSelectionBarRenderer statSelectionBarRenderer;
 
-    StatSelectionBarRenderer statSelectionBarRenderer;
     StatName selectedStat;
 
     private int selectedBlobId;
@@ -37,10 +37,7 @@ public class UpgradeShop : MonoBehaviour
 
     private void Start()
     {
-        statSelectionBarRenderer = gameObject.GetComponentInChildren<StatSelectionBarRenderer>();
-
         selectedBlobId = SaveSystem.saveData.lastSelectedBlobInUpgradeShop;
-        UpdateBlobUI();
     }
 
     public void Upgrade()
@@ -70,6 +67,7 @@ public class UpgradeShop : MonoBehaviour
     public void EnableUI()
     {
         shopCanvas.SetActive(true);
+        UpdateBlobUI();
         UpdateUI();
     }
 
