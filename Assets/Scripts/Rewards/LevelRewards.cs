@@ -10,7 +10,7 @@ public class LevelRewards
     public Dictionary<InventoryEnum, int> twoStarReward = new Dictionary<InventoryEnum, int>();
     public Dictionary<InventoryEnum, int> threeStarReward = new Dictionary<InventoryEnum, int>();
 
-    public Dictionary<InventoryEnum, int> GetLevelRewards(int maxStarsAchieved, int starsAchieved) // TODO come up with a nice algorithm
+    public Dictionary<InventoryEnum, int> GetLevelRewards(int maxStarsAchieved, int starsAchieved)
     {
         Dictionary<InventoryEnum, int> rewards = new Dictionary<InventoryEnum, int>();
 
@@ -21,17 +21,17 @@ public class LevelRewards
             AddCombineReward(rewards, victoryReward);
         }
 
-        if(starsAchieved == 3 || maxStarsAchieved < 3)
+        if(starsAchieved == 3 && maxStarsAchieved < 3)
         {
             AddCombineReward(rewards, threeStarReward);
         }
 
-        if (starsAchieved >= 2 || maxStarsAchieved < 2)
+        if (starsAchieved >= 2 && maxStarsAchieved < 2)
         {
             AddCombineReward(rewards, twoStarReward);
         }
 
-        if (starsAchieved >= 1 || maxStarsAchieved < 1)
+        if (starsAchieved >= 1 && maxStarsAchieved < 1)
         {
             AddCombineReward(rewards, oneStarReward);
         }

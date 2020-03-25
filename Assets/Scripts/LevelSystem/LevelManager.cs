@@ -124,4 +124,9 @@ public static class LevelManager
             SceneManager.LoadScene(GetLevelName(levelEnum));
         }
     }
+
+    public static LevelProgress GetLevelProgress(LevelEnum levelEnum)
+    {
+        return SaveSystem.saveData.levelProgresses[GetLevelName(levelEnum)];
+    }
 }

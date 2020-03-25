@@ -59,11 +59,15 @@ public class GameManager : MonoBehaviour
                     }
                     else*/
                     //{
+                    #region strict order
                     int starsAchieved = levelGoalSystem.GetLevelCompletedGoalCount();
-                    LevelManager.RecordLevelCompletion(SceneManager.GetActiveScene().name, starsAchieved); // TODO add possibility to fail a level and stars on achievements
 
+                    rewardScreen.GetComponent<RewardScreen>().AdministerRewards(currentLevel, starsAchieved); // Must be before RecordLevelCompletion because it uses last star count
+                    LevelManager.RecordLevelCompletion(SceneManager.GetActiveScene().name, starsAchieved); // TODO add possibility to fail a level and stars on achievements
+                    
                     rewardScreen.SetActive(true);
-                    rewardScreen.GetComponent<RewardScreen>().AdministerRewards(currentLevel, starsAchieved); // TODO stars based on achievements
+                    rewardScreen.GetComponent<RewardScreen>().RenderRewards();
+                    #endregion
                     //}
                 }
                 else

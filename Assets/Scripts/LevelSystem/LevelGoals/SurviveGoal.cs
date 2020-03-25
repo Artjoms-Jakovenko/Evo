@@ -14,7 +14,7 @@ public class SurviveGoal : ILevelGoal
     public bool IsRequirementMet()
     {
         //if(ObjectManager.GetInstance().GetAllTeammates(TeamTag.Player).Count > 0 && Time.time >= neededSurviveTime) // TODO left out to check if any of the blobs are alive
-        if(Time.time >= neededSurviveTime)
+        if(Time.timeSinceLevelLoad >= neededSurviveTime)
         {
             return true;
         }

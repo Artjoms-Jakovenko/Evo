@@ -11,6 +11,7 @@ public class RewardScreen : MonoBehaviour
     public GameObject rewardContent;
 
     private GameObject rewardBlockAsset;
+    private Dictionary<InventoryEnum, int> rewards;
 
     LevelEnum nextLevel;
     private void OnEnable()
@@ -27,9 +28,9 @@ public class RewardScreen : MonoBehaviour
         rewardBlockAsset = Resources.Load<GameObject>("UI/RewardBlock");
     }
 
-    public void AdministerRewards(LevelEnum levelName, int starsAchieved) // TODO
+    public void AdministerRewards(LevelEnum levelName, int starsAchieved)
     {
-        Dictionary<InventoryEnum, int> rewards = LevelInfoData.GetLevelRewards(levelName, 0, starsAchieved); // TODO read stars from savefile
+        rewards = LevelInfoData.GetLevelRewards(levelName, LevelManager.GetLevelProgress(levelName).starCount, starsAchieved);
 
         foreach (var reward in rewards)
         {
@@ -37,11 +38,9 @@ public class RewardScreen : MonoBehaviour
         }
 
         SaveSystem.Save();
-
-        RenderRewards(rewards);
     }
 
-    public void RenderRewards(Dictionary<InventoryEnum, int> rewards)
+    public void RenderRewards()
     {
         foreach (var reward in rewards)
         {
