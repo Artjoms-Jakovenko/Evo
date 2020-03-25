@@ -4,8 +4,8 @@ ModelImporter:
   serializedVersion: 19300
   internalIDToNameTable:
   - first:
-      74: 2131864205095655572
-    second: Cube|Idle
+      74: 1363115428705337131
+    second: Cube|Kick
   - first:
       74: -982115091633673366
     second: Armature|Death
@@ -47,11 +47,11 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: Cube|Idle
-      takeName: Cube|Idle
+      name: Cube|Kick
+      takeName: Cube|Kick
       internalID: 0
       firstFrame: 0
-      lastFrame: 180
+      lastFrame: 30
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
@@ -99,14 +99,7 @@ ModelImporter:
       mirror: 0
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
-      events:
-      - time: 1
-        functionName: DeathAnimationEvent
-        data: 
-        objectReferenceParameter: {instanceID: 0}
-        floatParameter: 0
-        intParameter: 0
-        messageOptions: 0
+      events: []
       transformMask: []
       maskType: 3
       maskSource: {instanceID: 0}
@@ -232,7 +225,7 @@ ModelImporter:
     tangentImportMode: 3
     normalCalculationMode: 4
     legacyComputeAllNormalsFromSmoothingGroupsWhenMeshHasBlendShapes: 0
-    blendShapeNormalImportMode: 1
+    blendShapeNormalImportMode: 2
     normalSmoothingSource: 0
   referencedClips: []
   importAnimation: 1
