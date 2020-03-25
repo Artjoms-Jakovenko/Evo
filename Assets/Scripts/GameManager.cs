@@ -16,6 +16,7 @@ public class GameManager : MonoBehaviour
     private LevelEnum currentLevel;
     private LevelGoalSystem levelGoalSystem;
     float roundTime = 60.0F;
+    float afterDeathDelay = 1.25F;
     bool roundStarted;
     private readonly List<Transform> availableSpawnPoints = new List<Transform>();
 
@@ -44,24 +45,31 @@ public class GameManager : MonoBehaviour
             List<TaggedObject> playerBlobs = ObjectManager.GetInstance().GetAllTeammates(TeamTag.Player);
             if (playerBlobs.Count == 0 || roundTime <= 0.0F) // TODO add small delay to observe last player death
             {
-                roundStarted = false;
-                Time.timeScale = 0;
-                Debug.Log("Game over");
-
-                Debug.Log("Stars achieved: " + levelGoalSystem.GetLevelCompletedGoalCount()); // TODO remove and use in rewards
-
-                /*if (roundTime > 0.0F) // TODO figure out what to do with survive time when died before level completion
+                if(afterDeathDelay <= 0 || roundTime <= 0.0F)
                 {
-                    rewardScreen.GetComponent<RewardScreen>().AdministerRewards(currentLevel, 0); // TODO stars based on achievements
-                }
-                else*/
-                //{
-                int starsAchieved = levelGoalSystem.GetLevelCompletedGoalCount();
-                LevelManager.RecordLevelCompletion(SceneManager.GetActiveScene().name, starsAchieved); // TODO add possibility to fail a level and stars on achievements
+                    roundStarted = false;
+                    Time.timeScale = 0;
+                    Debug.Log("Game over");
 
-                rewardScreen.SetActive(true);
-                rewardScreen.GetComponent<RewardScreen>().AdministerRewards(currentLevel, starsAchieved); // TODO stars based on achievements
-                //}
+                    Debug.Log("Stars achieved: " + levelGoalSystem.GetLevelCompletedGoalCount()); // TODO remove and use in rewards
+
+                    /*if (roundTime > 0.0F) // TODO figure out what to do with survive time when died before level completion
+                    {
+                        rewardScreen.GetComponent<RewardScreen>().AdministerRewards(currentLevel, 0); // TODO stars based on achievements
+                    }
+                    else*/
+                    //{
+                    int starsAchieved = levelGoalSystem.GetLevelCompletedGoalCount();
+                    LevelManager.RecordLevelCompletion(SceneManager.GetActiveScene().name, starsAchieved); // TODO add possibility to fail a level and stars on achievements
+
+                    rewardScreen.SetActive(true);
+                    rewardScreen.GetComponent<RewardScreen>().AdministerRewards(currentLevel, starsAchieved); // TODO stars based on achievements
+                    //}
+                }
+                else
+                {
+                    afterDeathDelay -= Time.deltaTime;
+                }
             }
         }
     }
