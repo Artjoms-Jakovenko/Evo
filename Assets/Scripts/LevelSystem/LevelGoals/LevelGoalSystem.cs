@@ -5,15 +5,10 @@ using UnityEngine.SceneManagement;
 
 public class LevelGoalSystem : MonoBehaviour
 {
-    Dictionary<ILevelGoal, bool> levelGoals = new Dictionary<ILevelGoal, bool>();
+    LevelGoals levelGoals;
     private void Awake()
     {
-        LevelGoals _levelGoals = LevelInfoData.GetLevelGoals(LevelManager.GetLevelEnum(SceneManager.GetActiveScene().name));
-
-        levelGoals.Add(_levelGoals.mainGoal, false);
-        levelGoals.Add(_levelGoals.oneStarGoal, false);
-        levelGoals.Add(_levelGoals.twoStarGoal, false);
-        levelGoals.Add(_levelGoals.threeStarGoal, false);
+        levelGoals = LevelInfoData.GetLevelGoals(LevelManager.GetLevelEnum(SceneManager.GetActiveScene().name));
     }
 
     public LevelGoals GetLevelGoals()
@@ -25,19 +20,24 @@ public class LevelGoalSystem : MonoBehaviour
     {
         int completedGoalCount = 0;
 
-        foreach (var levelGoal in levelGoals)
+        if (levelGoals.oneStarGoal.IsRequirementMet())
         {
-            if (levelGoal.Key.IsRequirementMet())
-            {
-                completedGoalCount++;
-            }
+            completedGoalCount++;
+        }
+        if (levelGoals.twoStarGoal.IsRequirementMet())
+        {
+            completedGoalCount++;
+        }
+        if (levelGoals.threeStarGoal.IsRequirementMet())
+        {
+            completedGoalCount++;
         }
 
         return completedGoalCount;
     }
 
-    bool IsLevelCompleted() // TODO
+    public bool IsLevelCompleted()
     {
-        return false;
+        return levelGoals.mainGoal.IsRequirementMet();
     }
 }

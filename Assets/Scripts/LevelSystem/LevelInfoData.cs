@@ -28,7 +28,7 @@ public static class LevelInfoData
         return blobStatsDatas;
     }
 
-    public static Dictionary<InventoryEnum, int> GetLevelRewards(LevelEnum levelEnum, int lastAchievedStars, int achievedStars)
+    public static Dictionary<InventoryEnum, int> GetLevelRewards(LevelEnum levelEnum, bool completed, int lastAchievedStars, int achievedStars)
     {
         LevelRewards levelRewards = new LevelRewards();
 
@@ -56,7 +56,7 @@ public static class LevelInfoData
                 break;
         }
 
-        Dictionary<InventoryEnum, int> rewards = levelRewards.GetLevelRewards(lastAchievedStars, achievedStars);
+        Dictionary<InventoryEnum, int> rewards = levelRewards.GetLevelRewards(lastAchievedStars, completed, achievedStars);
 
         return rewards;
     }

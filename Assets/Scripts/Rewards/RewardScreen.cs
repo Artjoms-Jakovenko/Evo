@@ -28,9 +28,9 @@ public class RewardScreen : MonoBehaviour
         rewardBlockAsset = Resources.Load<GameObject>("UI/RewardBlock");
     }
 
-    public void AdministerRewards(LevelEnum levelName, int starsAchieved)
+    public void AdministerRewards(LevelEnum levelName, bool completed, int starsAchieved)
     {
-        rewards = LevelInfoData.GetLevelRewards(levelName, LevelManager.GetLevelProgress(levelName).starCount, starsAchieved);
+        rewards = LevelInfoData.GetLevelRewards(levelName, completed, LevelManager.GetLevelProgress(levelName).starCount, starsAchieved);
 
         foreach (var reward in rewards)
         {

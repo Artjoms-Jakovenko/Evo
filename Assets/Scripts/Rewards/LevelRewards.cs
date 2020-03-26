@@ -10,30 +10,30 @@ public class LevelRewards
     public Dictionary<InventoryEnum, int> twoStarReward = new Dictionary<InventoryEnum, int>();
     public Dictionary<InventoryEnum, int> threeStarReward = new Dictionary<InventoryEnum, int>();
 
-    public Dictionary<InventoryEnum, int> GetLevelRewards(int maxStarsAchieved, int starsAchieved)
+    public Dictionary<InventoryEnum, int> GetLevelRewards(int maxStarsAchieved, bool completed, int starsAchieved)
     {
         Dictionary<InventoryEnum, int> rewards = new Dictionary<InventoryEnum, int>();
 
         AddCombineReward(rewards, participationReward);
 
-        if(starsAchieved > 0)
+        if(completed)
         {
             AddCombineReward(rewards, victoryReward);
-        }
 
-        if(starsAchieved == 3 && maxStarsAchieved < 3)
-        {
-            AddCombineReward(rewards, threeStarReward);
-        }
+            if (starsAchieved == 3 && maxStarsAchieved < 3)
+            {
+                AddCombineReward(rewards, threeStarReward);
+            }
 
-        if (starsAchieved >= 2 && maxStarsAchieved < 2)
-        {
-            AddCombineReward(rewards, twoStarReward);
-        }
+            if (starsAchieved >= 2 && maxStarsAchieved < 2)
+            {
+                AddCombineReward(rewards, twoStarReward);
+            }
 
-        if (starsAchieved >= 1 && maxStarsAchieved < 1)
-        {
-            AddCombineReward(rewards, oneStarReward);
+            if (starsAchieved >= 1 && maxStarsAchieved < 1)
+            {
+                AddCombineReward(rewards, oneStarReward);
+            }
         }
 
         return rewards;

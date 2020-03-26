@@ -22,7 +22,7 @@ public static class LevelManager
         { "IntroLevel3", LevelEnum.IntroLevel3},
     };
 
-    public static void RecordLevelCompletion(string levelName, int starCount)
+    public static void RecordLevelCompletion(string levelName, bool completed, int starCount)
     {
         SaveData saveData = SaveSystem.saveData;
         if (!saveData.levelProgresses.ContainsKey(levelName)) // TODO also handle updating completed levels
@@ -36,7 +36,7 @@ public static class LevelManager
         }
 
         string nextLevelName = GetNextLevelName(levelName);
-        if (nextLevelName != null && starCount > 0)
+        if (nextLevelName != null && completed)
         {
             UnlockLevel(nextLevelName);
         }

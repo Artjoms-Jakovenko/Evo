@@ -53,17 +53,17 @@ public class GameManager : MonoBehaviour
 
                     Debug.Log("Stars achieved: " + levelGoalSystem.GetLevelCompletedGoalCount()); // TODO remove and use in rewards
 
-                    /*if (roundTime > 0.0F) // TODO figure out what to do with survive time when died before level completion
-                    {
-                        rewardScreen.GetComponent<RewardScreen>().AdministerRewards(currentLevel, 0); // TODO stars based on achievements
-                    }
-                    else*/
-                    //{
                     #region strict order
-                    int starsAchieved = levelGoalSystem.GetLevelCompletedGoalCount();
+                    int starsAchieved = 0;
+                    bool levelCompleted = levelGoalSystem.IsLevelCompleted();
 
-                    rewardScreen.GetComponent<RewardScreen>().AdministerRewards(currentLevel, starsAchieved); // Must be before RecordLevelCompletion because it uses last star count
-                    LevelManager.RecordLevelCompletion(SceneManager.GetActiveScene().name, starsAchieved); // TODO add possibility to fail a level and stars on achievements
+                    if (levelCompleted)
+                    {
+                        starsAchieved = levelGoalSystem.GetLevelCompletedGoalCount();
+                    }
+
+                    rewardScreen.GetComponent<RewardScreen>().AdministerRewards(currentLevel, levelCompleted, starsAchieved); // Must be before RecordLevelCompletion because it uses last star count
+                    LevelManager.RecordLevelCompletion(SceneManager.GetActiveScene().name, levelCompleted, starsAchieved); // TODO add possibility to fail a level and stars on achievements
                     
                     rewardScreen.SetActive(true);
                     rewardScreen.GetComponent<RewardScreen>().RenderRewards();
