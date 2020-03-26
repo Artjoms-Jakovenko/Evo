@@ -7,6 +7,7 @@ public class Grass : Edible
     public override void HandleDestruction()
     {
         GetComponentInChildren<Animator>().enabled = true;
+        GetComponent<Collider>().enabled = false;
         ObjectManager.GetInstance().DestroyObject(gameObject, 0.625F);
     }
 }
