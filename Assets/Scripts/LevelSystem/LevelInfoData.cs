@@ -61,21 +61,23 @@ public static class LevelInfoData
         return rewards;
     }
 
-    public static List<ILevelGoal> GetLevelGoals(LevelEnum levelEnum)
+    public static LevelGoals GetLevelGoals(LevelEnum levelEnum)
     {
-        List<ILevelGoal> levelGoals = new List<ILevelGoal>();
+        LevelGoals levelGoals = new LevelGoals();
 
         switch (levelEnum)
         {
             case LevelEnum.TestingGround:
-                levelGoals.Add(new SurviveGoal(10.0F));
-                levelGoals.Add(new SurviveGoal(20.0F));
-                levelGoals.Add(new SurviveGoal(30.0F));
+                levelGoals.mainGoal = new SurviveGoal(5.0F);
+                levelGoals.oneStarGoal = new SurviveGoal(5.0F);
+                levelGoals.twoStarGoal = new SurviveGoal(10.0F);
+                levelGoals.threeStarGoal = new SurviveGoal(20.0F);
                 break;
             case LevelEnum.IntroLevel1: // TODO adjust
-                levelGoals.Add(new SurviveGoal(5.0F));
-                levelGoals.Add(new SurviveGoal(10.0F));
-                levelGoals.Add(new SurviveGoal(20.0F));
+                levelGoals.mainGoal = new SurviveGoal(5.0F);
+                levelGoals.oneStarGoal = new SurviveGoal(5.0F);
+                levelGoals.twoStarGoal = new SurviveGoal(10.0F);
+                levelGoals.threeStarGoal = new SurviveGoal(20.0F);
                 break;
             case LevelEnum.IntroLevel2:
                 break;
@@ -84,11 +86,6 @@ public static class LevelInfoData
             default:
                 Debug.LogError("LevelGoalInfo was not found.");
                 break;
-        }
-
-        if(levelGoals.Count != 3)
-        {
-            Debug.LogError("Level goal number is not equal to three:" + levelGoals.Count);
         }
 
         return levelGoals;

@@ -6,18 +6,21 @@ using UnityEngine;
 public class LevelGoalRenderer : MonoBehaviour
 {
     public LevelGoalSystem levelGoalSystem;
+    public GameObject goalMain; // TODO these could just be replaced by public textmeshpros
     public GameObject goalOne;
     public GameObject goalTwo;
     public GameObject goalThree;
 
+    private TextMeshProUGUI goalMainText;
     private TextMeshProUGUI goalOneText;
     private TextMeshProUGUI goalTwoText;
     private TextMeshProUGUI goalThreeText;
 
-    List<ILevelGoal> levelGoals;
+    LevelGoals levelGoals;
 
     private void Awake()
     {
+        goalMainText = goalMain.GetComponentInChildren<TextMeshProUGUI>();
         goalOneText = goalOne.GetComponentInChildren<TextMeshProUGUI>();
         goalTwoText = goalTwo.GetComponentInChildren<TextMeshProUGUI>();
         goalThreeText = goalThree.GetComponentInChildren<TextMeshProUGUI>();
@@ -27,16 +30,18 @@ public class LevelGoalRenderer : MonoBehaviour
     {
         levelGoals = levelGoalSystem.GetLevelGoals();
 
-        goalOneText.text = levelGoals[0].GetGoalDescription();
-        goalTwoText.text = levelGoals[1].GetGoalDescription();
-        goalThreeText.text = levelGoals[2].GetGoalDescription();
+        goalMainText.text = levelGoals.mainGoal.GetGoalDescription();
+        goalOneText.text = levelGoals.oneStarGoal.GetGoalDescription();
+        goalTwoText.text = levelGoals.twoStarGoal.GetGoalDescription();
+        goalThreeText.text = levelGoals.threeStarGoal.GetGoalDescription();
     }
 
     void Update()
     {
-        SetGoalColor(goalOneText, levelGoals[0]);
-        SetGoalColor(goalTwoText, levelGoals[1]);
-        SetGoalColor(goalThreeText, levelGoals[2]);
+        SetGoalColor(goalMainText, levelGoals.mainGoal);
+        SetGoalColor(goalOneText, levelGoals.oneStarGoal);
+        SetGoalColor(goalTwoText, levelGoals.twoStarGoal);
+        SetGoalColor(goalThreeText, levelGoals.threeStarGoal);
     }
 
     void SetGoalColor(TextMeshProUGUI text, ILevelGoal levelGoal)
