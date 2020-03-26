@@ -1,5 +1,7 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using TMPro;
 using UnityEngine;
@@ -31,22 +33,22 @@ public class BlobSelectScreen : MonoBehaviour
 
         for (int i = 0; i < blobDataKeys.Count; i++)
         {
-            GetObjectAt(i, SaveSystem.saveData.blobData[blobDataKeys[i]]);
+            CreateBlobSelectButton(blobDataKeys[i], SaveSystem.saveData.blobData[blobDataKeys[i]]);
         }
     }
 
-    private GameObject GetObjectAt(int position, BlobStatsData blobStatsData)
+    private GameObject CreateBlobSelectButton(int blobStatsDataKey, BlobStatsData blobStatsData)
     {
         // Create button
         GameObject blobBar = GameObjectUtility.InstantiateChild(blobBarAsset, blobContent, true);
         blobBar.GetComponent<BlobSelectButton>().RenderButton(blobStatsData);
 
         // Add events to buttons
-        int associatedBlobId = blobDataKeys[position];
+        int associatedBlobId = blobStatsDataKey;
         blobBar.GetComponent<Button>().onClick.AddListener(() => BlobClicked(associatedBlobId));
 
         // Add button to the dictionary
-        buttons.Add(blobDataKeys[position], blobBar);
+        buttons.Add(blobStatsDataKey, blobBar);
 
         return blobBar;
     }
