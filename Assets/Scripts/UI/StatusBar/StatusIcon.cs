@@ -26,6 +26,6 @@ public class StatusIcon : MonoBehaviour
 
     public void SetStatusIcon(ActionEnum action)
     {
-        actionIcon.sprite = Resources.Load<Sprite>(UiData.actionIconDescription[action].iconPath);
+        actionIcon.sprite = UiData.actionIconDescription[action].Icon;
     }
 }

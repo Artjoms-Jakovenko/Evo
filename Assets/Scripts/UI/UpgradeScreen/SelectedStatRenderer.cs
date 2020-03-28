@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class SelectedStatRenderer : MonoBehaviour
 {
@@ -36,16 +37,8 @@ public class SelectedStatRenderer : MonoBehaviour
             GameObject.Destroy(child.gameObject);
         }
 
-        foreach (Transform child in selectedStatBackground.transform)
-        {
-            GameObject.Destroy(child.gameObject);
-        }
-
-        string imagePath = UiData.statDescriptions[statName].statResourceImagePath;
-        GameObject image = GameObjectUtility.InstantiateChild(Resources.Load<GameObject>(imagePath), selectedStatBackground, true);
-        image.transform.localPosition = new Vector3(-8.0F, -25.0F, 0.0F);
-        image.transform.localScale = new Vector3(1.25F, 1.25F, 1.25F);
-        image.transform.SetAsFirstSibling(); // Render it behind info button
+        Image statIcon = selectedStatBackground.transform.Find("StatIcon").GetComponent<Image>();
+        statIcon.sprite = UiData.statDescriptions[statName].Icon;
 
         RectTransform rectTransform = upgradeLevelBackground.GetComponent<RectTransform>();
 

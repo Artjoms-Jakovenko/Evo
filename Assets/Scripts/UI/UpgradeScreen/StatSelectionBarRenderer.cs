@@ -63,9 +63,8 @@ public class StatSelectionBarRenderer : MonoBehaviour
         statBackgroundGameObject.GetComponent<Button>().onClick.AddListener(() => StatButtonClicked(statCaptured));
 
         // Add image
-        string imagePath = UiData.statDescriptions[blobStatsDataKeys[position]].statResourceImagePath;
-        GameObject image = GameObjectUtility.InstantiateChild(Resources.Load<GameObject>(imagePath), statBackgroundGameObject, true);
-        image.transform.localPosition = new Vector3(-8.0F, 15.0F, 0.0F);
+        Image statIcon = statBackgroundGameObject.transform.Find("StatIcon").GetComponent<Image>();
+        statIcon.sprite = UiData.statDescriptions[blobStatsDataKeys[position]].Icon;
 
         // Change text
         TextMeshProUGUI statValueText = statBackgroundGameObject.GetComponentInChildren<TextMeshProUGUI>();

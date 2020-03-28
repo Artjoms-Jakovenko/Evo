@@ -6,103 +6,91 @@ public static class UiData
 {
     public static Dictionary<StatName, StatUI> statDescriptions = new Dictionary<StatName, StatUI>()
     {
-        { StatName.Speed, new StatUI()
+        { StatName.Speed, new StatUI("UI/Stats/SpeedICon")
         {
             statDisplayName = "Speed",
             statDescription = "How fast the blob moves. More speed will help the blob outrun other species.",
-            statResourceImagePath = "UI/Stats/SpeedICon" // TODO load image object instead of path
         }
         },
-        { StatName.Health, new StatUI()
+        { StatName.Health, new StatUI("UI/Stats/HealthIcon")
         {
             statDisplayName = "Health",
             statDescription = "How much damage a blob can take before it dies. More health means the blob will likely survive longer.",
-            statResourceImagePath = "UI/Stats/HealthIcon"
         }
         },
-        { StatName.Sight, new StatUI()
+        { StatName.Sight, new StatUI("UI/Stats/HealthIcon") // TODO
         {
             statDisplayName = "Sight",
             statDescription = "How far a blob can notice things. More sight will help the blob make better decisions and react faster.",
-            statResourceImagePath = "UI/Stats/HealthIcon" // TODO
         }
         },
-        { StatName.ReactionTime, new StatUI()
+        { StatName.ReactionTime, new StatUI("UI/Stats/HealthIcon") // TODO
         {
             statDisplayName = "Reaction time",
             statDescription = "How fast a blob can make decisions.", // TODO
-            statResourceImagePath = "UI/Stats/HealthIcon" // TODO
         }
         },
-        { StatName.MaxEnergy, new StatUI()
+        { StatName.MaxEnergy, new StatUI("UI/Stats/HealthIcon") // TODO
         {
             statDisplayName = "Max energy",
             statDescription = "How much energy can a blob store. Having a lot of energy helps blob not starve and lets blob perform special actions.", // TODO
-            statResourceImagePath = "UI/Stats/HealthIcon" // TODO
         }
         },
-        { StatName.Strength, new StatUI()
+        { StatName.Strength, new StatUI("UI/Stats/HealthIcon") // TODO
         {
             statDisplayName = "Strength",
             statDescription = "How powerful this blob's hits are. Having a lot of strength helps fight other blobs.", // TODO
-            statResourceImagePath = "UI/Stats/HealthIcon" // TODO
         }
         },
     };
 
     public static Dictionary<BlobType, BlobUI> blobTypeDescription = new Dictionary<BlobType, BlobUI>()
     {
-        { BlobType.Survivor, new BlobUI()
+        { BlobType.Survivor, new BlobUI("TODO") // "TODO"
         {
-            iconSpritePath = "TODO" // TODO
         }
         },
-        { BlobType.Fighter, new BlobUI()
+        { BlobType.Fighter, new BlobUI("TODO") // "TODO"
         {
-            iconSpritePath = "TODO" // TODO
         }
         },
     };
 
     public static Dictionary<ActionEnum, ActionIconUI> actionIconDescription = new Dictionary<ActionEnum, ActionIconUI>()
     {
-        { ActionEnum.Eat, new ActionIconUI()
+        { ActionEnum.Eat, new ActionIconUI("UI/ActionIcons/me")
         {
-            iconPath = "TODO" // TODO
+
         }
         },
-        { ActionEnum.MeleeFight, new ActionIconUI()
+        { ActionEnum.MeleeFight, new ActionIconUI("TODO")
         {
-            iconPath = "TODO" // TODO
+
         }
         },
-        { ActionEnum.RunAway, new ActionIconUI()
+        { ActionEnum.RunAway, new ActionIconUI("TODO")
         {
-            iconPath = "TODO" // TODO
+
         }
         },
     };
 
     public static Dictionary<InventoryEnum, RewardUI> inventoryDescription = new Dictionary<InventoryEnum, RewardUI>()
     {
-        { InventoryEnum.Money, new RewardUI()
+        { InventoryEnum.Money, new RewardUI("TODO") // "TODO"
         {
-            iconPath = "TODO" // TODO
         }
         },
-        { InventoryEnum.PremiumMoney, new RewardUI()
+        { InventoryEnum.PremiumMoney, new RewardUI("TODO") // "TODO"
         {
-            iconPath = "TODO" // TODO
         }
         },
-        { InventoryEnum.StartChest, new RewardUI()
+        { InventoryEnum.StartChest, new RewardUI("TODO") // "TODO"
         {
-            iconPath = "TODO" // TODO
         }
         },
-        { InventoryEnum.Capsule, new RewardUI()
+        { InventoryEnum.Capsule, new RewardUI("TODO") // "TODO"
         {
-            iconPath = "TODO" // TODO
         }
         },
     };

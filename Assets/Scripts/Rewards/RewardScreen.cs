@@ -48,7 +48,7 @@ public class RewardScreen : MonoBehaviour
 
             rewardBlock.transform.Find("RewardAmountText").GetComponent<TextMeshProUGUI>().text = reward.Value.ToString();
 
-            Sprite rewardIcon = Resources.Load<Sprite>(UiData.inventoryDescription[reward.Key].iconPath);
+            Sprite rewardIcon = UiData.inventoryDescription[reward.Key].Icon;
             rewardBlock.transform.Find("RewardIcon").GetComponent<Image>().sprite = rewardIcon;
         }
     }
