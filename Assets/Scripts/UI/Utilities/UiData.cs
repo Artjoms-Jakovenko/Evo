@@ -58,17 +58,22 @@ public static class UiData
 
     public static Dictionary<ActionEnum, ActionIconUI> actionIconDescription = new Dictionary<ActionEnum, ActionIconUI>()
     {
-        { ActionEnum.Eat, new ActionIconUI("UI/ActionIcons/me")
+        { ActionEnum.None, new ActionIconUI("UI/StatusBar/ActionIcons/IdleActionIcon")
         {
 
         }
         },
-        { ActionEnum.MeleeFight, new ActionIconUI("TODO")
+        { ActionEnum.Eat, new ActionIconUI("UI/StatusBar/ActionIcons/EatActionIcon")
         {
 
         }
         },
-        { ActionEnum.RunAway, new ActionIconUI("TODO")
+        { ActionEnum.MeleeFight, new ActionIconUI("UI/StatusBar/ActionIcons/MeleeFightActionIcon")
+        {
+
+        }
+        },
+        { ActionEnum.RunAway, new ActionIconUI("UI/StatusBar/ActionIcons/RunAwayActionIcon")
         {
 
         }
