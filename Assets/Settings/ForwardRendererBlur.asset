@@ -10,9 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: de640fe3d0db1804a85f9fc8f5cadab6, type: 3}
-  m_Name: ForwardRenderer
+  m_Name: ForwardRendererBlur
   m_EditorClassIdentifier: 
-  m_RendererFeatures: []
+  m_RendererFeatures:
+  - {fileID: 1087195147607271698}
   m_RendererFeatureMap: 
   postProcessData: {fileID: 11400000, guid: 41439944d30ece34e96484bdb6645b55, type: 2}
   shaders:
@@ -36,3 +37,23 @@ MonoBehaviour:
     failOperation: 0
     zFailOperation: 0
   m_ShadowTransparentReceive: 1
+--- !u!114 &1087195147607271698
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5ef545cc23ef54644891707462456dab, type: 3}
+  m_Name: NewKawaseBlur
+  m_EditorClassIdentifier: 
+  m_Active: 1
+  settings:
+    renderPassEvent: 250
+    blurMaterial: {fileID: 2100000, guid: 0850f6f845508ca448fd9e4a7e881d63, type: 2}
+    blurPasses: 4
+    downsample: 2
+    copyToFramebuffer: 1
+    targetName: _blurTexture
