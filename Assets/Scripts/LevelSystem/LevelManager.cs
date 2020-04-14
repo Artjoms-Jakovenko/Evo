@@ -38,6 +38,7 @@ public static class LevelManager
         string nextLevelName = GetNextLevelName(levelName);
         if (nextLevelName != null && completed)
         {
+            saveData.levelProgresses[levelName].completed = true;
             UnlockLevel(nextLevelName);
         }
 
@@ -94,7 +95,21 @@ public static class LevelManager
             return false;
         }
     }
-    
+
+    public static bool IsLevelCompleted(LevelEnum levelEnum)
+    {
+        string levelName = GetLevelName(levelEnum);
+        if (SaveSystem.saveData.levelProgresses.ContainsKey(levelName))
+        {
+            return SaveSystem.saveData.levelProgresses[levelName].completed;
+        }
+        else
+        {
+            Debug.Log("Level info is missing from savefile.");
+            return false;
+        }
+    }
+
     public static bool IsNextLevelUnlocked(LevelEnum levelEnum)
     {
         string levelName = GetNextLevelName(GetLevelName(levelEnum));
@@ -128,5 +143,19 @@ public static class LevelManager
     public static LevelProgress GetLevelProgress(LevelEnum levelEnum)
     {
         return SaveSystem.saveData.levelProgresses[GetLevelName(levelEnum)];
+    }
+
+    public static int GetLevelStarCount(LevelEnum levelEnum)
+    {
+        string levelName = GetLevelName(levelEnum);
+        if (SaveSystem.saveData.levelProgresses.ContainsKey(levelName))
+        {
+            return SaveSystem.saveData.levelProgresses[levelName].starCount;
+        }
+        else
+        {
+            Debug.Log("Level info is missing from savefile.");
+            return 0;
+        }
     }
 }
