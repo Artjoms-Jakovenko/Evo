@@ -75,9 +75,9 @@ public static class LevelInfoData
                 break;
             case LevelEnum.IntroLevel1: // TODO adjust
                 levelGoals.mainGoal = new SurviveGoal(5.0F);
-                levelGoals.oneStarGoal = new SurviveGoal(50.0F);
-                levelGoals.twoStarGoal = new SurviveGoal(100.0F);
-                levelGoals.threeStarGoal = new SurviveGoal(2000.0F);
+                levelGoals.oneStarGoal = new SurviveGoal(5.0F);
+                levelGoals.twoStarGoal = new SurviveGoal(10.0F);
+                levelGoals.threeStarGoal = new SurviveGoal(200.0F);
                 break;
             case LevelEnum.IntroLevel2:
                 break;

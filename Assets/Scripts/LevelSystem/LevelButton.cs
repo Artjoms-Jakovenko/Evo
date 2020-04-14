@@ -38,30 +38,37 @@ public class LevelButton : MonoBehaviour
                     if (LevelManager.IsLevelCompleted(associatedLevel))
                     {
                         glowLight.intensity = 600.0F;
-                        crystal.GetComponent<Renderer>().material = Resources.Load<Material>("UI/LevelSelectScreen/GreenGlow");  
+                        SetCrystalMaterialAndGlow(Resources.Load<Material>("UI/LevelSelectScreen/GreenGlow"));
+                        glowLight.color = crystal.GetComponent<Renderer>().material.GetColor("_BaseColor");
                     }
                     break;
                 case 1:
                     glowLight.intensity = 700.0F;
-                    crystal.GetComponent<Renderer>().material = Resources.Load<Material>("UI/LevelSelectScreen/BlueGlow");
+                    SetCrystalMaterialAndGlow(Resources.Load<Material>("UI/LevelSelectScreen/BlueGlow"));
                     centerStar.SetActive(true);
                     break;
                 case 2:
                     glowLight.intensity = 800.0F;
-                    crystal.GetComponent<Renderer>().material = Resources.Load<Material>("UI/LevelSelectScreen/PurpleGlow");
+                    SetCrystalMaterialAndGlow(Resources.Load<Material>("UI/LevelSelectScreen/PurpleGlow"));
                     leftStar.SetActive(true);
                     rightStar.SetActive(true);
                     break;
                 case 3:
                     glowLight.intensity = 1000.0F;
 
-                    crystal.GetComponent<Renderer>().material = Resources.Load<Material>("UI/LevelSelectScreen/OrangeGlow");
+                    SetCrystalMaterialAndGlow(Resources.Load<Material>("UI/LevelSelectScreen/OrangeGlow"));
                     leftStar.SetActive(true);
                     centerStar.SetActive(true);
                     rightStar.SetActive(true);
                     break;
             }
         }
+    }
+
+    private void SetCrystalMaterialAndGlow(Material material)
+    {
+        crystal.GetComponent<Renderer>().material = material;
+        glowLight.color = crystal.GetComponent<Renderer>().material.GetColor("_BaseColor");
     }
 
     private void OnMouseDown()
