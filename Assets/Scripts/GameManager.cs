@@ -66,7 +66,7 @@ public class GameManager : MonoBehaviour
                     LevelManager.RecordLevelCompletion(SceneManager.GetActiveScene().name, levelCompleted, starsAchieved); // TODO add possibility to fail a level and stars on achievements
                     
                     rewardScreen.SetActive(true);
-                    rewardScreen.GetComponent<RewardScreen>().RenderRewards();
+                    rewardScreen.GetComponent<RewardScreen>().RenderRewardScreen();
                     #endregion
                     //}
                 }
