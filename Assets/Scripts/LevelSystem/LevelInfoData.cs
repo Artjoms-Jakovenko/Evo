@@ -40,6 +40,9 @@ public static class LevelInfoData
                 break;
             case LevelEnum.IntroLevel1:
                 levelRewards.participationReward.Add(InventoryEnum.Money, 3); // TODO rebalance
+                levelRewards.participationReward.Add(InventoryEnum.PremiumMoney, 1); // TODO rebalance
+                levelRewards.participationReward.Add(InventoryEnum.StartChest, 1); // TODO rebalance
+                levelRewards.participationReward.Add(InventoryEnum.Capsule, 1); // TODO rebalance
                 levelRewards.victoryReward.Add(InventoryEnum.Money, 7); // TODO rebalance
                 levelRewards.oneStarReward.Add(InventoryEnum.Money, 10); // TODO rebalance
                 levelRewards.twoStarReward.Add(InventoryEnum.Money, 10); // TODO rebalance

@@ -82,11 +82,11 @@ public static class UiData
 
     public static Dictionary<InventoryEnum, RewardUI> inventoryDescription = new Dictionary<InventoryEnum, RewardUI>()
     {
-        { InventoryEnum.Money, new RewardUI("TODO") // "TODO"
+        { InventoryEnum.Money, new RewardUI("UI/Rewards/PrimaryMoney")
         {
         }
         },
-        { InventoryEnum.PremiumMoney, new RewardUI("TODO") // "TODO"
+        { InventoryEnum.PremiumMoney, new RewardUI("UI/Rewards/PremiumMoney")
         {
         }
         },

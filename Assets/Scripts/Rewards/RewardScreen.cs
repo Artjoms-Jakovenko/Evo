@@ -33,7 +33,7 @@ public class RewardScreen : MonoBehaviour
 
     private void Awake()
     {
-        rewardBlockAsset = Resources.Load<GameObject>("UI/RewardBlock");
+        rewardBlockAsset = Resources.Load<GameObject>("UI/Rewards/RewardBlock");
         leftStar = transform.Find("RewardScreenCanvas/Background/LeftStar").GetComponent<Image>();
         centerStar = transform.Find("RewardScreenCanvas/Background/CenterStar").GetComponent<Image>();
         rightStar = transform.Find("RewardScreenCanvas/Background/RightStar").GetComponent<Image>();

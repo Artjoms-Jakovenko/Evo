@@ -45,13 +45,13 @@ public class LevelButton : MonoBehaviour
                 case 1:
                     glowLight.intensity = 700.0F;
                     SetCrystalMaterialAndGlow(Resources.Load<Material>("UI/LevelSelectScreen/BlueGlow"));
-                    centerStar.SetActive(true);
+                    leftStar.SetActive(true);
                     break;
                 case 2:
                     glowLight.intensity = 800.0F;
                     SetCrystalMaterialAndGlow(Resources.Load<Material>("UI/LevelSelectScreen/PurpleGlow"));
                     leftStar.SetActive(true);
-                    rightStar.SetActive(true);
+                    centerStar.SetActive(true);
                     break;
                 case 3:
                     glowLight.intensity = 1000.0F;
