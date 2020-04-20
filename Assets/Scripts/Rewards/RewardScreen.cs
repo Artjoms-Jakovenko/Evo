@@ -7,8 +7,9 @@ using UnityEngine.UI;
 
 public class RewardScreen : MonoBehaviour
 {
-    public GameObject nextLevelButton;
+    public Button nextLevelButton;
     public GameObject rewardContent;
+    public Material asbestosTextMaterial;
 
     private GameObject rewardBlockAsset;
 
@@ -27,7 +28,7 @@ public class RewardScreen : MonoBehaviour
         nextLevel = LevelManager.GetLevelEnum(SceneManager.GetActiveScene().name);
         if (!LevelManager.IsNextLevelUnlocked(nextLevel))
         {
-            nextLevelButton.SetActive(false);
+            nextLevelButton.interactable = false;
         }
     }
 
@@ -58,11 +59,29 @@ public class RewardScreen : MonoBehaviour
     {
         SetStarColor();
 
+        if (!completed)
+        {
+            Sprite grayscaleBackground = Resources.Load<Sprite>("UI/RewardScreen/VictoryScreenBackgroundGrayscale");
+            transform.Find("RewardScreenCanvas/Background").GetComponent<Image>().sprite = grayscaleBackground;
+
+            TextMeshProUGUI victoryText = transform.Find("RewardScreenCanvas/VictoryText").GetComponent<TextMeshProUGUI>();
+            victoryText.text = "Defeat...";
+            victoryText.fontSharedMaterial = asbestosTextMaterial;
+
+            TextMeshProUGUI rewardsText = transform.Find("RewardScreenCanvas/RewardsText").GetComponent<TextMeshProUGUI>();
+            rewardsText.fontSharedMaterial = asbestosTextMaterial;
+        }
+
         foreach (var reward in rewards)
         {
             GameObject rewardBlock = GameObjectUtility.InstantiateChild(rewardBlockAsset, rewardContent, true);
 
-            rewardBlock.transform.Find("RewardAmountText").GetComponent<TextMeshProUGUI>().text = reward.Value.ToString();
+            TextMeshProUGUI rewardAmountText = rewardBlock.transform.Find("RewardAmountText").GetComponent<TextMeshProUGUI>();
+            rewardAmountText.text = reward.Value.ToString();
+            if (!completed)
+            {
+                rewardAmountText.fontSharedMaterial = asbestosTextMaterial;
+            }
 
             Sprite rewardIcon = UiData.inventoryDescription[reward.Key].Icon;
             rewardBlock.transform.Find("RewardIcon").GetComponent<Image>().sprite = rewardIcon;
