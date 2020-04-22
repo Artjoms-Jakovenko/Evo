@@ -17,6 +17,8 @@ public class UpgradeShop : MonoBehaviour
     public BlobSelectScreen blobSelectScreen;
     public StatSelectionBarRenderer statSelectionBarRenderer;
 
+    public StatRenderer test;
+
     StatName selectedStat;
 
     private int selectedBlobId;
@@ -38,6 +40,7 @@ public class UpgradeShop : MonoBehaviour
     private void Start()
     {
         selectedBlobId = SaveSystem.saveData.lastSelectedBlobInUpgradeShop;
+        test.RenderStat(StatName.Speed, SaveSystem.saveData.blobData[selectedBlobId].stats[StatName.Speed]);
     }
 
     public void Upgrade()
@@ -95,7 +98,7 @@ public class UpgradeShop : MonoBehaviour
 
     private int GetUpgradeCost()
     {
-        return UpgradeSystem.GetUpgradeCost(selectedStat, SaveSystem.saveData.blobData[selectedBlobId].stats[selectedStat]);
+        return UpgradeCostCalculator.GetUpgradeCost(selectedStat, SaveSystem.saveData.blobData[selectedBlobId].stats[selectedStat]);
     }
 
     private bool EnoughMoneyToUpgrade(int upgradeCost)
@@ -131,7 +134,7 @@ public class UpgradeShop : MonoBehaviour
         }
         else
         {
-            int upgradeCost = UpgradeSystem.GetUpgradeCost(selectedStat, stat);
+            int upgradeCost = UpgradeCostCalculator.GetUpgradeCost(selectedStat, stat);
 
             if (EnoughMoneyToUpgrade(upgradeCost))
             {

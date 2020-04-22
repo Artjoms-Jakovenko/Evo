@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public static class UpgradeSystem
+public static class UpgradeCostCalculator
 {
     private static int CalculateUpgradeCost(Stat stat, float baselineValue, float baselineCost, float upgradeAmountCost)
     {
