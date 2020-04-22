@@ -36,7 +36,7 @@ public class StatRenderer : MonoBehaviour
         if (stat.IsMaxLevel())
         {
             upgradeValueText.text = "-";
-            evolveButton.SetButtonValue("Max", false, false);
+            evolveButton.SetButtonValue(statName ,"Max", false, false);
         }
         else
         {
@@ -44,11 +44,11 @@ public class StatRenderer : MonoBehaviour
             int upgradeCost = UpgradeCostCalculator.GetUpgradeCost(statName, stat);
             if(upgradeCost > SaveSystem.saveData.inventory.GetInventoryInfo(InventoryEnum.Money))
             {
-                evolveButton.SetButtonValue(upgradeCost.ToString(), false);
+                evolveButton.SetButtonValue(statName, upgradeCost.ToString(), false);
             }
             else
             {
-                evolveButton.SetButtonValue(upgradeCost.ToString());
+                evolveButton.SetButtonValue(statName, upgradeCost.ToString());
             }
         }
     }

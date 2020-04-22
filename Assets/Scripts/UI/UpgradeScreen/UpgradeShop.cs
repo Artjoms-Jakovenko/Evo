@@ -15,11 +15,11 @@ public class UpgradeShop : MonoBehaviour
     public TextMeshProUGUI evolvePriceText;
     public Button evolveButton;
     public BlobSelectScreen blobSelectScreen;
-    public StatSelectionBarRenderer statSelectionBarRenderer;
+
+    public GameObject statBlockParent;
 
     public StatRenderer test;
-
-    StatName selectedStat;
+    private List<GameObject> statBlocks;
 
     private int selectedBlobId;
 
@@ -27,28 +27,37 @@ public class UpgradeShop : MonoBehaviour
     {
         UpdateMoney();
 
-        StatSelectionBarRenderer.OnStatSelected += SelectedStatChanged;
         BlobSelectScreen.OnBlobSelected += SelectBlob;
+        EvolveButton.OnEvolveButtonClicked += UpgradeButtonClicked;
     }
 
     private void OnDisable()
     {
-        StatSelectionBarRenderer.OnStatSelected -= SelectedStatChanged;
         BlobSelectScreen.OnBlobSelected -= SelectBlob;
+        EvolveButton.OnEvolveButtonClicked -= UpgradeButtonClicked;
+    }
+
+    private void Awake()
+    {
+        statBlocks = new List<GameObject>();
+        foreach (Transform transform in statBlockParent.transform)
+        {
+            statBlocks.Add(transform.gameObject);
+        }
     }
 
     private void Start()
     {
         selectedBlobId = SaveSystem.saveData.lastSelectedBlobInUpgradeShop;
-        test.RenderStat(StatName.Speed, SaveSystem.saveData.blobData[selectedBlobId].stats[StatName.Speed]);
+        //test.RenderStat(StatName.Speed, SaveSystem.saveData.blobData[selectedBlobId].stats[StatName.Speed]); // TODO remove
     }
 
-    public void Upgrade()
+    public void Upgrade(StatName statName)
     {
-        int upgradeCost = GetUpgradeCost();
+        int upgradeCost = GetUpgradeCost(statName);
         if (EnoughMoneyToUpgrade(upgradeCost))
         {
-            if (SaveSystem.saveData.blobData[selectedBlobId].stats[selectedStat].Upgrade()) // Checks if stat is upgradeable
+            if (SaveSystem.saveData.blobData[selectedBlobId].stats[statName].Upgrade()) // Checks if stat is upgradeable
             {
                 SaveDataUtility.PayMoney(upgradeCost);
             }
@@ -70,7 +79,6 @@ public class UpgradeShop : MonoBehaviour
     public void EnableUI()
     {
         shopCanvas.SetActive(true);
-        UpdateBlobUI();
         UpdateUI();
     }
 
@@ -90,13 +98,7 @@ public class UpgradeShop : MonoBehaviour
         blobSelectScreen.SelectBlob();
     }
 
-    private void SelectedStatChanged()
-    {
-        selectedStat = statSelectionBarRenderer.GetSelectedStatName();
-        UpdateUI();
-    }
-
-    private int GetUpgradeCost()
+    private int GetUpgradeCost(StatName selectedStat)
     {
         return UpgradeCostCalculator.GetUpgradeCost(selectedStat, SaveSystem.saveData.blobData[selectedBlobId].stats[selectedStat]);
     }
@@ -116,52 +118,42 @@ public class UpgradeShop : MonoBehaviour
         premiumMoneyText.text = SaveSystem.saveData.inventory.GetInventoryInfo(InventoryEnum.PremiumMoney).ToString();
     }
 
-    private void UpdateUI()
+    private void UpdateUI() // TODO
     {
         UpdateMoney();
-        UpdateEvolveButton();
-        statSelectionBarRenderer.RenderStatSelectionUI(SaveSystem.saveData.blobData[selectedBlobId]);
-    }
-
-    private void UpdateEvolveButton()
-    {
-        Stat stat = SaveSystem.saveData.blobData[selectedBlobId].stats[selectedStat];
-
-        if (stat.IsMaxLevel())
-        {
-            evolvePriceText.text = "Max level";
-            evolveButton.interactable = false;
-        }
-        else
-        {
-            int upgradeCost = UpgradeCostCalculator.GetUpgradeCost(selectedStat, stat);
-
-            if (EnoughMoneyToUpgrade(upgradeCost))
-            {
-                evolvePriceText.text = "Evolve " + upgradeCost;
-                evolveButton.interactable = true;
-            }
-            else
-            {
-                evolvePriceText.text = "Not enough evo";
-                evolveButton.interactable = false;
-            }
-        }
     }
 
     private void SelectBlob(int blobId)
     {
         selectedBlobId = blobId;
 
-        UpdateBlobUI();
         SaveSystem.saveData.lastSelectedBlobInUpgradeShop = blobId;
         SaveSystem.Save();
+
+        foreach (var statBlock in statBlocks)
+        {
+            statBlock.SetActive(false);
+        }
+
+        List<StatName> blobStatNames = new List<StatName>(SaveSystem.saveData.blobData[blobId].stats.Keys); // TODO check performance
+        blobStatNames.Sort();
+
+        for (int i = 0; i < SaveSystem.saveData.blobData[blobId].stats.Count; i++)
+        {
+            statBlocks[i].GetComponent<StatRenderer>().RenderStat(blobStatNames[i], SaveSystem.saveData.blobData[blobId].stats[blobStatNames[i]]);
+            statBlocks[i].SetActive(true);
+        }
     }
 
-    private void UpdateBlobUI()
+    private void RenderStats(int blobId)
     {
-        statSelectionBarRenderer.RenderStatSelectionUI(SaveSystem.saveData.blobData[selectedBlobId]);
-        selectedStat = statSelectionBarRenderer.GetSelectedStatName();
+
+    }
+
+    private void UpgradeButtonClicked(StatName statName)
+    {
+        Upgrade(statName);
+
         UpdateUI();
     }
 }

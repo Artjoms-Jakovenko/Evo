@@ -8,14 +8,22 @@ public class EvolveButton : MonoBehaviour
 {
     private Button evolveButton;
     private TextMeshProUGUI buttonValue;
+
+    public delegate void EvolveButtonClicked(StatName statName);
+    public static event EvolveButtonClicked OnEvolveButtonClicked;
+
+    private StatName associatedStat;
+
     private void Awake()
     {
         evolveButton = GetComponent<Button>();
         buttonValue = transform.Find("EvolvePriceText").GetComponent<TextMeshProUGUI>();
     }
 
-    public void SetButtonValue(string value, bool interactable = true, bool showIcon = true) // Sprite 0 is primary money icon after the text
+    public void SetButtonValue(StatName associatedStat, string value, bool interactable = true, bool showIcon = true) // Sprite 0 is primary money icon after the text
     {
+        this.associatedStat = associatedStat;
+
         if (showIcon)
         {
             buttonValue.text = value + " <sprite=0>";
@@ -26,5 +34,10 @@ public class EvolveButton : MonoBehaviour
         }
 
         evolveButton.interactable = interactable;
+    }
+
+    public void ButtonClick()
+    {
+        OnEvolveButtonClicked(associatedStat);
     }
 }
