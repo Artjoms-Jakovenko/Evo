@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -40,7 +41,19 @@ public class StatRenderer : MonoBehaviour
         }
         else
         {
-            upgradeValueText.text = "+ " + (stat.GetNextLevelValue() - stat.value).ToString();
+            string sign = "";
+            float upgradeValue = stat.GetNextLevelValue() - stat.value;
+            if (upgradeValue >= 0)
+            {
+                sign = "+ ";
+            }
+            else
+            {
+                sign = "- ";
+            }
+            upgradeValueText.text = sign + Math.Abs(upgradeValue).ToString();
+
+
             int upgradeCost = UpgradeCostCalculator.GetUpgradeCost(statName, stat);
             if(upgradeCost > SaveSystem.saveData.inventory.GetInventoryInfo(InventoryEnum.Money))
             {

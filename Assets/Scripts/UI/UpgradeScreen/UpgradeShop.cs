@@ -49,7 +49,6 @@ public class UpgradeShop : MonoBehaviour
     private void Start()
     {
         selectedBlobId = SaveSystem.saveData.lastSelectedBlobInUpgradeShop;
-        //test.RenderStat(StatName.Speed, SaveSystem.saveData.blobData[selectedBlobId].stats[StatName.Speed]); // TODO remove
     }
 
     public void Upgrade(StatName statName)
@@ -72,8 +71,6 @@ public class UpgradeShop : MonoBehaviour
         {
             Debug.Log("Can't upgrade. Not enough money.");
         }
-
-        UpdateUI();
     }
 
     public void EnableUI()
@@ -121,6 +118,7 @@ public class UpgradeShop : MonoBehaviour
     private void UpdateUI() // TODO
     {
         UpdateMoney();
+        RenderStats(selectedBlobId);
     }
 
     private void SelectBlob(int blobId)
@@ -130,6 +128,11 @@ public class UpgradeShop : MonoBehaviour
         SaveSystem.saveData.lastSelectedBlobInUpgradeShop = blobId;
         SaveSystem.Save();
 
+        UpdateUI();
+    }
+
+    private void RenderStats(int blobId)
+    {
         foreach (var statBlock in statBlocks)
         {
             statBlock.SetActive(false);
@@ -143,11 +146,6 @@ public class UpgradeShop : MonoBehaviour
             statBlocks[i].GetComponent<StatRenderer>().RenderStat(blobStatNames[i], SaveSystem.saveData.blobData[blobId].stats[blobStatNames[i]]);
             statBlocks[i].SetActive(true);
         }
-    }
-
-    private void RenderStats(int blobId)
-    {
-
     }
 
     private void UpgradeButtonClicked(StatName statName)
