@@ -32,7 +32,7 @@ public static class UiData
         },
         { StatName.MaxEnergy, new StatUI("UI/Stats/HealthIcon") // TODO
         {
-            statDisplayName = "Max energy",
+            statDisplayName = "Energy",
             statDescription = "How much energy can a blob store. Having a lot of energy helps blob not starve and lets blob perform special actions.", // TODO
         }
         },

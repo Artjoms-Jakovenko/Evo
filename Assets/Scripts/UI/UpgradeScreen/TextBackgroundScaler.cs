@@ -17,6 +17,6 @@ public class TextBackgroundScaler : MonoBehaviour
 
     public void Rescale() // TODO test
     {
-        background.rectTransform.sizeDelta = text.textBounds.extents;
+        background.rectTransform.sizeDelta = new Vector2(text.preferredWidth + 24F, text.preferredHeight + 4F);
     }
 }

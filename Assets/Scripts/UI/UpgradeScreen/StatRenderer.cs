@@ -12,6 +12,8 @@ public class StatRenderer : MonoBehaviour
     private TextMeshProUGUI maxStatValueText;
     private TextMeshProUGUI statNameText;
     private Image statIcon;
+    private TextBackgroundScaler nameBackgroundScaler;
+    private TextBackgroundScaler valueBackgroundScaler;
 
     private EvolveButton evolveButton;
 
@@ -22,6 +24,9 @@ public class StatRenderer : MonoBehaviour
         maxStatValueText = transform.Find("StatMaxValue").GetComponent<TextMeshProUGUI>();
         statNameText = transform.Find("StatName").GetComponent<TextMeshProUGUI>();
 
+        valueBackgroundScaler = transform.Find("StatValue").GetComponent<TextBackgroundScaler>();
+        nameBackgroundScaler = transform.Find("StatName").GetComponent<TextBackgroundScaler>();
+
         statIcon = transform.Find("StatIcon").GetComponent<Image>();
         evolveButton = transform.Find("EvolveButton").GetComponent<EvolveButton>();
     }
@@ -29,9 +34,11 @@ public class StatRenderer : MonoBehaviour
     public void RenderStat(StatName statName, Stat stat)
     {
         currentValueText.text = stat.value.ToString();
+        valueBackgroundScaler.Rescale();
         maxStatValueText.text = "Max " + stat.maxValue.ToString();
 
         statNameText.text = UiData.statDescriptions[statName].statDisplayName;
+        nameBackgroundScaler.Rescale();
         statIcon.sprite = UiData.statDescriptions[statName].Icon;
         
         if (stat.IsMaxLevel())
