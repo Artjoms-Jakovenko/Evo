@@ -26,7 +26,7 @@ public static class UiData
         },
         { StatName.ReactionTime, new StatUI("UI/Stats/HealthIcon") // TODO
         {
-            statDisplayName = "Reaction time",
+            statDisplayName = "Reaction",
             statDescription = "How fast a blob can make decisions.", // TODO
         }
         },

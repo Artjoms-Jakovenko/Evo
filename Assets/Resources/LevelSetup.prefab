@@ -1073,12 +1073,14 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 2409603965692237551}
+  - component: {fileID: 8062809558403530265}
   - component: {fileID: 2409603965692237540}
   - component: {fileID: 2409603965692237547}
   - component: {fileID: 2409603965692237546}
   - component: {fileID: 2409603965692237545}
   - component: {fileID: 2409603965692237544}
+  - component: {fileID: 6725936205891751974}
+  - component: {fileID: 3991523203793414455}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -1086,20 +1088,25 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &2409603965692237551
-Transform:
+--- !u!224 &8062809558403530265
+RectTransform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2409603965692237550}
   m_LocalRotation: {x: -0.044642568, y: 0.9316535, z: -0.122654475, w: -0.33909407}
-  m_LocalPosition: {x: 7.28, y: 1.71, z: 7.61}
+  m_LocalPosition: {x: 0, y: 0, z: 7.61}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 2409603966380763788}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 15, y: 220, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 7.28, y: 1.71}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!20 &2409603965692237540
 Camera:
   m_ObjectHideFlags: 0
@@ -1235,6 +1242,44 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9b668a4156b8d6e4a8c7baf2601e33a2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!223 &6725936205891751974
+Canvas:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2409603965692237550}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_RenderMode: 2
+  m_Camera: {fileID: 0}
+  m_PlaneDistance: 100
+  m_PixelPerfect: 0
+  m_ReceivesEvents: 1
+  m_OverrideSorting: 0
+  m_OverridePixelPerfect: 0
+  m_SortingBucketNormalizedSize: 0
+  m_AdditionalShaderChannelsFlag: 0
+  m_SortingLayerID: 0
+  m_SortingOrder: 0
+  m_TargetDisplay: 0
+--- !u!114 &3991523203793414455
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2409603965692237550}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc42784cf147c0c48a680349fa168899, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_IgnoreReversedGraphics: 1
+  m_BlockingObjects: 0
+  m_BlockingMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
 --- !u!1 &2409603965729290410
 GameObject:
   m_ObjectHideFlags: 0
@@ -1998,7 +2043,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 2409603965750520681}
-  - {fileID: 2409603965692237551}
+  - {fileID: 8062809558403530265}
   - {fileID: 2409603965658157578}
   - {fileID: 2409603966475829897}
   - {fileID: 2409603966233777065}
@@ -4367,6 +4412,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 983824505938f244d85c44215b7b7df2, type: 3}
+--- !u!4 &6735073233902327206 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4712803854741983935, guid: 983824505938f244d85c44215b7b7df2,
+    type: 3}
+  m_PrefabInstance: {fileID: 2022388151145826073}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &2022388151206435317 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 94363372, guid: 983824505938f244d85c44215b7b7df2,
@@ -4379,9 +4430,3 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 468b38542c655024ab0c4c0c132c4d23, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!4 &6735073233902327206 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 4712803854741983935, guid: 983824505938f244d85c44215b7b7df2,
-    type: 3}
-  m_PrefabInstance: {fileID: 2022388151145826073}
-  m_PrefabAsset: {fileID: 0}
