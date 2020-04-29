@@ -6,7 +6,7 @@ public class BlobCollisionTracker : MonoBehaviour
 {
     public bool IsColliding(int layerMask) // TODO
     {
-        if (Physics.OverlapSphere(transform.position, 0.25F, layerMask).Length > 0)
+        if (Physics.OverlapSphere(transform.position, 1.0F, layerMask).Length > 1) // > 1 is accounting for the object itself, which will be hit by overlapSphere 
         {
             return true;
         }

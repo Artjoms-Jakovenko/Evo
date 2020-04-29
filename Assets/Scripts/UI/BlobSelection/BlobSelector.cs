@@ -15,16 +15,6 @@ public class BlobSelector : MonoBehaviour
 
     GameObject blobAddButton;
 
-    private void OnEnable()
-    {
-        BlobSelectScreen.OnBlobSelected += SelectedBlob;
-    }
-
-    private void OnDisable()
-    {
-        BlobSelectScreen.OnBlobSelected -= SelectedBlob;
-    }    
-
     void Start()
     {
         blobAddButton = Resources.Load("UI/BlobSelect/AddBlobButton") as GameObject;
@@ -51,16 +41,6 @@ public class BlobSelector : MonoBehaviour
         blobButtons.Add(blobButton);
 
         return blobButton;
-    }
-
-    void DeselectBlob(int buttonId)
-    {
-        SetStartButtonInteractability();
-    }
-
-    public void SelectedBlob(int blobID)
-    {
-        SetStartButtonInteractability();
     }
 
     public List<int> GetSelectedBlobIds()

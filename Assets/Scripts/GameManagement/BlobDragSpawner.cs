@@ -14,28 +14,33 @@ public class BlobDragSpawner : MonoBehaviour
     private GameObject blobIcon;
     public BlobDragSpawnerUi blobDragSpawnerUi;
 
-    public bool placed = false;
+    private Color32 initialColor;
+
+    public bool isColliding = false;
 
     private void Awake()
     {
         mainCamera = GameObject.Find("Main Camera").GetComponent<Camera>();
+        initialColor = skinnedMeshRenderer.material.color;
     }
 
     private void Start()
     {
         collisionTracker = GetComponent<BlobCollisionTracker>();
+        gameObject.SetActive(false); // disable itself after initialization
     }
 
     private void Update()
     {
-        if (collisionTracker.IsColliding(0x0100)) // Layer 8 (0x0100) for tagged ogjects
+        isColliding = collisionTracker.IsColliding(0x0100);
+        if (isColliding) // Layer 8 (0x0100) for tagged ogjects
         {
-            skinnedMeshRenderer.material.SetFloat("_Surface", (float)SurfaceType.Transparent);
+            //skinnedMeshRenderer.material.SetFloat("_Surface", (float)SurfaceType.Transparent);
             skinnedMeshRenderer.material.color = new Color32(255, 0, 0, 127);
         }
         else
         {
-            //skinnedMeshRenderer.sharedMaterial
+            skinnedMeshRenderer.material.color = initialColor;
         }
     }
 
