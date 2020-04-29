@@ -44,7 +44,7 @@ public static class UiData
         },
     };
 
-    public static Dictionary<BlobType, BlobUI> blobTypeDescription = new Dictionary<BlobType, BlobUI>()
+    public static Dictionary<BlobType, BlobUI> blobTypeDescription = new Dictionary<BlobType, BlobUI>() // TODO move to blobAssets
     {
         { BlobType.Survivor, new BlobUI("TODO") // "TODO"
         {
@@ -58,45 +58,23 @@ public static class UiData
 
     public static Dictionary<ActionEnum, ActionIconUI> actionIconDescription = new Dictionary<ActionEnum, ActionIconUI>()
     {
-        { ActionEnum.None, new ActionIconUI("UI/StatusBar/ActionIcons/IdleActionIcon")
-        {
-
-        }
-        },
-        { ActionEnum.Eat, new ActionIconUI("UI/StatusBar/ActionIcons/EatActionIcon")
-        {
-
-        }
-        },
-        { ActionEnum.MeleeFight, new ActionIconUI("UI/StatusBar/ActionIcons/MeleeFightActionIcon")
-        {
-
-        }
-        },
-        { ActionEnum.RunAway, new ActionIconUI("UI/StatusBar/ActionIcons/RunAwayActionIcon")
-        {
-
-        }
-        },
+        { ActionEnum.None, new ActionIconUI("UI/StatusBar/ActionIcons/IdleActionIcon") },
+        { ActionEnum.Eat, new ActionIconUI("UI/StatusBar/ActionIcons/EatActionIcon") },
+        { ActionEnum.MeleeFight, new ActionIconUI("UI/StatusBar/ActionIcons/MeleeFightActionIcon") },
+        { ActionEnum.RunAway, new ActionIconUI("UI/StatusBar/ActionIcons/RunAwayActionIcon") },
     };
 
     public static Dictionary<InventoryEnum, RewardUI> inventoryDescription = new Dictionary<InventoryEnum, RewardUI>()
     {
-        { InventoryEnum.Money, new RewardUI("UI/Rewards/PrimaryMoney")
-        {
-        }
-        },
-        { InventoryEnum.PremiumMoney, new RewardUI("UI/Rewards/PremiumMoney")
-        {
-        }
-        },
-        { InventoryEnum.StartChest, new RewardUI("TODO") // "TODO"
-        {
-        }
-        },
-        { InventoryEnum.Capsule, new RewardUI("TODO") // "TODO"
-        {
-        }
-        },
+        { InventoryEnum.Money, new RewardUI("UI/Rewards/PrimaryMoney") },
+        { InventoryEnum.PremiumMoney, new RewardUI("UI/Rewards/PremiumMoney") },
+        { InventoryEnum.StartChest, new RewardUI("TODO") }, // "TODO"
+        { InventoryEnum.Capsule, new RewardUI("TODO") }, // "TODO"
+    };
+
+    public static Dictionary<BlobType, BlobPlaceholderUI> blobAssets = new Dictionary<BlobType, BlobPlaceholderUI>()
+    {
+        { BlobType.Survivor, new BlobPlaceholderUI("BlobPlaceholders/SurvivorBlob") },
+        { BlobType.Fighter, new BlobPlaceholderUI("BlobPlaceholders/SurvivorBlob") }, // TODO
     };
 }
