@@ -17,6 +17,8 @@ public class BlobDragSpawner : MonoBehaviour
     private Color32 initialColor;
 
     public bool isColliding = false;
+    [HideInInspector]
+    public int associatedBlobId;
 
     private void Awake()
     {

@@ -34,7 +34,10 @@ public class GameManager : MonoBehaviour
         levelGoalSystem = GetComponent<LevelGoalSystem>();
         currentLevel = LevelManager.GetLevelEnum(SceneManager.GetActiveScene().name);
         List<BlobStatsData> enemiesData = LevelInfoData.GetLevelEnemies(currentLevel);
-        Spawn(enemiesData, TeamTag.Enemy);
+        foreach (var enemyStatsData in enemiesData)
+        {
+            Spawn(enemyStatsData, TeamTag.Enemy, Vector3.zero); // TODO
+        }
     }
     
     private void Update()
@@ -80,39 +83,28 @@ public class GameManager : MonoBehaviour
 
     public void StartRound()
     {
-        List<int> selectedBlobIds = blobSelectorBar.GetSelectedBlobIds();
+        Dictionary<int, Vector3> selectedBlobIds = blobSelectorBar.GetSelectedBlobIds();
         blobSelector.SetActive(false);
         
-        List<BlobStatsData> blobStatsDatas = new List<BlobStatsData>();
-        foreach(int selectedBlobId in selectedBlobIds)
+        foreach(var selectedBlobId in selectedBlobIds)
         {
-            blobStatsDatas.Add(SaveSystem.saveData.blobData[selectedBlobId]);
-        }
-
-        Spawn(blobStatsDatas, TeamTag.Player);
+            Spawn(SaveSystem.saveData.blobData[selectedBlobId.Key], TeamTag.Player, selectedBlobId.Value);
+        }  
 
         Destroy(spawnPointsParent);
         Time.timeScale = 1.0F;
         roundStarted = true;
     }
 
-    private void Spawn(List<BlobStatsData> blobStatsDatas, TeamTag teamTag)
+    private void Spawn(BlobStatsData blobStatsData, TeamTag teamTag, Vector3 blobPosition)
     {
-        CheckIfEnoughSpawnPoints(blobStatsDatas.Count, availableSpawnPoints.Count);
+        //CheckIfEnoughSpawnPoints(blobStatsData.Count, availableSpawnPoints.Count);
 
-        for (int i = 0; i < blobStatsDatas.Count; i++)
-        {
-            GameObject blob = BlobInstantiator.GetBlobGameObject(blobStatsDatas[i], teamTag);
+        GameObject blob = BlobInstantiator.GetBlobGameObject(blobStatsData, teamTag);
 
-            System.Random randomNumberGenerator = new System.Random();
-            int randomIndex = randomNumberGenerator.Next(0, availableSpawnPoints.Count);
+        blob.transform.localPosition = blobPosition;
 
-            Transform spawnPoint = availableSpawnPoints[randomIndex];
-            blob.transform.localPosition = spawnPoint.localPosition;
-
-            ObjectManager.GetInstance().AddObject(blob);
-            availableSpawnPoints.RemoveAt(randomIndex);
-        }
+        ObjectManager.GetInstance().AddObject(blob);
     }
 
     private bool CheckIfEnoughSpawnPoints(int blobCount, int spawnPointCount)

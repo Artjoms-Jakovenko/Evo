@@ -10,8 +10,6 @@ public class BlobDragSpawnerUi : MonoBehaviour, IPointerDownHandler
     private GameObject associatedBlob;
 
     [HideInInspector]
-    public int associatedBlobId;
-    [HideInInspector]
     public bool dragged = false;
 
     private BlobDragSpawner blobDragSpawner;
@@ -19,8 +17,6 @@ public class BlobDragSpawnerUi : MonoBehaviour, IPointerDownHandler
 
     void Start()
     {
-        blobDragSpawner = associatedBlob.GetComponent<BlobDragSpawner>();
-        blobDragSpawner.blobDragSpawnerUi = this;
     }
 
     public void OnPointerDown(PointerEventData eventData)
@@ -56,7 +52,7 @@ public class BlobDragSpawnerUi : MonoBehaviour, IPointerDownHandler
         }
         else
         {
-            if (dragged)
+            if (dragged) // Will be true on the frame when dragging is released
             {
                 if (blobDragSpawner.isColliding)
                 {
@@ -68,9 +64,12 @@ public class BlobDragSpawnerUi : MonoBehaviour, IPointerDownHandler
         }
     }
 
-    public void SetAssociatedBlob(GameObject blob)
+    public void SetAssociatedBlob(int blobId, GameObject blob)
     {
         associatedBlob = blob;
+        blobDragSpawner = associatedBlob.GetComponent<BlobDragSpawner>();
+        blobDragSpawner.blobDragSpawnerUi = this;
+        blobDragSpawner.associatedBlobId = blobId;
     }
 
     private void ReturnToBackground()

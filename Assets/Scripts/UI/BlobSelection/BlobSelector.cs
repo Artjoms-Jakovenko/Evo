@@ -9,7 +9,7 @@ public class BlobSelector : MonoBehaviour
     public LevelInfo levelInfo;
     public Button startRoundButton;
     public GameObject sliderContent;
-    public Transform spawnPoints;
+    public Transform playerSpawnPoints;
 
     List<GameObject> blobButtons = new List<GameObject>();
 
@@ -27,15 +27,15 @@ public class BlobSelector : MonoBehaviour
         SetStartButtonInteractability();
     }
 
-    private GameObject GetObjectAt(int position)
+    private GameObject GetObjectAt(int position) // TODO position shall be dictionary key
     {
         GameObject blobButton = GameObjectUtility.InstantiateChild(blobAddButton, sliderContent, true);
         BlobDragSpawnerUi blobDragSpawnerUi = blobButton.GetComponent<BlobDragSpawnerUi>();
 
         GameObject blobPlaceholder = Instantiate(UiData.blobAssets[SaveSystem.saveData.blobData[position].blobType].Asset);
-        blobPlaceholder.transform.parent = spawnPoints;
+        blobPlaceholder.transform.parent = playerSpawnPoints;
 
-        blobDragSpawnerUi.SetAssociatedBlob(blobPlaceholder);
+        blobDragSpawnerUi.SetAssociatedBlob(position, blobPlaceholder);
 
         int buttonID = blobButtons.Count;
         blobButtons.Add(blobButton);
@@ -43,9 +43,19 @@ public class BlobSelector : MonoBehaviour
         return blobButton;
     }
 
-    public List<int> GetSelectedBlobIds()
+    public Dictionary<int, Vector3> GetSelectedBlobIds()
     {
-        return new List<int>(); // TODO
+        Dictionary<int, Vector3> selectedBlobTransforms = new Dictionary<int, Vector3>();
+
+        foreach (Transform blobTransform in playerSpawnPoints.transform)
+        {
+            if (blobTransform.gameObject.activeSelf)
+            {
+                selectedBlobTransforms.Add(blobTransform.gameObject.GetComponent<BlobDragSpawner>().associatedBlobId, blobTransform.position);
+            }
+        }
+
+        return selectedBlobTransforms;
     }
 
     private void SetStartButtonInteractability()
