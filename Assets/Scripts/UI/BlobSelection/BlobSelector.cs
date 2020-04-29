@@ -49,9 +49,10 @@ public class BlobSelector : MonoBehaviour
 
         foreach (Transform blobTransform in playerSpawnPoints.transform)
         {
-            if (blobTransform.gameObject.activeSelf)
+            BlobDragSpawner blobDragSpawner = blobTransform.gameObject.GetComponent<BlobDragSpawner>();
+            if (blobTransform.gameObject.activeSelf && !blobDragSpawner.isColliding)
             {
-                selectedBlobTransforms.Add(blobTransform.gameObject.GetComponent<BlobDragSpawner>().associatedBlobId, blobTransform.position);
+                selectedBlobTransforms.Add(blobDragSpawner.associatedBlobId, blobTransform.position);
             }
         }
 
@@ -68,5 +69,10 @@ public class BlobSelector : MonoBehaviour
         {
             startRoundButton.interactable = false;
         }
+    }
+
+    private void Update()
+    {
+        SetStartButtonInteractability();
     }
 }
