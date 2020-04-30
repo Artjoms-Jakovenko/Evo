@@ -78,11 +78,19 @@ public static class LevelInfoData
                 levelGoals.mainGoal = new SurviveGoal(5.0F);
                 levelGoals.oneStarGoal = new SurviveGoal(5.0F);
                 levelGoals.twoStarGoal = new SurviveGoal(10.0F);
-                levelGoals.threeStarGoal = new SurviveGoal(200.0F);
+                levelGoals.threeStarGoal = new SurviveGoal(20.0F);
                 break;
             case LevelEnum.IntroLevel2:
+                levelGoals.mainGoal = new SurviveGoal(10.0F);
+                levelGoals.oneStarGoal = new SurviveGoal(10.0F);
+                levelGoals.twoStarGoal = new SurviveGoal(30.0F);
+                levelGoals.threeStarGoal = new SurviveGoal(60.0F);
                 break;
             case LevelEnum.IntroLevel3:
+                levelGoals.mainGoal = new SurviveGoal(15.0F);
+                levelGoals.oneStarGoal = new SurviveGoal(15.0F);
+                levelGoals.twoStarGoal = new SurviveGoal(30.0F);
+                levelGoals.threeStarGoal = new SurviveGoal(60.0F);
                 break;
             default:
                 Debug.LogError("LevelGoalInfo was not found.");

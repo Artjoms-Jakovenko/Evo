@@ -12,6 +12,7 @@ public class GameManager : MonoBehaviour
     public BlobSelector blobSelectorBar;
     public GameObject spawnPointsParent;
     public LevelInfo levelInfo;
+    public GameObject levelGoalsUi;
 
     private LevelEnum currentLevel;
     private LevelGoalSystem levelGoalSystem;
@@ -34,9 +35,9 @@ public class GameManager : MonoBehaviour
         levelGoalSystem = GetComponent<LevelGoalSystem>();
         currentLevel = LevelManager.GetLevelEnum(SceneManager.GetActiveScene().name);
         List<BlobStatsData> enemiesData = LevelInfoData.GetLevelEnemies(currentLevel);
-        foreach (var enemyStatsData in enemiesData)
+        for (int i = 0; i < enemiesData.Count; i++)
         {
-            Spawn(enemyStatsData, TeamTag.Enemy, Vector3.zero); // TODO
+            Spawn(enemiesData[i], TeamTag.Enemy, availableSpawnPoints[i].position);
         }
     }
     
@@ -70,6 +71,7 @@ public class GameManager : MonoBehaviour
                     
                     rewardScreen.SetActive(true);
                     rewardScreen.GetComponent<RewardScreen>().RenderRewardScreen();
+                    levelGoalsUi.SetActive(false);
                     #endregion
                     //}
                 }
@@ -92,6 +94,7 @@ public class GameManager : MonoBehaviour
         }  
 
         Destroy(spawnPointsParent);
+        blobSelectorBar.DisablePlaceholders();
         Time.timeScale = 1.0F;
         roundStarted = true;
     }

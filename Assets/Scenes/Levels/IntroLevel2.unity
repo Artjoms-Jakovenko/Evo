@@ -210,6 +210,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: SmallHoverWorld
       objectReference: {fileID: 0}
+    - target: {fileID: -927199367670048503, guid: 63f06e4b68a4af74ab2bb76399f3c831,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 63f06e4b68a4af74ab2bb76399f3c831, type: 3}
 --- !u!108 &516310297 stripped
@@ -447,6 +452,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1153975634737561443, guid: cf9d0fbd52201f245a9cb298a2158ebe,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2409603965692237551, guid: cf9d0fbd52201f245a9cb298a2158ebe,
         type: 3}
       propertyPath: m_LocalPosition.x

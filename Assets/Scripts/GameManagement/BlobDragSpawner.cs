@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
-using static UnityEditor.BaseShaderGUI;
 
 public class BlobDragSpawner : MonoBehaviour
 {

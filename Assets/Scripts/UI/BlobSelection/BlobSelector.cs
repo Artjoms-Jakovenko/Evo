@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -10,6 +11,7 @@ public class BlobSelector : MonoBehaviour
     public Button startRoundButton;
     public GameObject sliderContent;
     public Transform playerSpawnPoints;
+    public TextMeshProUGUI blobCountText;
 
     List<GameObject> blobButtons = new List<GameObject>();
 
@@ -61,7 +63,11 @@ public class BlobSelector : MonoBehaviour
 
     private void SetStartButtonInteractability()
     {
-        if (GetSelectedBlobIds().Count > 0)
+        int spawnedBlobCount = GetSelectedBlobIds().Count;
+
+        blobCountText.text = spawnedBlobCount + "/" + levelInfo.maxBlobCount;
+
+        if (spawnedBlobCount > 0 && spawnedBlobCount <= levelInfo.maxBlobCount)
         {
             startRoundButton.interactable = true;
         }
@@ -69,6 +75,11 @@ public class BlobSelector : MonoBehaviour
         {
             startRoundButton.interactable = false;
         }
+    }
+
+    public void DisablePlaceholders()
+    {
+        playerSpawnPoints.gameObject.SetActive(false);
     }
 
     private void Update()
