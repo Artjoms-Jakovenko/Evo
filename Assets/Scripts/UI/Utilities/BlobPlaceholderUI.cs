@@ -6,9 +6,12 @@ public class BlobPlaceholderUI
 {
     private string assetPath;
     private GameObject _asset;
-    public BlobPlaceholderUI(string assetPath)
+    private string iconPath;
+    private Sprite _icon;
+    public BlobPlaceholderUI(string assetPath, string iconPath)
     {
         this.assetPath = assetPath;
+        this.iconPath = iconPath;
     }
     public GameObject Asset
     {
@@ -23,6 +26,22 @@ public class BlobPlaceholderUI
         set
         {
             _asset = value;
+        }
+    }
+
+    public Sprite Icon
+    {
+        get
+        {
+            if (_icon == null)
+            {
+                _icon = Resources.Load<Sprite>(iconPath);
+            }
+            return _icon;
+        }
+        set
+        {
+            _icon = value;
         }
     }
 }

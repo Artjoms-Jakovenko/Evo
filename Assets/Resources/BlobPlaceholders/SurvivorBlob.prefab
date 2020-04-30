@@ -275,7 +275,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   skinnedMeshRenderer: {fileID: 4387382338852525604}
   blobDragSpawnerUi: {fileID: 0}
-  placed: 0
+  isColliding: 0
+  associatedBlobId: 0
 --- !u!1 &6997779674771251094
 GameObject:
   m_ObjectHideFlags: 0

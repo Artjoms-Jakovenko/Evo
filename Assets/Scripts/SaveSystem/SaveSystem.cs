@@ -50,7 +50,7 @@ public static class SaveSystem
     {
         _saveData = new SaveData();
 
-        _saveData.inventory.AddToInventory(InventoryEnum.Money, 10000);
+        _saveData.inventory.AddToInventory(InventoryEnum.Money, 0);
 
         _saveData.lastSelectedBlobInUpgradeShop = 0; // TODO must match first blob id
 

@@ -70,11 +70,17 @@ public class BlobDragSpawnerUi : MonoBehaviour, IPointerDownHandler
         blobDragSpawner = associatedBlob.GetComponent<BlobDragSpawner>();
         blobDragSpawner.blobDragSpawnerUi = this;
         blobDragSpawner.associatedBlobId = blobId;
+        SetIcon(SaveSystem.saveData.blobData[blobId].blobType);
     }
 
     private void ReturnToBackground()
     {
         blobIcon.transform.position = gameObject.transform.position;
         dragged = false;
+    }
+
+    private void SetIcon(BlobType blobType)
+    {
+        transform.Find("BlobIcon").GetComponent<Image>().sprite = UiData.blobAssets[blobType].Icon;
     }
 }

@@ -74,7 +74,7 @@ public static class UiData
 
     public static Dictionary<BlobType, BlobPlaceholderUI> blobAssets = new Dictionary<BlobType, BlobPlaceholderUI>()
     {
-        { BlobType.Survivor, new BlobPlaceholderUI("BlobPlaceholders/SurvivorBlob") },
-        { BlobType.Fighter, new BlobPlaceholderUI("BlobPlaceholders/FighterBlob") }, // TODO
+        { BlobType.Survivor, new BlobPlaceholderUI("BlobPlaceholders/SurvivorBlob", "UI/BlobTypeIcons/SurvivorBlobIcon") },
+        { BlobType.Fighter, new BlobPlaceholderUI("BlobPlaceholders/FighterBlob", "UI/BlobTypeIcons/FighterBlobIcon") }, 
     };
 }
