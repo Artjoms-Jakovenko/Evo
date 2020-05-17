@@ -33,6 +33,7 @@ public class DragManager : MonoBehaviour, IPointerDownHandler
                 if(objectInstance == null)
                 {
                     objectInstance = Instantiate(asset);
+                    ObjectManager.GetInstance().AddObject(objectInstance);
                 }
                 objectInstance.transform.position = hit.point;
                 objectIcon.enabled = false;

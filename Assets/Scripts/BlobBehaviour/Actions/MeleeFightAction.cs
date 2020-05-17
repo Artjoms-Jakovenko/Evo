@@ -11,11 +11,13 @@ public class MeleeFightAction : IAction
     private readonly AnimationController blobAnimationController;
     private readonly BlobMovement blobMovement;
     private readonly BlobStats blobStats; // Get rid of these in all actions
+    private Energy energy;
 
     readonly TeamTag teamTag;
     GameObject enemyToChase;
     GameObject enemyToFight;
     List<TaggedObject> enemies;
+    bool isWandering = false;
 
     public MeleeFightAction(GameObject blob)
     {
@@ -24,25 +26,26 @@ public class MeleeFightAction : IAction
         blobAnimationController = blob.GetComponent<AnimationController>();
         blobStats = blob.GetComponent<BlobStats>();
         teamTag = blob.GetComponent<TaggedObject>().teamTag;
+        energy = blob.GetComponent<Energy>();
         blobAnimationController.OnKicked += DealDamage;
     }
 
     public float GetActionPriorityScore()
     {
-        enemies = ObjectManager.GetInstance().GetAllEnemies(teamTag);
+        enemies = ObjectManager.GetInstance().GetAllWithTags(new List<ObjectTag>() { ObjectTag.Vegetarian });
 
         float maxDistance = blobStats.stats.stats[StatName.Sight].value;
         TaggedObject taggedObject  = ObjectManager.GetInstance().GetClothestObject(maxDistance, blob, enemies);
         
-        if (taggedObject != null)
+        if(taggedObject == null)
         {
-            enemyToChase = taggedObject.gameObject;
-            return 500.0F;
+            enemyToChase = null;
         }
         else
         {
-            return -100.0F;
+            enemyToChase = taggedObject.gameObject;
         }
+        return 500.0F;
     }
 
     public void MakeDecision()
@@ -52,6 +55,11 @@ public class MeleeFightAction : IAction
             blobAnimationController.PlayAnimation(AnimationState.Walk);
             blobMovement.RunTo(enemyToChase.transform.position); // TODO move outside the loop
         }
+        else
+        {
+            blobMovement.StartWandering();
+            isWandering = true;
+        }
     }
 
     public void PerformAction()
@@ -60,7 +68,7 @@ public class MeleeFightAction : IAction
         {
             Vector3 colliderPosition = blob.transform.position;
             colliderPosition.y += blob.transform.localScale.y / 2;
-            Collider[] hitColliders = Physics.OverlapSphere(colliderPosition, 0.5F * 1.3F, 0x0100);
+            Collider[] hitColliders = Physics.OverlapSphere(colliderPosition, 0.9F * 1.3F, 0x0100);
             if (hitColliders.Any(x => x.gameObject.GetInstanceID() == enemyToChase.GetInstanceID()))
             {
                 blobAnimationController.PlayAnimation(AnimationState.Kick);
@@ -69,10 +77,7 @@ public class MeleeFightAction : IAction
                 enemyToChase = null;
                 blobMovement.Stop();
             }
-        }
-        else
-        {
-            blobAnimationController.PlayAnimation(AnimationState.Idle);
+            isWandering = false;
         }
     }
 
@@ -81,10 +86,15 @@ public class MeleeFightAction : IAction
         if (enemyToFight != null)
         {
             enemyToFight.GetComponent<Health>().TakeDamage(1);
+            energy.AddEnergy(20.0F);
         }
         else
         {
             Debug.Log("Enemy was null. Could not kick.");
+            if (!isWandering)
+            {
+                blobMovement.Stop();
+            }
         }
     }
 }
