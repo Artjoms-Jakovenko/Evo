@@ -14,16 +14,10 @@ public class Edible : MonoBehaviour
 
     public float Bite(int biteSize)
     {
-        if(biteSize >= portionNumber)
-        {
-            HandleDestruction();
-            return portionNumber * portionEnergyValue;
-        }
-        else
-        {
-            portionNumber -= biteSize;
-            return portionNumber * biteSize;
-        }
+        //HandleDestruction();
+
+        ObjectManager.GetInstance().DestroyObject(gameObject);
+        return portionNumber * portionEnergyValue;
     }
 
     public virtual void HandleDestruction()

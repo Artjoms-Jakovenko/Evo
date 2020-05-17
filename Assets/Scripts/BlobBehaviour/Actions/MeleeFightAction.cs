@@ -45,7 +45,7 @@ public class MeleeFightAction : IAction
         {
             enemyToChase = taggedObject.gameObject;
         }
-        return 500.0F;
+        return 0.6F - energy.GetEnergy() / 20.0F;
     }
 
     public void MakeDecision()

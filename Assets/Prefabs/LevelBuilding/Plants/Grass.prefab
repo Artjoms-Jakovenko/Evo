@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 1071676288026452202}
   - component: {fileID: 4589421182104275399}
   - component: {fileID: 1945255674536584735}
+  - component: {fileID: 1297626262089734305}
   m_Layer: 8
   m_Name: Grass
   m_TagString: Untagged
@@ -92,6 +93,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   portionEnergyValue: 10
   portionNumber: 1
+--- !u!114 &1297626262089734305
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6400645819154176427}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 517ca76f7ec89df4a9a0df7ff298ab0f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  asset: {fileID: 6400645819154176427}
+  spreadTime: 5
 --- !u!1001 &1348674173785555540
 PrefabInstance:
   m_ObjectHideFlags: 0

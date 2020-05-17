@@ -126,4 +126,20 @@ public class ObjectManager : MonoBehaviour
         }
         return closestObject;
     }
+
+    public int CountNearObjects(float maxDistance, GameObject origin, List<TaggedObject> objects)
+    {
+        int count = 0;
+
+        foreach (var taggedObject in objects)
+        {
+            float objectDistance = Vector3.Distance(taggedObject.transform.position, origin.transform.position);
+            if (objectDistance <= maxDistance)
+            {
+                count++;
+            }
+        }
+
+        return count;
+    }
 }

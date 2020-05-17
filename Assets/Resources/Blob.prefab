@@ -22,6 +22,7 @@ GameObject:
   - component: {fileID: 4534026255640067008}
   - component: {fileID: 6966303873799925880}
   - component: {fileID: 797555042911341808}
+  - component: {fileID: -2810012376185452333}
   m_Layer: 8
   m_Name: Blob
   m_TagString: Untagged
@@ -228,6 +229,20 @@ MonoBehaviour:
     maxXPLevel: 3
     currentXPLevel: 0
     blobXp: 0
+--- !u!114 &-2810012376185452333
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2491383671027716230}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 517ca76f7ec89df4a9a0df7ff298ab0f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  asset: {fileID: 2491383671027716230}
+  spreadTime: 10
 --- !u!1001 &3554174918702849635
 PrefabInstance:
   m_ObjectHideFlags: 0
