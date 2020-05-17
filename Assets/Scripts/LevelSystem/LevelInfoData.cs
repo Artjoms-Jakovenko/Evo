@@ -19,7 +19,10 @@ public static class LevelInfoData
                 blobStatsDatas.Add(BlobInstantiator.CreateBlob(BlobType.Survivor));
                 break;
             case LevelEnum.IntroLevel3:
-                blobStatsDatas.Add(BlobInstantiator.CreateBlob(BlobType.Fighter));
+                for (int i = 0; i < 50; i++)
+                {
+                    blobStatsDatas.Add(BlobInstantiator.CreateBlob(BlobType.Fighter));
+                }
                 break;
             default:
                 Debug.LogError("LevelEnemyInfo was not found.");
