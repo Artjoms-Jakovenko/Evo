@@ -45,7 +45,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 84f086f431ce0c14da68be3ae0ce5788, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ObjectTagList: 02000000
+  ObjectTagList: 08000000
   teamTag: 0
 --- !u!114 &8234684564877693977
 MonoBehaviour:

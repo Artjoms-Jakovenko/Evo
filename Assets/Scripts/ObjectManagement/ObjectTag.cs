@@ -10,4 +10,8 @@ public enum ObjectTag
     Living,
     Vegetarian,
     Carnivorous,
+    Blob,
+    Grass,
+    Tree,
+    Fighter
 }
