@@ -1,2 +1,2 @@
 # Evo
- Evolution RPG mobile game.
+ Evolution mobile game.
